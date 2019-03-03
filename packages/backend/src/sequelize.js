@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+require('sequelize-hierarchy')(Sequelize);
 const {formateDate} = require('./util/date');
 const env = require('./env');
 const sequelize = new Sequelize(env.mysqlURl, {
@@ -12,6 +13,33 @@ const sequelize = new Sequelize(env.mysqlURl, {
 	dialectOptions: {
 	},
 	timezone: '-03:00', // -->Add this line. for writing to database
+});
+
+
+
+const Category = sequelize.define('category', {
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+	name: { type: Sequelize.STRING, allowNull: false},
+	keywords: { 
+		type: Sequelize.TEXT, 
+		get: function() {
+			const keywords = this.getDataValue('keywords');
+			if(keywords){
+				return JSON.parse(keywords);
+			}
+			return []
+		}, 
+		set: function(val) {
+				return this.setDataValue('keywords', JSON.stringify(val || []));
+		}
+}
+}, {
+	hierarchy: true,
+	getterMethods:{
+		title() {
+			return this.name
+		}
+	}
 });
 
 
@@ -170,6 +198,7 @@ module.exports = {
 	Investiment,
 	CreditCard,
 	User,
+	Category,
 	sequelize,
 	initDb,
 	formatDbError,

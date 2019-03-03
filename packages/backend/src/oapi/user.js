@@ -6,14 +6,17 @@ const env = require('../env.js');
 const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/;
 
 const login = (req, res) => {
-	console.log('teste');
 	const email = req.body.email || '';
 	const password = req.body.password || '';
 	User.findOne({
 		where: { email }
 	}).then(user => {
 		if (user && bcrypt.compareSync(password, user.password)) {
-			const token = jwt.sign(user.toJSON(), env.authSecret, {
+			// jwt payload
+			const payload = {
+				id: user.id
+			}
+			const token = jwt.sign(payload, env.authSecret, {
 				expiresIn: '1 day'
 			});
 			const { name, email } = user;

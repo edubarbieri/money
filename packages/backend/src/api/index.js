@@ -15,4 +15,5 @@ module.exports = server => {
 	require('./dashboard')(api);
 	require('./import')(api);
 	require('./summary')(api);
+	require('./category')(api);
 };
