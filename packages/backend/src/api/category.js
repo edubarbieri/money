@@ -62,12 +62,23 @@ const update = (req, res) => {
 };
 
 
+const remove = (req, res) => {
+	//TODO validar se não possui despesas/receitas associadas
+	Category.destroy({
+		where: { id: req.params.id }
+	}).then(deleteRows => {
+		if (deleteRows > 0) {
+			return res.status(200).send();
+		}
+		return res.status(400).send({ errors: 'Nenhum deletado.' });
+	});
+};
+
 module.exports = router => {
 	router.get('/category', findAll);
 	router.get('/category/:id', findOne);
 	router.put('/category/:id', update);
 	router.post('/category', create);
 	router.post('/category/:id/parent', updateParent);
-	// router.put('/category/:id', update);
-	// router.delete('/category/:id', remove);
+	router.delete('/category/:id', remove);
 };
