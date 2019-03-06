@@ -1,123 +1,59 @@
 const { Debt, Credit } = require('../sequelize');
-const crypto = require('crypto');
-const moment = require('moment');
-
+const importItau = require('../services/importItau')
 const {promiseSerial} = require('../util/promise');
 
-const importTxt = (req, res) => {
-	const lines = req.body.lines || [];
-	const promises = [];
-	lines.forEach(line => {
-		const p = processLine(line);
-		if(p){
-			promises.push(p);
+
+async function insert(data){
+	const Entity = data.isDebt ? Debt: Credit;
+	const already = await Entity.findOne({where: { importHash : data.importHash }})
+	if(already){
+		console.log('Entrada já inserida ', data)
+		return null;
+	}
+	if(data.isDebt){
+		data.status = 'PAYD';
+	}
+	if(data.categoryId === ''){
+		data.categoryId = null
+	}
+	const created = await Entity.create(data);
+	return await Entity.findById(created.get('id'))
+}
+
+
+
+const generatePreviewItau = (req, resp) => {
+	const {lines} = req.body;
+	const result = importItau.generatePreview(lines || [])
+		.then(lines => resp.json(lines))
+		.catch((error) => {
+			console.error(error)
+			resp.status(500).send({errors: [error.toString()]})
+
+		})
+}
+
+const save = async (req, res) => {
+	const entries = req.body.entries || [];
+	const result = {};
+	let alreadyImporteds = 0;
+	for (const entry of entries) {
+		const value = await insert(entry);
+		if(value){
+			const modelName = value._modelOptions.name.plural;
+			if(!result[modelName]){
+				result[modelName] = [];
+			}
+			result[modelName].push(value);
+		}else{
+			alreadyImporteds = alreadyImporteds + 1
 		}
-	});
-	promiseSerial(promises).then(results => {
-		const result = {};
-		results.forEach(value => {
-			if(value){
-				const modelName = value._modelOptions.name.plural;
-				if(!result[modelName]){
-					result[modelName] = [];
-				}
-				result[modelName].push(value);
-			}
-		});
-		res.json(result);
-	});
-};
-
-function processLine(line){
-	const split = line.split(';');
-
-	if(split.length !== 3){
-		return;
 	}
-	const date = parseDate(split[0]);
-	const hash = crypto.createHash('md5').update(line).digest('hex');
-	const name = split[1].trim();
-	let value = parseFloat(split[2].replace(',', '.').trim());
-	let isDebt = false;
-	if(value < 0){
-		isDebt = true;
-		value = value * -1;
-	}
-	const insertDate = { ...date, importHash: hash, name: name, value: value};
-
-	return insert(isDebt, insertDate);
-}
-function parseDate(strDate){
-	//str date is in formate 03/09/2018;
-	const split = strDate.split('/');
-	const date = moment.tz(`${split[2]}-${split[1]}-${split[0]}`, 'America/Sao_Paulo').toDate();
-	return {
-		entryDate: date,
-		month: parseInt(split[1]),
-		year: parseInt(split[2])
-	};
-}
-function insert(isDebt, data){
-	return new Promise(resolve => {
-		const Entity = isDebt ? Debt: Credit;
-		Entity.findOne({
-			where: { importHash : data.importHash }
-		}).then(entry => {
-			if(entry){
-				resolve();
-				return;
-			}
-			if(isDebt){
-				data.status = 'PAYD';
-			}
-			data.tag = parseTag(data.name);
-			Entity.create(data).then(created => {
-				Entity.findById(created.get('id')).then(d => {
-					resolve(d);
-				});
-			});
-
-		});
-
-	});
-}
-
-function parseTag(name){
-	if(name.match(/POSTO|PORTO SEGURO|MECANICA/)){
-		return 'carro';
-	}
-	if(name.match(/ZAFFARI|MERCADO|COMERCIAL Z|STOK CENTER|BOURBON|VERDURAO/)){
-		return 'mercado';
-	}
-	if(name.match(/PASSARINHO|SAN MARINO|PORTO FILES|CHURRASCARI|BELLA VENET|PIZZARIA|SHEIK LANCH|CACHORRAO|MC DONALDS|SAHIB|SUBWAY|RECEITA CAS/)){
-		return 'alimentacao';
-	}
-	if(name.match(/NETFLIX|CORSAN|RGE|ALUGUEL/)){
-		return 'fixa';
-	}
-	if(name.match(/CERTAGRO/)){
-		return 'pets';
-	}
-	if(name.match(/ACADEMIA/)){
-		return 'academia';
-	}
-	if(name.match(/PANVEL|FARMACIA/)){
-		return 'farmacia';
-	}
-	if(name.match(/PRE-PAGO/)){
-		return 'celular';
-	}
-	if(name.match(/ˆTAR|REND PAGO APLIC/)){
-		return 'banco';
-	}
-	if(name.match(/SAQUE/)){
-		return 'saque';
-	}
-	if(name.match(/SALARIO/)){
-		return 'salario';
-	}
+	result.alreadyImporteds = alreadyImporteds;
+	res.json(result);
 }
 
 module.exports = router => {
-	router.post('/import/txt', importTxt);
+	router.post('/import/itau/preview', generatePreviewItau);
+	router.post('/import/itau/save', save);
 };

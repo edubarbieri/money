@@ -60,25 +60,20 @@ const findOne = (req, res) => {
 const create = (req, res) => {
 	const debt = req.body;
 
-	let month, year;
 	if (debt.entryDate) {
-		debt.entryDate = debt.entryDate + 'T00:00:00.00';
+		debt.entryDate = debt.entryDate;
 		const date = new Date(debt.entryDate);
-		month = date.getMonth() + 1;
-		year = date.getFullYear();
-	} else if (debt.month && debt.year) {
-		month = debt.month;
-		year = debt.year;
 	} else {
 		return res.status(400).send({
 			errors: ['Dados inválidos. Informe a data ou mês e ano.']
 		});
 	}
-	Debt.create({ ...debt, month, year })
+	Debt.create({ ...debt})
 		.then(deb => {
 			Debt.findById(deb.get('id')).then(d => {
 				res.json(d);
-			});
+			})
+			.catch(e => formatDbError(res, e));
 		})
 		.catch(e => formatDbError(res, e));
 };

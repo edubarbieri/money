@@ -1,11 +1,20 @@
-const { Category, Catalog, formatDbError, paginatedQuery} = require('../sequelize');
-const {convertToDate} = require('../util/date');
-const {queryTagsDebt} = require('../services/tags');
+const { Category, formatDbError} = require('../sequelize');
+const categoryService = require('../services/categories')
 
 const findAll = (req, res) => {
 	Category.findAll({ order: [['createdAt', 'DESC']], hierarchy: true })
 		.then(items => {
 			res.json(items || []);
+		})
+		.catch(e => {
+			formatDbError(res, e);
+		});
+};
+
+const findAllWithPathName = async (req, res) => {
+	categoryService.listWithPath()
+		.then(resp => {
+			res.json(resp || []);
 		})
 		.catch(e => {
 			formatDbError(res, e);
@@ -76,6 +85,7 @@ const remove = (req, res) => {
 
 module.exports = router => {
 	router.get('/category', findAll);
+	router.get('/category/path', findAllWithPathName);
 	router.get('/category/:id', findOne);
 	router.put('/category/:id', update);
 	router.post('/category', create);

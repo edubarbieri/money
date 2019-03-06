@@ -1,20 +1,30 @@
 const Sequelize = require('sequelize');
 require('sequelize-hierarchy')(Sequelize);
 const {formateDate} = require('./util/date');
+const momentTimezone = require('moment-timezone')
+const moment = require('moment')
 const env = require('./env');
-const sequelize = new Sequelize(env.mysqlURl, {
-	dialect: 'mysql',
-	pool: {
-		max: 10,
-		min: 0,
-		acquire: 30000,
+// const sequelize = new Sequelize(env.mysqlURL {
+// 	dialect: 'mysql',
+// 	charset: 'utf8',
+//   collate: 'utf8_general_ci',
+// 	pool: {
+// 		max: 10,
+// 		min: 0,
+// 		acquire: 30000,
+// 		idle: 10000
+// 	},
+// 	define:{
+// 	},
+// });
+const sequelize = new Sequelize(env.postgresURL,{
+	pool:{
+		max: 20,
+		min: 2, 
+		acquire: 5000,
 		idle: 10000
-	},
-	dialectOptions: {
-	},
-	timezone: '-03:00', // -->Add this line. for writing to database
+	}
 });
-
 
 
 const Category = sequelize.define('category', {
@@ -49,8 +59,19 @@ const Debt = sequelize.define('debt',{
 	year: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1970, max: 2100 } },
 	name: { type: Sequelize.STRING, allowNull: false},
 	value: { type: Sequelize.DOUBLE(10, 2), allowNull: false, validate: { min: 0 } },
-	entryDate: {type: Sequelize.DATE },
-	tag: { type: Sequelize.STRING },
+	entryDate: {type: Sequelize.DATEONLY, 
+	 	set: function(value){
+			 let date;
+			 if(value instanceof Date){
+				 date = value
+			 }else{
+				 date = moment(value).toDate()
+			 }
+			this.setDataValue('month', date.getMonth() + 1)
+			this.setDataValue('year', date.getFullYear())
+			return this.setDataValue('entryDate', date)
+		}
+	},
 	status: { type: Sequelize.ENUM('PAYD', 'SCHEDULED', 'PENDING') },
 	recurrent: { type: Sequelize.BOOLEAN, defaultValue: false },
 	recurrentCount: {type: Sequelize.INTEGER, defaultValue: 0},
@@ -59,11 +80,12 @@ const Debt = sequelize.define('debt',{
 },{
 	getterMethods: {
 		formattedDate(){
-			return this.entryDate ? formateDate(this.entryDate) : '';
+			return this.entryDate ? moment(this.entryDate).format('DD/MM/YYYY') : '';
 		}
 	}
 }
 );
+Debt.belongsTo(Category)
 
 const Credit = sequelize.define('credit',{
 	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -71,8 +93,19 @@ const Credit = sequelize.define('credit',{
 	year: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1970, max: 2100 } },
 	name: { type: Sequelize.STRING, allowNull: false},
 	value: { type: Sequelize.DOUBLE(10, 2), allowNull: false, validate: { min: 0 } },
-	entryDate: {type: Sequelize.DATE },
-	tag: { type: Sequelize.STRING },
+	entryDate: {type: Sequelize.DATEONLY,
+		set: function(value){
+			let date;
+			if(value instanceof Date){
+				date = value
+			}else{
+				date = moment(value).toDate()
+			}
+		 this.setDataValue('month', date.getMonth() + 1)
+		 this.setDataValue('year', date.getFullYear())
+		 return this.setDataValue('entryDate', date)
+	 }
+	},
 	recurrent: { type: Sequelize.BOOLEAN, defaultValue: false },
 	recurrentCount: {type: Sequelize.INTEGER, defaultValue: 0},
 	recurrentTotal: {type: Sequelize.INTEGER, defaultValue: 0},
@@ -80,12 +113,13 @@ const Credit = sequelize.define('credit',{
 },{
 	getterMethods: {
 		formattedDate(){
-			return formateDate(this.entryDate);
+			return this.entryDate ? moment(this.entryDate).format('DD/MM/YYYY') : '';
 		}
 	}
 }
 );
 
+Credit.belongsTo(Category)
 
 const CreditCard = sequelize.define('credit_card',{
 	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
