@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon",
-    "prod": "pm2 start src/loader.js --name backend"
+    "prod": "pm2 start src/loader.js --name backend",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
