@@ -16,4 +16,5 @@ module.exports = server => {
 	require('./import')(api);
 	require('./summary')(api);
 	require('./category')(api);
+	require('./monthDetails')(api);
 };
