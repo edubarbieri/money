@@ -1,3 +1,4 @@
+require('newrelic');
 const { initDb } = require('./sequelize');
 const server = require('./server');
 

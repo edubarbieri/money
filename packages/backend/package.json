@@ -22,6 +22,7 @@
     "moment-timezone": "^0.5.23",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.5",
+    "newrelic": "^5.7.0",
     "pg": "^7.8.1",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.42.0",
