@@ -1,4 +1,4 @@
-const { CreditCard, formatDbError } = require('../sequelize');
+const { CreditCard, formatDbError } = require('../db');
 const {convertToDate} = require('../util/date');
 const findAll = (req, res) => {
 	CreditCard.findAll({ order: [['createdAt', 'DESC']] })

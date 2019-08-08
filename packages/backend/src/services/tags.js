@@ -1,4 +1,4 @@
-const { sequelize } = require('../sequelize');
+const { sequelize } = require('../db/models');
 
 const queryTagsByMonth = (month, year, table) => {
 	return sequelize

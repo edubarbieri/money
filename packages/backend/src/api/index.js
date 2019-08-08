@@ -1,12 +1,12 @@
 const { Router } = require('express');
 const auth = require('../middleware/auth');
 
-module.exports = server => {
+module.exports = app => {
 	const api = Router();
 	//force autenticate for all request
 	api.use(auth);
 	//register api in server
-	server.use('/api', api);
+	app.use('/api', api);
 
 	require('./debt')(api);
 	require('./credit')(api);
@@ -17,4 +17,5 @@ module.exports = server => {
 	require('./summary')(api);
 	require('./category')(api);
 	require('./monthDetails')(api);
+	// require('./billToPay')(api);
 };

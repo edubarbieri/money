@@ -1,4 +1,4 @@
-const { Credit, formatDbError, paginatedQuery} = require('../sequelize');
+const { Credit, formatDbError, paginatedQuery} = require('../db');
 const {queryTagsCredits} = require('../services/tags');
 
 const findAll = (req, res) => {

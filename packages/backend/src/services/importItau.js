@@ -1,7 +1,11 @@
 const moment = require("moment")
 const crypto = require('crypto')
-const {Category} = require('../sequelize')
+const {Category} = require('../db')
 const _ = require('lodash')
+module.exports = {
+  generatePreview
+}
+
 
 async function generatePreview(rawLines){
     const result = []
@@ -71,6 +75,3 @@ function matchAny(keywords, name){
   return name.toLowerCase().match(keywords.join('|').toLowerCase()) !== null
 }
 
-module.exports = {
-  generatePreview
-}

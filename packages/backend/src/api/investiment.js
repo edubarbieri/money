@@ -1,4 +1,4 @@
-const { Investiment, formatDbError } = require('../sequelize');
+const { Investiment, formatDbError } = require('../db');
 const {convertToDate} = require('../util/date');
 const findAll = (req, res) => {
 	Investiment.findAll({ order: [['createdAt', 'DESC']] })
@@ -46,7 +46,7 @@ const create = (req, res) => {
 			errors: ['Dados inválidos. Informe a data ou mês e ano.']
 		});
 	}
-	Investiment.create({ ...investiment, month, year })
+	Investiment.create({...investiment, month, year })
 		.then(deb => {
 			Investiment.findById(deb.get('id')).then(d => {
 				res.json(d);

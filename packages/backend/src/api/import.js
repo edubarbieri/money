@@ -1,4 +1,4 @@
-const { Debt, Credit } = require('../sequelize');
+const { Debt, Credit } = require('../db/models');
 const importItau = require('../services/importItau')
 const {promiseSerial} = require('../util/promise');
 

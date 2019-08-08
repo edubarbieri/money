@@ -1,4 +1,4 @@
-const { sequelize, formatDbError } = require('../sequelize');
+const { sequelize, formatDbError } = require('../db');
 
 const summary = (req, res) => {
 	sequelize

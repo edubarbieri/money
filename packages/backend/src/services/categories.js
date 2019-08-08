@@ -1,5 +1,5 @@
-const { Category } = require('../sequelize')
-const _ = require('lodash')
+const { Category } = require('../db')
+const {sortBy} = require('lodash')
 async function listWithPath(){
   const categories = await Category.findAll();
   const resp = [];
@@ -10,7 +10,7 @@ async function listWithPath(){
       pathName: getParentName(category, categories)
     })
   }
-  return _.sortBy(resp, 'pathName')
+  return sortBy(resp, 'pathName')
 }
 
 function getParentName(category, categories){

@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'MeuDinheiro backend api',
-    script: './src/index.js',
+    script: './src/server.js',
     instances: 2,
     autorestart: true,
     watch: false,

@@ -1,4 +1,4 @@
-const { Category, formatDbError} = require('../sequelize');
+const { Category, formatDbError} = require('../db');
 const categoryService = require('../services/categories')
 
 const findAll = (req, res) => {

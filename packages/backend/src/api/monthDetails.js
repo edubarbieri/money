@@ -1,4 +1,4 @@
-const {Debt, Credit} = require('../sequelize')
+const {Debt, Credit} = require('../db/models')
 
 async function listMonthDetails(req, res){
   const {month, year} = req.params;

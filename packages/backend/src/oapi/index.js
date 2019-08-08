@@ -1,11 +1,6 @@
-const { Router } = require('express');
-
-module.exports = server => {
-	const oapi = Router();
+module.exports = app => {
 	//force autenticate for all request
 	// api.use(auth);
 	//register api in server
-	server.use('/oapi', oapi);
-
-	require('./user')(oapi);
+	app.use('/oapi', require('./auth'));
 };

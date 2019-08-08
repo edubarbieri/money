@@ -1,5 +1,4 @@
-const { Debt, formatDbError, paginatedQuery} = require('../sequelize');
-const {convertToDate} = require('../util/date');
+const { Debt, formatDbError, paginatedQuery } = require('../db');
 const {queryTagsDebt} = require('../services/tags');
 
 const findAll = (req, res) => {
