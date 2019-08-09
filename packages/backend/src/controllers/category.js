@@ -1,7 +1,10 @@
 const { Category, formatDbError} = require('../db');
 const categoryService = require('../services/categories')
+const { Router } = require('express');
 
-const findAll = (req, res) => {
+const route = Router();
+
+route.get('/category', (req, res) => {
 	Category.findAll({ order: [['createdAt', 'DESC']], hierarchy: true })
 		.then(items => {
 			res.json(items || []);
@@ -9,9 +12,9 @@ const findAll = (req, res) => {
 		.catch(e => {
 			formatDbError(res, e);
 		});
-};
+});
 
-const findAllWithPathName = async (req, res) => {
+route.get('/category/path', async (req, res) => {
 	categoryService.listWithPath()
 		.then(resp => {
 			res.json(resp || []);
@@ -19,24 +22,24 @@ const findAllWithPathName = async (req, res) => {
 		.catch(e => {
 			formatDbError(res, e);
 		});
-};
+});
 
-const findOne = (req, res) => {
-	Category.findById(req.params.id)
+route.get('/category/:id', (req, res) => {
+	Category.findByPk(req.params.id)
 		.then(debt => res.json(debt))
 		.catch(e => formatDbError(res, e));
-};
+});
 
-const create = (req, res) => {
+route.post('/category', (req, res) => {
 	const category = req.body;
 	Category.create(category)
 		.then(cat => {
 			res.json(cat);
 		})
 		.catch(e => formatDbError(res, e));
-};
+});
 
-const updateParent = (req, res) => {
+route.post('/category/:id/parent', (req, res) => {
 	Category.update({
 		parentId: req.body.parentId
 	},{
@@ -50,10 +53,10 @@ const updateParent = (req, res) => {
 		return findOne(req, res);
 	})
 	.catch(e => formatDbError(res, e));
-};
+});
 
 
-const update = (req, res) => {
+route.put('/category/:id', (req, res) => {
 	const category = req.body;
 
 	Category.update(category, {
@@ -68,10 +71,10 @@ const update = (req, res) => {
 			return findOne(req, res);
 		})
 		.catch(e => formatDbError(res, e));
-};
+});
 
 
-const remove = (req, res) => {
+route.delete('/category/:id', (req, res) => {
 	//TODO validar se não possui despesas/receitas associadas
 	Category.destroy({
 		where: { id: req.params.id }
@@ -81,14 +84,6 @@ const remove = (req, res) => {
 		}
 		return res.status(400).send({ errors: 'Nenhum deletado.' });
 	});
-};
+});
 
-module.exports = router => {
-	router.get('/category', findAll);
-	router.get('/category/path', findAllWithPathName);
-	router.get('/category/:id', findOne);
-	router.put('/category/:id', update);
-	router.post('/category', create);
-	router.post('/category/:id/parent', updateParent);
-	router.delete('/category/:id', remove);
-};
+module.exports = route;

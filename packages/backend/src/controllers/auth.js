@@ -8,7 +8,8 @@ const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/;
 
 
 const route = Router();
-route.post('/login', async function(req, res){
+
+async function login(req, res){
 	const email = req.body.email || '';
 	const password = req.body.password || '';
 	const user = await User.findOne({ where: { email }});
@@ -23,7 +24,9 @@ route.post('/login', async function(req, res){
 			errors: ['Usuário/Senha inválidos']
 		});
 	}
-});
+}
+
+route.post('/login', login);
 
 route.post('/validateToken', function (req, res) {
 	const token = req.body.token || '';
@@ -41,7 +44,7 @@ route.post('/signup', async function (req, res) {
 	if (!password.match(passwordRegex)) {
 		return res.status(400).send({
 			errors: [
-				'Senha precisar ter: uma letra maiúscula, uma letra minúscula, um n úmero, uma caractere especial(@#$%) e tamanho entre 6-20.'
+				'Senha precisar ter: uma letra maiúscula, uma letra minúscula, um número, uma caractere especial(@#$%) e tamanho entre 6-20.'
 			]
 		});
 	}
@@ -53,7 +56,7 @@ route.post('/signup', async function (req, res) {
 		});
 	}
 	//valida se usuario ja não existe
-	const user = User.findOne({ where: { email } });
+	const user = await User.findOne({ where: { email } });
 	if (user) {
 		return res.status(400).send({
 			errors: ['Usuário já cadastrado.']
@@ -64,7 +67,7 @@ route.post('/signup', async function (req, res) {
 			email,
 			password: passwordHash
 	});
-	login(req, res);
+	await login(req, res);
 });
 
 module.exports = route;

@@ -1,6 +1,9 @@
 const { Credit, formatDbError, paginatedQuery} = require('../db');
 const {queryTagsCredits} = require('../services/tags');
+const { Router } = require('express');
 
+
+const route = Router();
 const findAll = (req, res) => {
 	Credit.findAll({ order: [['createdAt', 'DESC']] })
 		.then(items => {
