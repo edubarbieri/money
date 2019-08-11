@@ -14,7 +14,7 @@ async function login(req, res){
 	const password = req.body.password || '';
 	const user = await User.findOne({ where: { email }});
 	if (user && bcrypt.compareSync(password, user.password)) {
-		const token = jwt.sign({id: user.id}, env.authSecret, {
+		const token = jwt.sign({userId: user.id}, env.authSecret, {
 			expiresIn: '1 day'
 		});
 		const { name, email } = user;

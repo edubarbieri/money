@@ -156,11 +156,62 @@ User.init({
 });
 
 
+
+class UserWallet extends Model {}
+UserWallet.init({
+  userId: {
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  },
+  walletId: {
+	type: Sequelize.INTEGER,
+	primaryKey: true,
+  },
+  isOwner: {
+	type: Sequelize.BOOLEAN,
+	allowNull: false,
+	defaultValue: false
+  }
+}, { sequelize, modelName: 'user_wallet' });
+
+
+class Wallet extends Model {}
+Wallet.init({
+  id: {
+	type: Sequelize.INTEGER,
+	autoIncrement: true,
+    primaryKey: true,
+  },
+  name: {type: Sequelize.STRING, allowNull: false},
+  description: {type: Sequelize.STRING}
+}, { sequelize, modelName: 'wallet' });
+
+User.belongsToMany(Wallet, {
+	through: {
+	  model: UserWallet,
+	  unique: false
+	},
+	foreignKey: 'userId',
+	constraints: false
+});
+
+Wallet.belongsToMany(User, {
+	through: {
+	  model: UserWallet,
+	  unique: false
+	},
+	foreignKey: 'walletId',
+	constraints: false
+});
+
+
 module.exports = {
   sequelize,
   Category,
 	Bill,
 	Debt,
 	Credit,
-	User
+	User,
+	Wallet,
+	UserWallet
 }
