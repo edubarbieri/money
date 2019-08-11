@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { sequelize, Wallet, User } = require('../db')
-const {isWalletOwner} = require('../services/wallets');
+const {isWalletOwner, listUserWallets} = require('../services/wallets');
 
 const route = Router();
 
@@ -35,29 +35,13 @@ route.put('/wallet/:walletId', async (req, resp) => {
     })
 });
 
-route.get('/wallet', async (req, resp) => {
-    const query = `
-        select  w."id" as "id", w."name" as "name", wu."isOwner" as "isOwner"
-        from  wallets w, user_wallets wu
-        where 1 = 1  and w."id" = wu."walletId" and  wu."userId" = :userId`;
-    const wallates = await sequelize.query(query, { replacements: { userId: req.userId }, type: sequelize.QueryTypes.SELECT});
-
-    const queryUser = `select  
-            wu."userId" as "id",
-            wu."isOwner" as "isOwner",
-            u.name as "name"
-            
-        from  
-        wallets w, user_wallets wu, users u
-        where 1 = 1  
-        and w."id" = wu."walletId"
-        and wu."userId" = u."id"
-        and w.id = :walletId`;
-
-    for (const wallet of wallates) {
-        wallet.users = await sequelize.query(queryUser, { replacements: { walletId: wallet.id }, type: sequelize.QueryTypes.SELECT});
-    }
-    resp.json(wallates)
+route.get('/wallet', (req, resp) => {
+    listUserWallets(req.userId, req.query.withUser).then(wallates => {
+        resp.json(wallates)
+    }).catch(error => {
+        console.error(error);
+        resp.status(500).json({erros: ['wallet.error.generic']})
+    })
 });
 
 route.post('/wallet/:walletId/addUser', async (req, resp) => {
