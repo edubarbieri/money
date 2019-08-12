@@ -4,35 +4,48 @@ const {isWalletOwner, listUserWallets} = require('../services/wallets');
 
 const route = Router();
 
-route.post('/wallet', async (req, resp) => {
-    const user = await User.findByPk(req.userId, { attributes: ['id'] });
-    sequelize.transaction(t => {
-        return Wallet.create({
-            name: req.body.name,
-            description: req.body.description
-        }, {transaction: t}).then((wallet) => {
-            return wallet.addUser(user, { through: { isOwner: true }, transaction: t});
+route.post('/wallet', (req, resp) => {
+    User.findByPk(req.userId, { attributes: ['id'] }).then(user => {
+        sequelize.transaction(t => {
+            return Wallet.create({
+                name: req.body.name,
+                description: req.body.description
+            }, {transaction: t}).then((wallet) => {
+                return wallet.addUser(user, { through: { isOwner: true }, transaction: t});
+            })
         })
-    })
-    .then(() => resp.status(201))
-    .catch((e) => {
-        resp.status(500).json({
-            erros: [e]
+        .then(() => resp.sendStatus(201))
+        .catch((e) => {
+            resp.status(500).json({
+                erros: [e]
+            })
         })
-    })
+    });
 });
 
 route.put('/wallet/:walletId', async (req, resp) => {
-    User.update({
-        name: req.body.name,
-        description: req.body.description
-    }, { where: {id: parsetInt(req.params.walletId)} })
-    .then(() => resp.status(200))
-    .catch((e) => {
+    try {
+        const { walletId } = req.params;
+        const isOwner = await isWalletOwner(parseInt(walletId), req.userId);
+        if(!isOwner){
+            return resp.status(403).json({
+                errors: ['wallet.update.noPermissionToUpdate']
+            }) 
+        }
+        const rowsUpdated = await Wallet.update({
+            name: req.body.name,
+            description: req.body.description
+        }, { where: {id: parseInt(req.params.walletId)} });
+        if(rowsUpdated[0] > 0){
+            return resp.send(await Wallet.findByPk(walletId));
+        }
+        resp.status(400).json({erros: ['wallet.update.noRowsUpdateds']})
+    } catch (error) {
+        console.error("Error updating wallet", error);
         resp.status(500).json({
             erros: ['wallet.update.genericError']
         })
-    })
+    }
 });
 
 route.get('/wallet', (req, resp) => {
@@ -53,7 +66,7 @@ route.post('/wallet/:walletId/addUser', async (req, resp) => {
     }
     
     const isOwner = await isWalletOwner(parseInt(walletId), req.userId);
-    if(isOwner){
+    if(!isOwner){
         return resp.status(403).json({
             errors: ['wallet.addUser.noPermissionToAddUser']
         }) 

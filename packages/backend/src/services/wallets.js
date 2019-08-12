@@ -6,7 +6,7 @@ async function isWalletOwner(walletId, userId){
         from  user_wallets wu
         where 1 = 1  and wu."walletId" = :walletId and  wu."userId" = :userId`;
     const wallates = await sequelize.query(query, { replacements: { walletId, userId}, type: sequelize.QueryTypes.SELECT });
-    if(wallates.length == 0 || wallates[0].isOwner !== 1){
+    if(wallates.length == 0 || !wallates[0].isOwner){
         return false;
     }
     return true;
