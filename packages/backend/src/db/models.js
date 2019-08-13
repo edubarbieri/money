@@ -12,6 +12,10 @@ const sequelize = new Sequelize(env.databaseURL,{
 		min: 2, 
 		acquire: 5000,
 		idle: 10000
+	},
+	define:{
+		freezeTableName: true,
+		underscored: true
 	}
 });
 
@@ -20,9 +24,9 @@ const sequelize = new Sequelize(env.databaseURL,{
  */
 class Category extends Model {};
 Category.init({
-  id: { type: Sequelize.INTEGER,  primaryKey: true,autoIncrement: true },
-  name: { type: Sequelize.STRING, allowNull: false },
-  keywords: { type: Sequelize.TEXT,
+  id: { type: Sequelize.INTEGER,  primaryKey: true, autoIncrement: true, field: 'id'},
+  name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
+  keywords: { type: Sequelize.TEXT, field: 'keywords',
     get: function () {
       const keywords = this.getDataValue('keywords');
       if (keywords) {
@@ -37,7 +41,8 @@ Category.init({
 }, {
   sequelize,
   hierarchy: true,
-  modelName: 'category'
+	modelName: 'category',
+	tableName: 'category'
 });
 
 /**
@@ -45,33 +50,35 @@ Category.init({
  */
 class Bill extends Model {}
 Bill.init({
-  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  description: { type: Sequelize.STRING, allowNull: false },
-  dueDate: { type: Sequelize.DATE, allowNull: false },
-  payDate: { type: Sequelize.DATE },
-  value: { type: Sequelize.DECIMAL(10, 2), allowNull: false,
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id'},
+  description: { type: Sequelize.STRING, allowNull: false, field: 'description'},
+  dueDate: { type: Sequelize.DATE, allowNull: false, field: 'due_date'},
+  payDate: { type: Sequelize.DATE, field: 'pay_date'},
+  value: { type: Sequelize.DECIMAL(10, 2), allowNull: false, field: 'value',
     validate: { min: 0 }
   },
-  recurrent: { type: Sequelize.BOOLEAN, defaultValue: false
-  }
+  recurrent: { type: Sequelize.BOOLEAN, defaultValue: false, field: 'recurrent'},
+  recurrentTotal: { type: Sequelize.INTEGER, field: 'recurrent_total'},
+  recurrentCount: { type: Sequelize.INTEGER, field: 'recurrent_count'}
 }, {
   sequelize,
-  modelName: 'bill'
+	modelName: 'bill',
+	tableName: 'bill'
 });
 
-Bill.belongsTo(Category)
+Bill.belongsTo(Category, {foreignKey: 'category_id'});
 
 /**
  * @class Debt model
  */
 class Debt extends Model {}
 Debt.init({
-	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-	month: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1, max: 12 }},
-	year: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1970, max: 2100 } },
-	name: { type: Sequelize.STRING, allowNull: false},
-	value: { type: Sequelize.DECIMAL(10, 2), allowNull: false, validate: { min: 0 } },
-	entryDate: {type: Sequelize.DATEONLY, 
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id' },
+	month: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1, max: 12 }, field: 'month'},
+	year: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1970, max: 2100 }, field: 'year' },
+	name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
+	value: { type: Sequelize.DECIMAL(10, 2), allowNull: false, validate: { min: 0 }, field: 'value' },
+	entryDate: {type: Sequelize.DATEONLY, field: 'entry_date',
 	 	set: function(value){
 			 let date;
 			 if(value instanceof Date){
@@ -84,14 +91,12 @@ Debt.init({
 			return this.setDataValue('entryDate', date)
 		}
 	},
-	status: { type: Sequelize.ENUM('PAYD', 'SCHEDULED', 'PENDING') },
-	recurrent: { type: Sequelize.BOOLEAN, defaultValue: false },
-	recurrentCount: {type: Sequelize.INTEGER, defaultValue: 0},
-	recurrentTotal: {type: Sequelize.INTEGER, defaultValue: 0},
-	importHash: { type: Sequelize.STRING }
+	status: { type: Sequelize.ENUM('PAYD', 'SCHEDULED', 'PENDING'), field: 'status'},
+	importHash: { type: Sequelize.STRING, field: 'import_hash'}
 },{
 	sequelize,
 	modelName: 'debt',
+	tableName: 'debt',
 	getterMethods: {
 		formattedDate(){
 			return this.entryDate ? moment(this.entryDate).format('DD/MM/YYYY') : '';
@@ -106,12 +111,12 @@ Debt.belongsTo(Category)
  */
 class Credit extends Model {}
 Credit.init({
-	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-	month: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1, max: 12 }},
-	year: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1970, max: 2100 } },
-	name: { type: Sequelize.STRING, allowNull: false},
-	value: { type: Sequelize.DECIMAL(10, 2), allowNull: false, validate: { min: 0 } },
-	entryDate: {type: Sequelize.DATEONLY,
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id'},
+	month: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1, max: 12 }, field: 'month'},
+	year: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 1970, max: 2100 }, field: 'year' },
+	name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
+	value: { type: Sequelize.DECIMAL(10, 2), allowNull: false, validate: { min: 0 }, field: 'value'},
+	entryDate: {type: Sequelize.DATEONLY, field: 'entry_date',
 		set: function(value){
 			let date;
 			if(value instanceof Date){
@@ -124,13 +129,11 @@ Credit.init({
 		 return this.setDataValue('entryDate', date)
 	 }
 	},
-	recurrent: { type: Sequelize.BOOLEAN, defaultValue: false },
-	recurrentCount: {type: Sequelize.INTEGER, defaultValue: 0},
-	recurrentTotal: {type: Sequelize.INTEGER, defaultValue: 0},
-	importHash: { type: Sequelize.STRING }
+	importHash: { type: Sequelize.STRING, field: 'import_hash'}
 },{
 	sequelize,
 	modelName: 'credit',
+	tableName: 'credit',
 	getterMethods: {
 		formattedDate(){
 			return this.entryDate ? moment(this.entryDate).format('DD/MM/YYYY') : '';
@@ -139,59 +142,66 @@ Credit.init({
 }
 );
 
-Credit.belongsTo(Category)
+Credit.belongsTo(Category, {foreignKey: 'category_id'});
 
 /**
  * @class User model
  */
 class User extends Model {}
 User.init({
-	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-	name: { type: Sequelize.STRING, allowNull: false},
-	email: { type: Sequelize.STRING, allowNull: false, validate: { isEmail: true}},
-	password: { type: Sequelize.STRING, allowNull: false},
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id'},
+	name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
+	email: { type: Sequelize.STRING, allowNull: false, validate: { isEmail: true}, field: 'email'},
+	password: { type: Sequelize.STRING, allowNull: false, field: 'password'},
 },{
 	sequelize,
 	modelName: 'user',
+	tableName: 'app_user'
 });
 
+
+class Wallet extends Model {}
+Wallet.init({
+  id: {
+		type: Sequelize.INTEGER,
+		autoIncrement: true,
+		primaryKey: true,
+		field: 'id'
+  },
+  name: {type: Sequelize.STRING, allowNull: false, field: 'name'},
+  description: {type: Sequelize.STRING, field: 'description'}
+}, { sequelize, modelName: 'wallet', tableName: 'wallet', paranoid: true});
 
 
 class UserWallet extends Model {}
 UserWallet.init({
   userId: {
     type: Sequelize.INTEGER,
-    primaryKey: true
+		allowNull: false,
+		field: 'user_id'
   },
-  walletId: {
-	type: Sequelize.INTEGER,
-	primaryKey: true,
+  walltId: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		field: 'wallet_id'
   },
   isOwner: {
-	type: Sequelize.BOOLEAN,
-	allowNull: false,
-	defaultValue: false
+		type: Sequelize.BOOLEAN,
+		allowNull: false,
+		defaultValue: false,
+		field: 'is_owner'
   }
-}, { sequelize, modelName: 'user_wallet' });
+}, { sequelize, modelName: 'userWallet', tableName: 'user_wallet'});
 
 
-class Wallet extends Model {}
-Wallet.init({
-  id: {
-	type: Sequelize.INTEGER,
-	autoIncrement: true,
-    primaryKey: true,
-  },
-  name: {type: Sequelize.STRING, allowNull: false},
-  description: {type: Sequelize.STRING}
-}, { sequelize, modelName: 'wallet' });
+
 
 User.belongsToMany(Wallet, {
 	through: {
 	  model: UserWallet,
 	  unique: false
 	},
-	foreignKey: 'userId',
+	foreignKey: 'user_id',
 	constraints: false
 });
 
@@ -200,7 +210,7 @@ Wallet.belongsToMany(User, {
 	  model: UserWallet,
 	  unique: false
 	},
-	foreignKey: 'walletId',
+	foreignKey: 'wallet_id',
 	constraints: false
 });
 

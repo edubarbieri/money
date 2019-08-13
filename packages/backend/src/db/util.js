@@ -55,6 +55,9 @@ const paginatedQuery = (entity, options, page = 1, itemsPerPage = 10) => {
 	});
 };
 
+function sanitazyQuery(query) {
+	return query.replace(/\n/g, '').replace(/\s\s+/g, ' ');
+}
 module.exports = {
-  formatDbError, paginatedQuery
+  formatDbError, paginatedQuery, sanitazyQuery
 }
