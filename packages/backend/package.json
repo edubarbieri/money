@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --collect-coverage --colors --logHeapUsage",
-    "dev": "nodemon --ignore __tests__",
+    "dev": "nodemon --ignore __tests__ --inspect",
     "start": "pm2-runtime start ecosystem.config.js --env production"
   },
   "keywords": [],

@@ -9,6 +9,13 @@
       "request": "launch",
       "name": "Launch mymoney api",
       "program": "${workspaceFolder}/src/server.js"
+    },{
+      "name": "Attach to nodemon mymoney api",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "port": 9229
     }
+    
   ]
 }
