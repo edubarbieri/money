@@ -25,8 +25,9 @@ route.post('/wallet', (req, resp) => {
         })
         .then(() => resp.sendStatus(201))
         .catch((e) => {
+            console.error('Create wallet', e)
             resp.status(500).json({
-                erros: [e]
+                erros: ['wallet.create.genericError']
             })
         })
     });

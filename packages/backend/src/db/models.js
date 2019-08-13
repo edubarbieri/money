@@ -16,7 +16,8 @@ const sequelize = new Sequelize(env.databaseURL,{
 	define:{
 		freezeTableName: true,
 		underscored: true
-	}
+	},
+	logging: env.dbLogging
 });
 
 /**
@@ -153,6 +154,7 @@ User.init({
 	name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
 	email: { type: Sequelize.STRING, allowNull: false, validate: { isEmail: true}, field: 'email'},
 	password: { type: Sequelize.STRING, allowNull: false, field: 'password'},
+	avatar: { type: Sequelize.STRING, field: 'avatar'}
 },{
 	sequelize,
 	modelName: 'user',
@@ -177,12 +179,10 @@ class UserWallet extends Model {}
 UserWallet.init({
   userId: {
     type: Sequelize.INTEGER,
-		allowNull: false,
 		field: 'user_id'
   },
   walltId: {
 		type: Sequelize.INTEGER,
-		allowNull: false,
 		field: 'wallet_id'
   },
   isOwner: {
