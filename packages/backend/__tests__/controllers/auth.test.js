@@ -8,7 +8,6 @@ beforeAll(async() => {
 });
   
 afterAll(() => {
-    console.log('After all')
 });
 
 describe('signup', () => {
@@ -61,12 +60,12 @@ describe('login', () => {
         expect(response.body.errors).toContain('login.userOrPasswordInvalid');
     })
 
-    test('deve retornar status 200 se usuario e ou senha for valido', async () =>{
+    test('deve retornar status 200 se usuario e senha for valido', async () =>{
         const loginRequest = {email: signupRequest.email, password: password};
         const response = await request(app).post('/login').send(loginRequest);
         expect(response.status).toBe(200);
     })
-    test('deve retornar token se usuario e ou senha for valido', async () =>{
+    test('deve retornar token se usuario e senha for valido', async () =>{
         const loginRequest = {email: signupRequest.email, password: password};
         const response = await request(app).post('/login').send(loginRequest);
         expect(response.body.token).toBeDefined();

@@ -2,13 +2,15 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const {production} = require('./env');
+const {morganFormat} = require('./env');
 const queryParser = require('express-query-int');
 const authMiddleware = require('./middleware/auth')
 
 
 const app = express();
-app.use(morgan(production ? 'tiny' : 'dev'));
+if(morganFormat){
+	app.use(morgan(morganFormat));
+}
 app.use(bodyParser.json());
 app.use(cors({
 	"origin": "*",

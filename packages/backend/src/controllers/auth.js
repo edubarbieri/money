@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { User, formatDbError } = require('../db');
+const { User } = require('../db');
 const env = require('../env.js');
 const { Router } = require('express');
 //Senha precisar ter: uma letra maiúscula, uma letra minúscula, um número, uma caractere especial(@#$%) e tamanho entre 6-20.

@@ -2,3 +2,4 @@ node_modules
 newrelic_agent.log
 __tests__/database.sqlite
 __tests__/coverage
+.DS_Store
