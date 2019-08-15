@@ -8,7 +8,7 @@
     "test": "cross-env NODE_ENV=test DATABASE_URL=sqlite://$INIT_CWD/__tests__/database.sqlite jest --collect-coverage --colors --logHeapUsage",
     "posttest": "sequelize db:migrate:undo:all --url sqlite://$INIT_CWD/__tests__/database.sqlite",
     "dev": "nodemon --ignore __tests__ --inspect",
-    "prestart": "sequelize db:migrate --url $DATABASE_URL",
+    "prestart": "npx sequelize-cli db:migrate --url $DATABASE_URL",
     "start": "pm2-runtime start ecosystem.config.js --env production"
   },
   "keywords": [],
