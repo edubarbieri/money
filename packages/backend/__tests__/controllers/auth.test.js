@@ -4,7 +4,7 @@ const app = require("../../src/app");
 const {sequelize} = require('../../src/db')
 
 beforeAll(async() => {
-    await sequelize.sync();
+    // await sequelize.sync();
 });
   
 afterAll(() => {

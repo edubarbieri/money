@@ -10,7 +10,7 @@ RUN npm install pm2 -g
 # Bundle APP files
 COPY src src/
 COPY package.json .
-COPY pm2.json .
+COPY ecosystem.config.js .
 
 # Install app dependencies
 ENV NPM_CONFIG_LOGLEVEL warn
@@ -23,5 +23,5 @@ RUN npm install --production
 #Server port
 EXPOSE 3003
 
-CMD [ "pm2-runtime", "start", "pm2.json", "--env", "production" ]
+CMD [ "npm", "start"]
 
