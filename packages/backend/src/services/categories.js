@@ -1,7 +1,7 @@
 const { Category } = require('../db')
 const {sortBy} = require('lodash')
-async function listWithPath(){
-  const categories = await Category.findAll();
+async function listWithPath(walletId){
+  const categories = await Category.findAll({where: {walletId}});
   const resp = [];
   for (const category of categories) {
     resp.push({

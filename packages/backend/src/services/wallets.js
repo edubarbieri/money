@@ -1,4 +1,4 @@
-const {sequelize, sanitazyQuery} = require('../db');
+const {sequelize, sanitazyQuery, UserWallet } = require('../db');
 
 async function isWalletOwner(walletId, userId){
     const query = sanitazyQuery(`
@@ -10,6 +10,19 @@ async function isWalletOwner(walletId, userId){
         return false;
     }
     return true;
+}
+
+async function userInWallet(userId, walletId){
+    if(!userId || !walletId){
+        return false;
+    }
+    const total = await UserWallet.count({
+        where : {
+            userId,  walltId: walletId
+        }
+    })
+
+    return total > 0;
 }
 
 async function listUserWallets(userId, withMember = false){
@@ -44,5 +57,6 @@ async function listUserWallets(userId, withMember = false){
 
 module.exports = {
     isWalletOwner,
-    listUserWallets
+    listUserWallets,
+    userInWallet
 }

@@ -13,10 +13,10 @@ if(morganFormat){
 }
 app.use(bodyParser.json());
 app.use(cors({
-	"origin": "*",
-	"methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-	"preflightContinue": false,
-	"allowedHeaders" : ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+	'origin': '*',
+	'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+	'preflightContinue': false,
+	'allowedHeaders' : ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
 }));
 app.use(queryParser());
 app.disable('x-powered-by');
