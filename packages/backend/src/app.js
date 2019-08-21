@@ -16,7 +16,7 @@ app.use(cors({
 	'origin': '*',
 	'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
 	'preflightContinue': false,
-	'allowedHeaders' : ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+	'allowedHeaders' : ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'walletId']
 }));
 app.use(queryParser());
 app.disable('x-powered-by');
