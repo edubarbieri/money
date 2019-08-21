@@ -200,7 +200,7 @@ Category.init({
   id: { type: Sequelize.INTEGER,  primaryKey: true, autoIncrement: true, field: 'id'},
   name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
   walletId: { type: Sequelize.INTEGER, allowNull: false, field: 'wallet_id'},
-  parentId: { type: Sequelize.INTEGER, allowNull: false, field: 'parent_id'},
+  parentId: { type: Sequelize.INTEGER, allowNull: true, field: 'parent_id'},
   keywords: { type: Sequelize.ARRAY(Sequelize.STRING), field: 'keywords'}
 }, {
   sequelize,

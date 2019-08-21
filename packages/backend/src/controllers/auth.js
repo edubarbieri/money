@@ -20,7 +20,7 @@ async function login(req, res){
 		const { name, email, avatar } = user;
 		res.json({ name, email, avatar, token });
 	} else {
-		res.status(400).send({
+		res.status(401).send({
 			errors: ['login.userOrPasswordInvalid']
 		});
 	}
