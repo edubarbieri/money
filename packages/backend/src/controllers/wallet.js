@@ -23,7 +23,11 @@ route.post('/wallet', (req, resp) => {
                 return wallet.addUser(user, { through: { isOwner: true }, transaction: t});
             })
         })
-        .then(() => resp.sendStatus(201))
+        .then((data) => {
+            if(data && data.length > 0){
+                resp.json({id: data[0].walltId});
+            }
+        })
         .catch((e) => {
             console.error('Create wallet', e)
             resp.status(500).json({

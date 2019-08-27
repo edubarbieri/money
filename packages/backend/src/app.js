@@ -27,6 +27,7 @@ app.use(authMiddleware);
 app.use(require('./controllers/bill'));
 app.use(require('./controllers/category'));
 app.use(require('./controllers/wallet'));
+app.use(require('./controllers/user'));
 // app.use(require('./controllers/credit'));
 // app.use(require('./controllers/creditCard'));
 // app.use(require('./controllers/dashboard'));
