@@ -15,7 +15,8 @@ const billAttributes = [
 	'amountPaid',
 	'recurrent',
 	'recurrentTotal',
-	'recurrentCount'
+	'recurrentCount',
+	'isPayd'
 ];
 route.get('/bill', (req, res) => {
 	Bill.findAll({

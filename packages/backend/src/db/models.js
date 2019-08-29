@@ -220,11 +220,7 @@ Category.belongsTo(Wallet, {foreignKey: 'wallet_id', allowNull: false});
 /**
  * @class Bill model
  */
-class Bill extends Model {
-	get isPayd(){
-		return this.payDate !== null;
-	}
-}
+class Bill extends Model {}
 Bill.init({
 	id: { 
 		type: Sequelize.DataTypes.UUID, 
@@ -250,6 +246,13 @@ Bill.init({
 			// Workaround until sequelize issue #8019 is fixed
 			const value = this.getDataValue('amountPaid');
 			return value === null ? null : parseFloat(value);
+		}
+	},
+	isPayd: { type: Sequelize.VIRTUAL,
+		get() {
+			// Workaround until sequelize issue #8019 is fixed
+			const paymentDate = this.getDataValue('amountPaid');
+			return paymentDate != null;
 		}
 	},
 	recurrent: { type: Sequelize.BOOLEAN, defaultValue: false, field: 'recurrent'},
