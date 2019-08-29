@@ -1,9 +1,8 @@
 const {
-  Sequelize,
+	Sequelize,
 	Model
 } = require('sequelize');
 require('sequelize-hierarchy')(Sequelize);
-const moment = require('moment')
 const env = require('../env');
 
 const sequelize = new Sequelize(env.databaseURL,{
@@ -141,33 +140,33 @@ User.init({
  */
 class Wallet extends Model {}
 Wallet.init({
-  id: {
+	id: {
 		type: Sequelize.INTEGER,
 		autoIncrement: true,
 		primaryKey: true,
 		field: 'id'
-  },
-  name: {type: Sequelize.STRING, allowNull: false, field: 'name'},
-  description: {type: Sequelize.STRING, field: 'description'}
+	},
+	name: {type: Sequelize.STRING, allowNull: false, field: 'name'},
+	description: {type: Sequelize.STRING, field: 'description'}
 }, { sequelize, modelName: 'wallet', tableName: 'wallet', paranoid: true});
 
 
 class UserWallet extends Model {}
 UserWallet.init({
-  userId: {
-    type: Sequelize.INTEGER,
+	userId: {
+		type: Sequelize.INTEGER,
 		field: 'user_id'
-  },
-  walltId: {
+	},
+	walltId: {
 		type: Sequelize.INTEGER,
 		field: 'wallet_id'
-  },
-  isOwner: {
+	},
+	isOwner: {
 		type: Sequelize.BOOLEAN,
 		allowNull: false,
 		defaultValue: false,
 		field: 'is_owner'
-  }
+	}
 }, { sequelize, modelName: 'userWallet', tableName: 'user_wallet'});
 
 
@@ -197,14 +196,14 @@ Wallet.belongsToMany(User, {
  */
 class Category extends Model {}
 Category.init({
-  id: { type: Sequelize.INTEGER,  primaryKey: true, autoIncrement: true, field: 'id'},
-  name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
-  walletId: { type: Sequelize.INTEGER, allowNull: false, field: 'wallet_id'},
-  parentId: { type: Sequelize.INTEGER, allowNull: true, field: 'parent_id'},
-  keywords: { type: Sequelize.ARRAY(Sequelize.STRING), field: 'keywords'}
+	id: { type: Sequelize.INTEGER,  primaryKey: true, autoIncrement: true, field: 'id'},
+	name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
+	walletId: { type: Sequelize.INTEGER, allowNull: false, field: 'wallet_id'},
+	parentId: { type: Sequelize.INTEGER, allowNull: true, field: 'parent_id'},
+	keywords: { type: Sequelize.ARRAY(Sequelize.STRING), field: 'keywords'}
 }, {
-  sequelize,
-  hierarchy: {
+	sequelize,
+	hierarchy: {
 		levelFieldName: 'hierarchy_level',
 		foreignKey:'parent_id',
 		throughKey: 'category_id',
@@ -217,10 +216,64 @@ Category.init({
 Category.belongsTo(Wallet, {foreignKey: 'wallet_id', allowNull: false});
 
 
+
+/**
+ * @class Bill model
+ */
+class Bill extends Model {
+	get isPayd(){
+		return this.payDate !== null;
+	}
+}
+Bill.init({
+	id: { 
+		type: Sequelize.DataTypes.UUID, 
+		primaryKey: true, 
+		allowNull: false,
+		field: 'id',
+		defaultValue: Sequelize.UUIDV4
+	},
+	description: { type: Sequelize.STRING, allowNull: false, field: 'description'},
+	dueDate: { type: Sequelize.DATE, allowNull: false, field: 'due_date'},
+	paymentDate: { type: Sequelize.DATE, field: 'payment_date'},
+	amount: { type: Sequelize.DECIMAL(10, 2), allowNull: false, field: 'amount',
+		validate: { min: 0 },
+		get() {
+			// Workaround until sequelize issue #8019 is fixed
+			const value = this.getDataValue('amount');
+			return value === null ? null : parseFloat(value);
+		}
+	},
+	amountPaid: { type: Sequelize.DECIMAL(10, 2), field: 'amount_paid',
+		validate: { min: 0 },
+		get() {
+			// Workaround until sequelize issue #8019 is fixed
+			const value = this.getDataValue('amountPaid');
+			return value === null ? null : parseFloat(value);
+		}
+	},
+	recurrent: { type: Sequelize.BOOLEAN, defaultValue: false, field: 'recurrent'},
+	recurrentTotal: { type: Sequelize.INTEGER, field: 'recurrent_total', validate: { min: 0 }},
+	recurrentCount: { type: Sequelize.INTEGER, field: 'recurrent_count', validate: { min: 0 }},
+
+	categoryId: { type: Sequelize.INTEGER, allowNull: true, field: 'category_id'},
+	walletId: { type: Sequelize.INTEGER, allowNull: false, field: 'wallet_id'},
+	userId: { type: Sequelize.INTEGER, allowNull: true, field: 'user_id'}
+}, {
+	sequelize,
+	modelName: 'bill',
+	tableName: 'bill'
+});
+
+Bill.belongsTo(Category, {foreignKey: 'category_id'});
+Bill.belongsTo(Wallet, {foreignKey: 'wallet_id', allowNull: false});
+Bill.belongsTo(User, {foreignKey: 'user_id'});
+
 module.exports = {
-  sequelize,
-  Category,
+	sequelize,
+	Category,
 	User,
 	Wallet,
-	UserWallet
+	UserWallet,
+	Bill
 }
