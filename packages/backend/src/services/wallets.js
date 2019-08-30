@@ -27,7 +27,7 @@ async function userInWallet(userId, walletId){
 
 async function listUserWallets(userId, withMember = false){
     const query = sanitazyQuery(`
-        select  w.id as "id", w.name as "name", wu.is_owner as "isOwner"
+        select  w.id as "id", w.name as "name", wu.is_owner as "isOwner", w.description as "description"
         from  wallet w, user_wallet wu
         where 1 = 1  and w.id = wu.wallet_id 
             and w.deleted_at is null
@@ -40,7 +40,8 @@ async function listUserWallets(userId, withMember = false){
     const queryUser = sanitazyQuery(`select  
             wu.user_id as "id",
             wu.is_owner as "isOwner",
-            u.name as "name"
+            u.name as "name",
+            u.avatar as "avatar"
         from  
         wallet w, user_wallet wu, app_user u
         where 1 = 1  

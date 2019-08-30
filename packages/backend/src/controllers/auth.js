@@ -17,8 +17,8 @@ async function login(req, res){
 		const token = jwt.sign({userId: user.id}, env.authSecret, {
 			expiresIn: '1 day'
 		});
-		const { name, email, avatar } = user;
-		res.json({ name, email, avatar, token });
+		const { name, email, avatar, id } = user;
+		res.json({ name, email, avatar, token, id });
 	} else {
 		res.status(401).send({
 			errors: ['login.userOrPasswordInvalid']
