@@ -1,6 +1,7 @@
 const { Bill, User, Category, formatDbError } = require('../db');
 const { Router } = require('express');
 const walletMiddleware = require('../middleware/wallet');
+const billService = require('../services/bill')
 const _ = require('lodash');
 
 const route = Router();
@@ -19,21 +20,11 @@ const billAttributes = [
 	'isPayd'
 ];
 route.get('/bill', (req, res) => {
-	Bill.findAll({
-		attributes: billAttributes,
-		where: { wallet_id: req.walletId },
-		order: [['createdAt', 'DESC']],
-		include: [
-			{
-				model: User,
-				attributes: ['name']
-			},
-			{
-				model: Category,
-				attributes: ['id', 'name']
-			}
-		]
-	})
+	const options = {..._.pick(req.query, ['withCategory', 'withUser', 'isPayd', 'order', 'month', 'year']),
+		walletId: req.walletId
+	}
+
+	billService.findAll(options)
 		.then(items => {
 			res.json(items || []);
 		})
