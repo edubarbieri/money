@@ -20,10 +20,9 @@ const billAttributes = [
 	'isPayd'
 ];
 route.get('/bill', (req, res) => {
-	const options = {..._.pick(req.query, ['withCategory', 'withUser', 'isPayd', 'order', 'month', 'year']),
+	const options = {..._.pick(req.query, ['withCategory', 'withUser', 'isPayd', 'order', 'month', 'year', 'pageSize', 'page']),
 		walletId: req.walletId
 	}
-
 	billService.findAll(options)
 		.then(items => {
 			res.json(items || []);

@@ -20,35 +20,38 @@ const formatDbError = (res, seqError) => {
 	});
 };
 
-const paginatedQuery = (entity, options, page = 1, itemsPerPage = 10) => {
+const paginatedQuery = (entity, options, page = 1, pageSize = 20) => {
 	return new Promise((resolve, reject) => {
-		entity.count(options).then(count => {
+		const countOptions = {...options};
+		delete countOptions.attributes;
+		entity.count(countOptions).then(count => {
 			if(count === 0){
 				resolve({
 					page: 0,
-					totalItems: 0,
 					totalPages: 0,
-					items: []
+					pageSize: pageSize,
+					totalItems: 0,
+					data: []
 				});
 				return;
 			}
-			const totalPages = Math.ceil(count / itemsPerPage);
+			const totalPages = Math.ceil(count / pageSize);
 			if(page > totalPages){
 				page = totalPages;
 			}
-			const offset = itemsPerPage * (page - 1);
+			const offset = pageSize * (page - 1);
 
 			entity.findAll({
 				...options,
-				limit: itemsPerPage,
+				limit: pageSize,
 				offset
 			}).then(result => {
 				resolve({
-					totalPages,
 					page,
-					itemsPerPage,
+					totalPages,
+					pageSize: pageSize,
 					totalItems: count,
-					items: result ||[],
+					data: result ||[],
 				});
 			}).catch(e => reject(e));
 		}).catch(e => reject(e));
