@@ -69,6 +69,22 @@ route.put('/bill/:id', async (req, res) => {
 	return _update(req, res, bill);
 });
 
+route.delete('/bill/:id', async (req, res) => {
+	try {
+		const bill = { ...req.body, walletId: req.walletId };
+		const affectedRows = await Bill.destroy({
+			where: { id: req.params.id, walletId: req.walletId }
+		});
+		if (affectedRows[0] === 0) {
+			return res.status(400).send({ errors: ['bill.delete.noDeletedItem'] });
+		}
+		res.status(203).json();
+	} catch (e) {
+		console.log('Delete bill error', e);
+		formatDbError(res, e);
+	}
+});
+
 route.put('/bill/:id/setAsPayd', async (req, res) => {
 	const bill = _.pick(req.body, ['amountPaid', 'paymentDate']);
 	if (!bill.amountPaid || !bill.paymentDate) {

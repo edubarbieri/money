@@ -37,7 +37,7 @@ function _include(options) {
 	if (options.withUser === 'true') {
 		includes.push({
 			model: User,
-			attributes: ['name']
+			attributes: ['id', 'name', 'avatar']
 		});
 	}
 
