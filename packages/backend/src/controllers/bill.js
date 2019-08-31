@@ -40,7 +40,7 @@ route.post('/bill', (req, res) => {
 		walletId: req.walletId,
 		userId: req.body.userId || req.userId
 	})
-		.then(bill => res.json(bill))
+		.then(bill => res.json(_.pick(bill, billService.BILL_ATTRIBUTES)))
 		.catch(e => {
 			console.error('create bill error', e);
 			formatDbError(res, e);

@@ -34,14 +34,14 @@ function findAll(options) {
 }
 function _include(options) {
 	const includes = [];
-	if (options.withCategory === 'true') {
+	if (options.withUser === 'true') {
 		includes.push({
 			model: User,
 			attributes: ['name']
 		});
 	}
 
-	if (options.withUser === 'true') {
+	if (options.withCategory === 'true') {
 		includes.push({
 			model: Category,
 			attributes: ['id', 'name']

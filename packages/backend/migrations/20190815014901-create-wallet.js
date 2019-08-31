@@ -5,9 +5,9 @@ module.exports = {
     return queryInterface.createTable('wallet', {
       'id': {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.DataTypes.UUID,
+				defaultValue: Sequelize.literal('uuid_generate_v4()')
       },
       'name': {
         type: Sequelize.STRING,

@@ -40,7 +40,7 @@ route.post('/wallet', (req, resp) => {
 route.put('/wallet/:walletId', async (req, resp) => {
 	try {
 		const { walletId } = req.params;
-		const isOwner = await isWalletOwner(parseInt(walletId), req.userId);
+		const isOwner = await isWalletOwner(walletId, req.userId);
 		if(!isOwner){
 			return resp.status(403).json({
 				errors: ['wallet.update.noPermissionToUpdate']
@@ -48,7 +48,7 @@ route.put('/wallet/:walletId', async (req, resp) => {
 		}
 		const {name, description} = req.body;
 		const rowsUpdated = await Wallet.update({name, description}, 
-			{ where: {id: parseInt(req.params.walletId)} });
+			{ where: {id: req.params.walletId} });
 		if(rowsUpdated[0] > 0){
 			return resp.send(await Wallet.findByPk(walletId));
 		}
@@ -63,13 +63,13 @@ route.put('/wallet/:walletId', async (req, resp) => {
 route.delete('/wallet/:walletId', async (req, resp) => {
 	try {
 		const { walletId } = req.params;
-		const isOwner = await isWalletOwner(parseInt(walletId), req.userId);
+		const isOwner = await isWalletOwner(walletId, req.userId);
 		if(!isOwner){
 			return resp.status(403).json({
 				errors: ['wallet.delete.noPermissionToDelete']
 			}) 
 		}
-		const rowsDeletes = await Wallet.destroy({ where: {id: parseInt(req.params.walletId)} });
+		const rowsDeletes = await Wallet.destroy({ where: {id: req.params.walletId} });
 		if(rowsDeletes > 0){
 			return resp.sendStatus(200);
 		}
@@ -90,7 +90,7 @@ route.post('/wallet/:walletId/addUser', async (req, resp) => {
 				errors: ['wallet.addUser.noWalletIdProvided']
 			})
 		}
-		const currentUserIsOwner = await isWalletOwner(parseInt(walletId), req.userId);
+		const currentUserIsOwner = await isWalletOwner(walletId, req.userId);
 		if(!currentUserIsOwner){
 			return resp.status(403).json({
 				errors: ['wallet.addUser.noPermissionToAddUser']
@@ -117,7 +117,7 @@ route.post('/wallet/:walletId/removeUser', async (req, resp) => {
 				errors: ['wallet.removeUser.noWalletIdProvided']
 			})
 		}
-		const isOwner = await isWalletOwner(parseInt(walletId), req.userId);
+		const isOwner = await isWalletOwner(walletId, req.userId);
 		if(!isOwner){
 			return resp.status(403).json({
 				errors: ['wallet.removeUser.noPermissionToAddUser']
@@ -144,7 +144,7 @@ route.post('/wallet/:walletId/setOwner', async (req, resp) => {
 				errors: ['wallet.setOwner.noWalletIdProvided']
 			})
 		}
-		const userIsOwner = await isWalletOwner(parseInt(walletId), req.userId);
+		const userIsOwner = await isWalletOwner(walletId, req.userId);
 		if(!userIsOwner){
 			return resp.status(403).json({
 				errors: ['wallet.setOwner.noPermissionToAddUser']

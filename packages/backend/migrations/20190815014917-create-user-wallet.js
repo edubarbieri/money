@@ -6,7 +6,7 @@ module.exports = {
       'user_id': {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
         references: {
           model: {
             tableName: 'app_user',
@@ -17,7 +17,7 @@ module.exports = {
       'wallet_id': {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
         references: {
           model: {
             tableName: 'wallet',

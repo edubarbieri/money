@@ -124,7 +124,7 @@ const sequelize = new Sequelize(env.databaseURL,{
  */
 class User extends Model {}
 User.init({
-	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id'},
+	id: { type: Sequelize.DataTypes.UUID, primaryKey: true, field: 'id', defaultValue: Sequelize.UUIDV4},
 	name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
 	email: { type: Sequelize.STRING, allowNull: false, validate: { isEmail: true}, field: 'email'},
 	password: { type: Sequelize.STRING, allowNull: false, field: 'password'},
@@ -141,10 +141,10 @@ User.init({
 class Wallet extends Model {}
 Wallet.init({
 	id: {
-		type: Sequelize.INTEGER,
-		autoIncrement: true,
+		type: Sequelize.DataTypes.UUID,
 		primaryKey: true,
-		field: 'id'
+		field: 'id',
+		defaultValue: Sequelize.UUIDV4
 	},
 	name: {type: Sequelize.STRING, allowNull: false, field: 'name'},
 	description: {type: Sequelize.STRING, field: 'description'}
@@ -154,11 +154,11 @@ Wallet.init({
 class UserWallet extends Model {}
 UserWallet.init({
 	userId: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.DataTypes.UUID,
 		field: 'user_id'
 	},
 	walltId: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.DataTypes.UUID,
 		field: 'wallet_id'
 	},
 	isOwner: {
@@ -198,8 +198,8 @@ class Category extends Model {}
 Category.init({
 	id: { type: Sequelize.INTEGER,  primaryKey: true, autoIncrement: true, field: 'id'},
 	name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
-	walletId: { type: Sequelize.INTEGER, allowNull: false, field: 'wallet_id'},
-	parentId: { type: Sequelize.INTEGER, allowNull: true, field: 'parent_id'},
+	walletId: { type: Sequelize.DataTypes.UUID, allowNull: false, field: 'wallet_id'},
+	parentId: { type: Sequelize.DataTypes.UUID, allowNull: true, field: 'parent_id'},
 	keywords: { type: Sequelize.ARRAY(Sequelize.STRING), field: 'keywords'}
 }, {
 	sequelize,
@@ -260,8 +260,8 @@ Bill.init({
 	recurrentCount: { type: Sequelize.INTEGER, field: 'recurrent_count', validate: { min: 0 }},
 
 	categoryId: { type: Sequelize.INTEGER, allowNull: true, field: 'category_id'},
-	walletId: { type: Sequelize.INTEGER, allowNull: false, field: 'wallet_id'},
-	userId: { type: Sequelize.INTEGER, allowNull: true, field: 'user_id'}
+	walletId: { type: Sequelize.DataTypes.UUID, allowNull: false, field: 'wallet_id'},
+	userId: { type: Sequelize.DataTypes.UUID, allowNull: true, field: 'user_id'}
 }, {
 	sequelize,
 	modelName: 'bill',

@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
 	}
 	userInWallet(req.userId, walletId).then(inWlt => {
 		if (inWlt) {
-			req.walletId = parseInt(walletId);
+			req.walletId = walletId;
 			next();
 		} else {
 			res.status(400).send({

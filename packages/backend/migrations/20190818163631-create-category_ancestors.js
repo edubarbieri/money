@@ -6,7 +6,7 @@ module.exports = {
       'category_id': {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
         references: {
           model: {
             tableName: 'category',
@@ -17,7 +17,7 @@ module.exports = {
       'ancestor_id': {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
         references: {
           model: {
             tableName: 'category',

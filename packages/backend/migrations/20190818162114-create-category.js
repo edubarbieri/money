@@ -4,14 +4,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('category', {
       'id': {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+				allowNull: false,
+				primaryKey: true,
+        type: Sequelize.DataTypes.UUID,
+				defaultValue: Sequelize.literal('uuid_generate_v4()')
       },
       'wallet_id': {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
         references: {
           model: {
             tableName: 'wallet',
@@ -27,7 +27,7 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
       'parent_id': {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
         references: {
           model: {
             tableName: 'category',

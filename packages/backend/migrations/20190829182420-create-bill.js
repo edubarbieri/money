@@ -17,10 +17,10 @@ module.exports = {
 						allowNull: false
 					},
 					'due_date': {
-						type: Sequelize.DATE,
+						type: Sequelize.DATEONLY,
 						allowNull: false
 					},
-					'payment_date': { type: Sequelize.DATE },
+					'payment_date': { type: Sequelize.DATEONLY },
 					'amount': {
 						type: Sequelize.DECIMAL(10, 2),
 						allowNull: false
@@ -39,7 +39,7 @@ module.exports = {
 						type: Sequelize.INTEGER
 					},
 					'category_id': {
-						type: Sequelize.INTEGER,
+						type: Sequelize.DataTypes.UUID,
 						references: {
 							model: {
 								tableName: 'category',
@@ -49,7 +49,7 @@ module.exports = {
 					},
 					'wallet_id': {
 						allowNull: false,
-						type: Sequelize.INTEGER,
+						type: Sequelize.DataTypes.UUID,
 						references: {
 							model: {
 								tableName: 'wallet',
@@ -58,10 +58,19 @@ module.exports = {
 						}
 					},
 					'user_id': {
-						type: Sequelize.INTEGER,
+						type: Sequelize.DataTypes.UUID,
 						references: {
 							model: {
 								tableName: 'app_user',
+							},
+							key: 'id'
+						}
+					},
+					'source_bill_id': {
+						type: Sequelize.DataTypes.UUID,
+						references: {
+							model: {
+								tableName: 'bill',
 							},
 							key: 'id'
 						}

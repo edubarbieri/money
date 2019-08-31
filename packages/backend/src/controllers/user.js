@@ -21,7 +21,7 @@ route.post('/user/findByEmail', (req, res) => {
 route.put('/user/:userId', async (req, res) => {
 	try {
 		const userId = req.params.userId;
-		if(parseInt(userId) !== parseInt(req.userId)){
+		if(userId !== req.userId){
 			return res.status(403).json({erros: ['user.update.noYourUser']});
 		}
 
@@ -41,7 +41,7 @@ route.put('/user/:userId', async (req, res) => {
 		if(req.body.avatar){
 			updateObject.avatar = req.body.avatar;
 		}
-		const rowsUpdated = await User.update(updateObject, { where: {id: parseInt(user.id)} });
+		const rowsUpdated = await User.update(updateObject, { where: {id: user.id} });
 		if(rowsUpdated[0] > 0){
 			return res.send(await User.findByPk(user.id, {attributes: ['id', 'email', 'name', 'avatar']}));
 		}
