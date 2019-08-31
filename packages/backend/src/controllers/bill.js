@@ -20,6 +20,10 @@ route.get('/bill', (req, res) => {
 			formatDbError(res, e);
 		});
 });
+route.get('/bill/billAmountMonthResume', (req, res) => {
+	billService.billAmountMonthResume(req.walletId)
+		.then(r => res.json(r));
+});
 
 route.get('/bill/:id', (req, res) => {
 	Bill.findOne({
@@ -82,7 +86,6 @@ route.put('/bill/:id', async (req, res) => {
 
 route.delete('/bill/:id', async (req, res) => {
 	try {
-		const bill = { ...req.body, walletId: req.walletId };
 		const affectedRows = await Bill.destroy({
 			where: { id: req.params.id, walletId: req.walletId }
 		});
@@ -120,5 +123,6 @@ route.post('/bill/generateMonthRecurrentBills', (req, res) => {
 	billService.generateMonthRecurrentBills(req.walletId, parseInt(month), parseInt(year))
 		.then(r => res.json(r));
 });
+
 
 module.exports = route;

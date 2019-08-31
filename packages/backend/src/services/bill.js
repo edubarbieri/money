@@ -167,9 +167,42 @@ async function generateMonthRecurrentBills(walletId, month, year){
 	}
 }
 
+async function billAmountMonthResume(walletId){
+	const query = sanitazyQuery(`
+	select * from (
+		select 
+			EXTRACT(year from bill.due_date) as "year",
+			EXTRACT(month from bill.due_date) as "month", 	
+			sum(COALESCE(bill.amount_paid, bill.amount)) as "amount"
+		FROM bill
+		WHERE
+			bill.due_date >= date_trunc('month', current_date - interval '6' month)
+			AND wallet_id = :walletId
+		group by EXTRACT(year from bill.due_date), EXTRACT(month from bill.due_date)
+  ) as b
+  order by 1, 2
+	`);
+
+	try {
+		
+		return await sequelize.query(query, {
+			replacements: {
+				walletId
+			},
+			type: sequelize.QueryTypes.SELECT
+		});
+	} catch (error) {
+		console.error('generateMonthRecurrentBills - error', error);
+		return {
+			errors: ['bill.generateMonthRecurrentBills.genericError']
+		}
+	}
+}
+
 
 module.exports = {
 	findAll: findAll,
 	BILL_ATTRIBUTES: BILL_ATTRIBUTES,
-	generateMonthRecurrentBills: generateMonthRecurrentBills
+	generateMonthRecurrentBills: generateMonthRecurrentBills,
+	billAmountMonthResume: billAmountMonthResume
 };
