@@ -35,6 +35,7 @@ route.get('/bill/:id', (req, res) => {
 
 route.post('/bill', (req, res) => {
 	const bill = req.body;
+	_fixRecurrent(bill);
 	Bill.create({
 		...bill,
 		walletId: req.walletId,
@@ -46,9 +47,19 @@ route.post('/bill', (req, res) => {
 			formatDbError(res, e);
 		});
 });
+function _fixRecurrent(data){
+	if(data.recurrentTotal == '' || data.recurrentTotal == 0){
+		data.recurrentTotal = null;
+		data.recurrentCount = null;
+	}else if(data.recurrentTotal && !data.recurrentCount){
+		data.recurrentCount = 1;
+	}
+	
+}
 
 async function _update(req, res, data) {
 	try {
+		_fixRecurrent(data);
 		const affectedRows = await Bill.update(data, {
 			where: { id: req.params.id, walletId: req.walletId }
 		});
