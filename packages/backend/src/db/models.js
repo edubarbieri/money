@@ -230,8 +230,8 @@ Bill.init({
 		defaultValue: Sequelize.UUIDV4
 	},
 	description: { type: Sequelize.STRING, allowNull: false, field: 'description'},
-	dueDate: { type: Sequelize.DATE, allowNull: false, field: 'due_date'},
-	paymentDate: { type: Sequelize.DATE, field: 'payment_date'},
+	dueDate: { type: Sequelize.DATEONLY, allowNull: false, field: 'due_date'},
+	paymentDate: { type: Sequelize.DATEONLY, field: 'payment_date'},
 	amount: { type: Sequelize.DECIMAL(10, 2), allowNull: false, field: 'amount',
 		validate: { min: 0 },
 		get() {
@@ -271,6 +271,7 @@ Bill.init({
 Bill.belongsTo(Category, {foreignKey: 'category_id'});
 Bill.belongsTo(Wallet, {foreignKey: 'wallet_id', allowNull: false});
 Bill.belongsTo(User, {foreignKey: 'user_id'});
+Bill.belongsTo(Bill, {foreignKey: 'source_bill_id', as: 'sourceBill'});
 
 module.exports = {
 	sequelize,

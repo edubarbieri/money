@@ -1,6 +1,7 @@
-const { Bill, User, Category, paginatedQuery } = require('../db');
-const { Op } = require('sequelize');
+const { Bill, User, Category, paginatedQuery, sanitazyQuery, sequelize } = require('../db');
+const { Op, col} = require('sequelize');
 const _ = require('lodash');
+const moment = require('moment');
 const BILL_ATTRIBUTES = [
 	'id',
 	'description',
@@ -106,6 +107,69 @@ function _order(options) {
 	return orders;
 }
 
+
+
+async function generateMonthRecurrentBills(walletId, month, year){
+	const query = sanitazyQuery(`
+		insert into bill (source_bill_id, description, due_date, amount, recurrent, recurrent_total, recurrent_count, wallet_id, category_id, user_id, created_at, updated_at)
+		select bill.id, 
+			bill.description, 
+			due_date + INTERVAL '1 month' due_date, 
+			COALESCE(bill.amount_paid, bill.amount) amount,
+			true recurrent,
+			bill.recurrent_total,
+			bill.recurrent_count + 1 recurrent_count,
+			bill.wallet_id,
+			bill.category_id,
+			bill.user_id,
+			current_timestamp created_at,
+			current_timestamp updated_at
+		from bill
+		where
+		bill.recurrent = true
+		AND (bill.recurrent_count IS NULL or bill.recurrent_count < bill.recurrent_total)
+		AND EXTRACT(month from bill.due_date) = :prevMonth
+		AND EXTRACT(year from bill.due_date) = :prevYear
+		and bill.wallet_id = :walletId
+		AND NOT EXISTS (
+			select 1 from bill b2
+			where 
+			b2.source_bill_id = bill.id
+			AND EXTRACT(month from b2.due_date) = :curMonth
+			AND EXTRACT(year from b2.due_date) = :curYear
+			and b2.wallet_id = :walletId
+		)
+	`);
+
+	try {
+		// month in js start in 0
+		const previewMonthDate = moment([year, month - 1]).subtract(1, 'month');
+
+		
+		const resp = await sequelize.query(query, {
+			replacements: {
+				prevMonth: previewMonthDate.month() + 1,
+				prevYear: previewMonthDate.year(),
+				curMonth: month,
+				curYear: year,
+				walletId
+			},
+			type: sequelize.QueryTypes.INSERT
+		});
+		return {
+			billsCreated: resp[1]
+		}
+	} catch (error) {
+		console.error('generateMonthRecurrentBills - error', error);
+		return {
+			errors: ['bill.generateMonthRecurrentBills.genericError']
+		}
+	}
+}
+
+
 module.exports = {
-	findAll: findAll
+	findAll: findAll,
+	BILL_ATTRIBUTES: BILL_ATTRIBUTES,
+	generateMonthRecurrentBills: generateMonthRecurrentBills
 };
