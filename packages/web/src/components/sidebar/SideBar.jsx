@@ -10,6 +10,7 @@ import { isMobile } from 'service/util';
 const SideBar = () => {
   const activePage = useSelector(state => state.global.activePage);
   const [expandedMaintenance, setExpandedMaintenance] = useState(false);
+  const [expandedImport, setExpandedImport] = useState(false);
   const [collapseSidebar, setCollapseSidebar] = useState(true);
 
   return (
@@ -60,6 +61,20 @@ const SideBar = () => {
             <i className="fas fa-wallet"></i>
             <span className="title">{bundle('wallet.manager')}</span>
           </Link>
+        </li>
+        <li className={(expandedImport) ? 'active has-sub' : 'has-sub'}>
+          <div className="dropdown" onClick={() => setExpandedImport(!expandedImport)}>
+            <i className="fas fa-file-import"></i>
+            <span className="title">{bundle('import')}</span>
+          </div>
+          <ul className={(expandedImport) ? 'nav collapse in' : 'nav collapse'}>
+            <li className={activePage === route('import.itau.extract') ? 'active' : ''}>
+              <Link to={route('import.itau.extract')} onClick={() => setCollapseSidebar(!collapseSidebar)}>
+                <i className="fas fa-angle-double-right"></i>
+                <span className="title">{bundle('import.itau.extract')}</span>
+              </Link>
+            </li>
+          </ul>
         </li>
         <li className={(expandedMaintenance) ? 'active has-sub' : 'has-sub'}>
           <div className="dropdown" onClick={() => setExpandedMaintenance(!expandedMaintenance)}>

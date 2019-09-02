@@ -42,4 +42,8 @@ create.user:
   pt-BR: "/criar-usuario"
   en-US: "/create-user"
 
+import.itau.extract:
+  pt-BR: "/importacao/extrato-itau"
+  en-US: "/import/itau-extract"
+
 

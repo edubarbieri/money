@@ -14,6 +14,7 @@ import route from 'i18n/route';
 import Bills from 'pages/bills/Bills';
 import { isMobile } from 'service/util';
 import Footer from 'components/footer/Footer';
+import ItauExtract from 'pages/import/ItauExtract';
 
 const Container = () => {
   return ( 
@@ -33,6 +34,7 @@ const Container = () => {
               <Route path={route('wallet.editor') + '/:id'} component={WalletEditor} />
               <Route path={route('maintenance.category')} component={CategoryMaintenance} />
               <Route path={route('opened.bills')} component={Bills} />
+              <Route path={route('import.itau.extract')} component={ItauExtract} />
               <Route component={Home} />
             </Switch>
           </div>

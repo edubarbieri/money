@@ -1,0 +1,21 @@
+@import 'mixins.scss';
+.dropzone{
+    margin: 15px 0;
+    border: 2px dashed $gray-light;
+    color: $gray;
+    padding: 35px;
+    cursor: pointer;
+    &:hover,
+    &:focus{
+        border-color: $brand-primary;
+        outline: none;
+        p{
+            color: $brand-primary;
+        }
+    }
+    p{
+        margin: 0px;
+        width: 100%;
+        text-align: center;
+    }
+}

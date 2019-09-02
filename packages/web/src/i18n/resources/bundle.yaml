@@ -551,3 +551,27 @@ recurrent:
 recurrency:
   pt-BR: "Recorrência"
   en-US: "Recurrency"
+
+import:
+  pt-BR: "Importação"
+  en-US: "Import"
+
+do.import:
+  pt-BR: "Importar"
+  en-US: "Import"
+
+import.itau.extract:
+  pt-BR: "Extrato do Itaú"
+  en-US: "Itaú Extract"
+
+drag.drop:
+  pt-BR: "Arraste e solte o arquivo aqui, ou click e selecione em seu computador."
+  en-US: "Drag 'n' drop some files here, or click to select files"
+
+collected.data:
+  pt-BR: "Dados coletados"
+  en-US: "Collected Data"
+
+invalid.file:
+  pt-BR: "O arquivo importado deve ser do formato: '{0}'"
+  en-US: "Imported file format should be: '{0}'"
