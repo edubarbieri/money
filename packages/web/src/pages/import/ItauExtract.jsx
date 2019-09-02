@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { SET_ACTIVE_PAGE } from 'store/globalActions';
 import bundle, { bundleFormat } from 'i18n/bundle';
 import SelectWalletMessage from 'components/global/SelectWalletMessage';
@@ -10,12 +10,15 @@ import 'sass/dropzone';
 import moment from 'moment';
 import {formatMoney} from 'service/util';
 import Errors from 'components/message/Error';
+import SelectSearch  from 'react-select-search';
+import _ from 'lodash';
 
 const ItauExtract = () => {
     const dispatch = useDispatch();
     dispatch({ type: SET_ACTIVE_PAGE, payload: route('import.itau.extract') })
     const [readedFileJSON, setReadedFileJSON] = useState([]);
     const [errors, setErrors] = useState([]);
+    let categories = useSelector(state => state.wallet.categories);
 
     const pages = [{
         label: bundle('import.itau.extract')
@@ -61,10 +64,16 @@ const ItauExtract = () => {
                 date: moment(lineParts[0], 'DD/MM/YYYY').toDate(),
                 description: lineParts[1],
                 amount: amount,
-                type: (amount > 0) ? 'credit' : 'debit'
+                type: (amount > 0) ? 'credit' : 'debit',
+                categoryId: ''
             })
         }
         setReadedFileJSON(auxJson);
+    }
+
+    const setCategory = (idx, value) => {
+        readedFileJSON[idx].categoryId = value.value;
+        setReadedFileJSON(readedFileJSON);
     }
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop })
@@ -76,6 +85,15 @@ const ItauExtract = () => {
                 <td>{line.description}</td>
                 <td>{bundle('currency')}&nbsp;{formatMoney(line.amount)}</td>
                 <td className={line.type}>{bundle(line.type)}</td>
+                <td className="t-a-l">
+                    <SelectSearch
+                        value={line.category}
+                        options={categories} 
+                        className="select-search-box"
+                        search={true}
+                        onChange={value => setCategory(idx, value)}
+                    />
+                </td>
             </tr>
         ));
     }
@@ -110,7 +128,7 @@ const ItauExtract = () => {
                                 <div className="panel-title">{bundle('collected.data')}</div>
                             </div>
                             <div className="panel-body">
-                                <div className="table-responsive  data-grid">
+                                <div className="table-responsive  data-grid" style={{overflow: 'inherit'}}>
                                     <table className="table table-striped">
                                         <thead> 
                                             <tr>
@@ -118,6 +136,7 @@ const ItauExtract = () => {
                                                 <th>{bundle('description')}</th> 
                                                 <th>{bundle('amount')}</th> 
                                                 <th>{bundle('type')}</th> 
+                                                <th>{bundle('category')}</th> 
                                             </tr> 
                                         </thead> 
                                         <tbody> 
