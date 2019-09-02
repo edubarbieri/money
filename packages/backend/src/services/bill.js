@@ -74,9 +74,8 @@ function _where(options) {
 		const year = _.has(options, 'year') ? parseInt(options.year) : new Date().getFullYear();
 		const monthYear = year + '-' + (month < 10 ? '0' + month : month);
 		where.dueDate = {
-			[Op.gte]: new Date(monthYear + '-01T23:59:59Z'),
-			[Op.lt]: new Date(year + '-' + (month + 1 < 10 ? '0' + (month + 1) : month + 1) + '-01T23:59:59Z'
-			)
+			[Op.gte]: monthYear + '-01',
+			[Op.lt]: moment(monthYear).add(1, 'month').format('YYYY-MM-DD')
 		};
 	}
 
