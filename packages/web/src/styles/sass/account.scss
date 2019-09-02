@@ -1,0 +1,24 @@
+@import 'mixins.scss';
+
+.my-account{
+    .current-info{
+        .panel-body{
+            padding: 20px;
+        }
+        .avatar-container{
+            margin: 20px auto;
+            display: inherit;
+            width: 100px;
+            height: 100px;
+            .avatar{
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        h4,
+        h6{
+            text-align: center;
+        }
+    }
+}

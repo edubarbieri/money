@@ -1,0 +1,191 @@
+@import 'mixins';
+
+@media screen and (max-width: 767px){
+    .rst__tree{
+        overflow: hidden;
+        overflow-x: scroll;
+    }
+    .rst__toolbarButton{
+        .row-options {
+            width: 25px;
+            font-size: 16px;
+        }
+    }
+}
+.rst__rowContents {
+    border: 1px solid #ffffff;
+    border-radius: 7px ;
+    box-shadow: none;
+    color: $brand-primary;
+}
+
+.rst__lineHalfHorizontalRight::before, 
+.rst__lineFullVertical::after, 
+.rst__lineHalfVerticalTop::after, 
+.rst__lineHalfVerticalBottom::after,
+.rst__lineChildren::after{
+    background-color: $brand-primary;
+    box-shadow: none;
+    opacity: 0.2;
+}
+
+.rst__rowLandingPad > *, 
+.rst__rowCancelPad > *{
+    opacity: 0.5 !important;
+}
+
+.rst__rowLandingPad .rst__rowToolbar, 
+.rst__rowCancelPad .rst__rowToolbar{
+    opacity: 0 !important;
+}
+
+
+.rst__rowToolbar{
+    z-index: 2;
+}
+
+.rst__collapseButton:hover:not(:active), 
+.rst__expandButton:hover:not(:active) {
+    background-size: auto;
+    height: 16px;
+    width: 16px;
+}
+
+.rst__collapseButton:focus,
+.rst__expandButton:focus,
+.rst__collapseButton,
+.rst__expandButton{
+    @include box-shadow(0 0 0 1px $brand-primary);
+    border-radius: 2px;
+}
+
+.rst__moveHandle,
+.rst__loadingHandle{
+    background: none !important;
+    position: absolute;
+    box-shadow: none;
+    border: 0px;
+    border-radius: 7px 0px 0px 7px;
+    top: 5px;
+    height: 40px;
+    width: 100%;
+}
+
+.rst__rowWrapper:hover{
+    opacity: 1;
+}
+
+.rst__node {
+    height: 50px !important;
+}
+
+.rst__rowWrapper {
+    padding: 5px 5px 5px 0;
+}
+
+.row-options{
+    color: $gray-medium;
+    height: 24px;
+    width: 20px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.row-options:hover{
+    color: $brand-primary;
+}
+
+.row-options.plus{
+    line-height: 26px;
+}
+
+.row-options.plus:hover,
+.row-options.plus i:hover{
+    color: $brand-success;
+}
+
+.row-options.remove:hover,
+.row-options.remove i:hover{
+    color: $brand-danger;
+}
+
+.row-options.disabled{
+    cursor: not-allowed;
+}
+
+.rst__rowTitle{
+    font-weight: 400;
+}
+
+/**
+ * +--+--+
+ * |  |  |
+ * |  |  |
+ * |  +->|
+ * +-----+
+ */
+.rst__highlightBottomLeftCorner::before {
+    border-bottom: 2px solid $brand-primary-fade;
+    border-left: 2px solid $brand-primary-fade;
+    box-sizing: border-box;
+    height: calc(100% + 2px);
+    width: calc(50% - 11px);
+}
+
+.rst__rtl.rst__highlightBottomLeftCorner::before {
+    border-right: 2px solid $brand-primary-fade;
+}
+
+.rst__highlightBottomLeftCorner::after {
+    right: 10px;
+    margin-top: -3px;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid $brand-primary-fade;
+}
+
+.rst__rtl.rst__highlightBottomLeftCorner::after {
+    border-right: 2px solid $brand-primary-fade;
+}
+
+.rst__rtl.rst__rowWrapper {
+    padding: 10px 0 10px 10px;
+}
+
+.rst__highlightTopLeftCorner::before {
+    border-top: 2px solid $brand-primary-fade;
+    border-left: 2px solid $brand-primary-fade;
+    height: calc(50% + 2px);
+    top: calc(50% + 2px);
+    margin-top: -2px;
+    width: calc(50% + 1px);
+}
+
+.rst__rtl.rst__highlightTopLeftCorner::before {
+    border-right: 2px solid $brand-primary-fade;
+}
+  
+.rst__highlightLineVertical::before {
+    background-color: $brand-primary-fade;;
+    width: 2px;
+    margin-left: 0px;
+    left: calc(50% - 1px);
+}
+
+.rst__highlightLineVertical::after {
+    border-top: 4px solid $gray-medium;
+}
+
+.button-with-icon i:after{
+    position: absolute;
+    content: '';
+    width: 1px;
+    left: calc(50% - 1px);
+    top: 15px;
+    bottom: 0;
+    height: 31px;
+    background-color: $brand-success;
+    box-shadow: none;
+    opacity: 0.2;
+}

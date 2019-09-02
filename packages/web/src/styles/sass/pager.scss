@@ -1,0 +1,52 @@
+@import "mixins";
+
+/* Pager pagination
+   ========================================================================== */
+.pagination {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    div{
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        color: $brand-primary;
+        text-decoration: none;
+        background-color: $brand-white;
+        border: 1px solid $gray-lighter;
+        cursor: pointer;
+        display: inline-block;
+        i, 
+        i:focus, 
+        i:hover{
+            color: inherit;
+        }
+        &.active{
+            color: $brand-white;
+            background-color: $brand-primary;
+        }
+    }
+    .disabled, 
+    .disabled:focus, 
+    .disabled:hover, 
+    .disabled>i, 
+    .disabled>i:focus, 
+    .disabled>i:hover {
+        color: #777;
+        cursor: not-allowed;
+        border-color: $gray-lighter;
+    }
+}
+
+.panel-danger{
+    .pagination {
+        div{
+            color: $brand-danger;
+            &.active{
+                color: $brand-white;
+                background-color: $brand-danger;
+            }
+        }
+    }
+}

@@ -1,0 +1,197 @@
+@import 'mixins';
+
+
+.data-grid{
+    .table>tbody>tr>td, 
+    .table>tbody>tr>th, 
+    .table>tfoot>tr>td, 
+    .table>tfoot>tr>th, 
+    .table>thead>tr>td, 
+    .table>thead>tr>th{
+        border: 0px;
+    }
+
+    .table-striped>tbody>tr:nth-of-type(odd) {
+        background-color: $brand-white;
+    }
+
+    .table > thead > tr > th{
+        font-weight: 600;
+    }
+    
+    thead{
+        border-bottom: 2px solid $gray; 
+        th{
+            color: $gray;
+        }
+    }
+
+    tbody {
+        tr{
+            color: $gray;
+        }
+    
+        tr.disabled{
+            color: $gray-light;
+        }
+    }
+
+    td.actions{
+        width: 250px;
+        max-width: 250px;;
+    }
+
+    .sorter{
+        color: $gray;
+        cursor: pointer;
+        i{
+            margin-left:5px; 
+            font-size: 11px;
+        }
+        i:hover{
+            color: $gray;
+        }
+    }
+
+    .actions-container {
+        display: flex;
+        float: right;
+        cursor: pointer;
+        .row-options{
+            width: auto;
+            display: flex;
+            margin: 0px 5px;
+            color: $gray-dark;
+            i{
+                line-height: 24px;
+            }
+            i:hover{
+                color: inherit;
+            }
+            &.remove,
+            &.plus{
+                line-height: 24px;
+                min-width: 85px;
+            }
+            label{
+                cursor: pointer;
+                font-weight: 400;
+                margin: 0px 5px;
+                line-height: 25px;
+            }
+
+            &.disabled,
+            &.disabled:hover{
+                color: $gray-light;
+            }
+            
+        }
+    }
+}
+
+.data-list{
+    .disabled .list-row {
+        background-color: $gray-lighter;
+        color: $gray;
+    }
+    .list-row:after{
+        content: '\f155';
+        font-weight: 900;
+        font-family: "Font Awesome 5 Free";
+        width: 35px;
+        height: 35px;
+        position: absolute;
+        transform: rotate(45deg);
+        top: -17px;
+        line-height: 53px;
+        right: -17px;
+        text-align: center;
+        font-size: 9px;
+        color: $brand-white;
+    }
+    .disabled .list-row:after{
+        background-color: $brand-success;
+    }
+    .list-row{
+        padding: 10px;
+        border: 1px solid $gray-lighter;
+        margin-bottom: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+    .actions-container {
+        display: flex;
+        .row-options{
+            width: 100%;
+            display: inline-flex;
+            margin: 5px 0px;
+            color: $gray-dark;
+            i{
+                line-height: 24px;
+                width: 24px;
+            }
+            i:hover{
+                color: inherit;
+            }
+            &.plus{
+                line-height: 24px;
+            }
+            label{
+                cursor: pointer;
+                font-weight: 400;
+                margin: 0px 5px;
+                line-height: 25px;
+            }
+    
+            &.disabled,
+            &.disabled:hover{
+                color: $gray-light;
+            }
+            
+        }
+    }
+}
+
+
+
+.panel-danger{
+    .data-list{
+        .disabled .list-row:after{
+            background-color: $brand-danger;
+        }
+    }
+    thead{
+        border-color: $brand-danger;
+    }
+}
+
+.panel-default,
+.panel-primary{
+    .data-list{
+        .disabled .list-row:after{
+            background-color: $brand-primary;
+        }
+    }
+    thead{
+        border-color: $brand-primary;
+    }
+}
+
+.panel-extract{
+    .data-grid{
+        tbody tr{
+            color: $brand-danger;
+        }
+        tbody tr.disabled{
+            color: $gray;
+        }
+    }
+    .data-list{
+        .disabled .list-row:after{
+            background-color: $gray;
+        }
+    }
+    thead{
+        border-color: $gray;
+    }
+}

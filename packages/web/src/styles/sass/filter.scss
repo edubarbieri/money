@@ -1,0 +1,76 @@
+@import "mixins";
+
+/* Filter
+   ========================================================================== */
+
+.filter-wrapper {
+    display: flex;
+    width: 100%;
+    .item{
+        margin: 0 15px;
+        flex: 1;
+    }
+    .date-range{
+        min-width: 400px;
+    }
+    .type{
+        max-width: 100px;
+        margin-top: 20px;
+    }
+    .range{
+        max-width: 100px;
+        margin-top: 20px;
+    }
+    .date {
+        width: calc(50% - 20px);
+        float: left;
+        margin-right: 10px;
+    }
+    .filter-btn{
+        max-width: 100px;
+        margin: 0px;
+        margin-top: 18px;
+    }
+}
+@media screen and (max-width: 980px){
+    .filter-wrapper{
+        display: inline-block;
+        .type{
+            margin: 15px;
+            max-width: none;
+            width: calc(50% - 30px);
+            float: left;
+        }
+        .range{
+            margin-bottom: 15px;
+        }
+        .date-range{
+            min-width: auto;
+            clear: both;
+        }
+        .date {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+            &.collapsed{
+                .react-calendar{
+                    position: relative;
+                    top: 0px;
+                }
+            }
+        }
+        .filter-btn{
+            margin: 0 15px;
+            max-width: none;
+            clear: both;
+            padding-top: 20px;
+            button{
+                width: 100%;
+            }
+        }
+        .left{
+            float: left;
+            width: calc(50% - 30px);
+        }
+    }
+}

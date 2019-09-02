@@ -1,0 +1,229 @@
+@import "mixins";
+
+/* Buttons
+   ========================================================================== */
+
+.btn {
+    @include border-radius(3px);
+    font-weight: $btn-font-weight;
+    text-transform: uppercase;
+    line-height: 1.2867;
+    font-size: $default-font-size;
+}
+
+.btn-rounded {
+    @include border-radius(50px);
+}
+
+.btn-2x {
+    padding: 10px 16px;
+}
+
+.btn-sm,
+.btn-group-sm>.btn {
+    padding: 4px 12px;
+}
+
+.btn-white {
+    background-color: #FFF;
+    border-color: #ccc;
+}
+
+.panel>.btn-block {
+    @include border-radius(0);
+}
+
+.bs-example .btn,
+.bs-example-group .btn-group {
+    margin: 4px 8px 4px 0;
+}
+
+.bs-example-block .btn {
+    margin: 6px 0;
+}
+
+.btn [class^="icon-"],
+.btn [class*=" icon-"] {
+    font-weight: normal;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.btn-container:not(.btn-fixed-container) {
+    width: 100%;
+}
+
+.btn-container {
+    padding: 15px 0px;
+    display: inline-block;
+}
+
+.btn-fixed-container {
+    padding: 15px 30px;
+    background-color: $brand-white;
+    height: 62px;
+    position: relative;
+    width: 100%;
+}
+
+
+
+.btn-container .btn {
+    margin-left: 15px;
+    min-width: 100px;
+}
+
+.btn {
+
+    &.active.focus,
+    &.active:focus,
+    &.focus,
+    &:active.focus,
+    &:active:focus,
+    &:focus {
+        outline: none;
+        border: 1px solid initial;
+    }
+    
+    &.btn-light {
+        background-color: $brand-white;
+        border: 1px solid $gray-light;
+    }
+    
+    &.btn-light.lighter{
+        font-weight: 400;
+        text-transform: none;    
+    }
+    
+    &.btn-light:active:focus {
+        outline: 0;
+        box-shadow: none;
+        background-color: $gray-lighter;
+    }
+    
+    &:hover {
+        background: initial
+    }
+}
+
+.btn-primary{
+    border-color: $brand-primary;
+    color: $brand-primary;
+    background-color: transparent;
+
+    &.btn:active:focus {
+        background-color: $brand-blue;
+    }
+    
+    &.btn:hover,
+    &.btn.focus,
+    &.btn:focus {
+        color: $brand-white;
+        background-color: $brand-primary;
+        border-color: $brand-primary;
+        box-shadow: none;
+    }
+}
+
+
+.btn-success{
+    border-color: $brand-success;
+    color: $brand-success;
+    background-color: transparent;
+
+    &.btn:active:focus {
+        background-color: $brand-success;
+    }
+
+    &.btn:hover,
+    &.btn.focus,
+    &.btn:focus {
+        color: $brand-white;
+        background-color: $brand-success;
+        border-color: $brand-success;
+        box-shadow: none;
+    }
+}
+
+.btn-danger{
+    border-color: $brand-danger;
+    color: $brand-danger;
+    background-color: transparent;
+
+    &.btn:active:focus {
+        background-color: $brand-danger;
+    }
+
+    &.btn:hover,
+    &.btn.focus,
+    &.btn:focus {
+        color: $brand-white;
+        background-color: $brand-danger;
+        box-shadow: none;
+        border-color: $brand-danger;
+    }
+}
+
+
+.btn-text{
+    background-color: transparent;
+    color: $gray;
+    border: 0px;
+    &.btn:hover,
+    &.btn.focus,
+    &.btn:focus {
+        color: $gray;
+        background-color: transparent !important;
+        box-shadow: none;
+        border: 0px;
+    }
+}
+
+.button-with-icon{
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px 5px 30px;
+    position: relative;
+    margin: 0px 15px;
+
+    i{
+        color: inherit
+    }
+
+    i{
+        font-size: 8px;
+        width: 16px;
+        height: 16px;
+        border: 1px solid $brand-success;
+        color: $brand-success;
+        padding: 3px;
+        line-height: 8px;
+        text-align: center;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: 6px;
+    }
+}
+
+.btn-icon{
+    padding-left: 28px;
+    position: relative;
+
+    i:hover{
+        color: inherit;
+    }
+
+    i{
+        font-size: 7px;
+        position: absolute;
+        line-height: 13px;
+        left: 7px;
+        top: 6px;
+        border: 1px solid;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+    }
+}
+

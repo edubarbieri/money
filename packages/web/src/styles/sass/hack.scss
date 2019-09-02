@@ -1,0 +1,77 @@
+.f12{
+    font-size: 12px;
+}
+.p10{
+    padding: 10px;
+}
+.p-0{
+    padding: 0px !important;
+}
+.b-0{
+    border: 0px !important;
+}
+.p-l-14{
+    padding-left: 14px;
+}
+.bn{
+    background-color: transparent;
+}
+.m-h-235{
+    min-height: 235px;
+}
+.m-0{
+    margin: 0 !important;
+}
+.m-t-20{
+    margin-top: 20px;
+}
+.m-b-20{
+    margin-bottom: 20px;
+}
+.m-w-300{
+    max-width: 300px;
+}
+.m-h-282{
+    min-height: 282px;
+}
+.w-100{
+    width: 100%;
+}
+.center{
+    width: 100%;
+    text-align: center;
+}
+@media screen and (max-width: 980px){
+    .center{
+        text-align: left
+    }
+}
+.left{
+    width: 100%;
+    text-align: left
+}
+.right{
+    width: 100%;
+    text-align: right
+}
+.pointer{
+    cursor: pointer;
+}
+.strong {
+    font-weight: 600;
+}
+.invisible{
+    opacity: 0;
+    visibility: hidden;
+    height: 0px;
+}
+.m-b-10{
+    margin-bottom: 10px;
+}
+.t-48{
+    top: 48px !important;
+}
+.z-i-20{
+    z-index: 20;
+}
+

@@ -1,0 +1,92 @@
+@import "mixins";
+
+/* Modals
+   ========================================================================== */
+.modal-body,
+.modal-footer,
+.modal-header{
+    padding: 10px 15px;
+    border: 0px;
+}
+
+
+.fixed .modal-dialog{
+    transform: translate(-50%, -50%);
+    position: fixed;
+    top: calc(50% - 40px);
+    left: calc(50% + 140px);
+}
+.modal {
+    position: absolute;
+    display: none;
+    overflow: initial;
+    .modal-dialog{
+        margin: 0px;
+    }
+
+    .form-control{
+        padding: 0px;
+    }
+    
+    .close-modal{
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .modal-title {
+        font-weight: 600;
+        font-size: $default-font-size;
+    }
+    
+    &.show{
+        display: block;
+    }
+    
+    .overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #00000025;
+    }
+    
+    .small{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        right: 0;
+        bottom: 0;
+        transform: translate(-50%, -50%)
+    }
+    
+    .modal-content{
+        box-shadow: none;
+        border-radius: 2px;
+        border: 0px;
+    }
+    
+    &.fixed {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 280px;
+    }
+}
+
+
+@media screen and (max-width: 767px){
+    .modal{
+        position: absolute;
+        &.fixed{
+            left: 0;
+            right: 0;
+        }
+        .modal-dialog{
+            top: 50%;
+            left: 50%;
+            min-width: 300px;
+        }
+    }   
+}
