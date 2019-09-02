@@ -345,3 +345,9 @@ input[type=number]::-webkit-outer-spin-button {
     color: $brand-success;
     font-weight: 600;
 }
+
+.simple-card{
+    padding: 15px;
+    border: 1px solid $gray-light;
+    margin-bottom: 15px;
+}

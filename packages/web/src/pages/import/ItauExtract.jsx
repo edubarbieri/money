@@ -8,7 +8,7 @@ import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { useDropzone } from 'react-dropzone'
 import 'sass/dropzone';
 import moment from 'moment';
-import {formatMoney} from 'service/util';
+import {formatMoney, isMobile} from 'service/util';
 import Errors from 'components/message/Error';
 import SelectSearch  from 'react-select-search';
 import _ from 'lodash';
@@ -98,6 +98,26 @@ const ItauExtract = () => {
         ));
     }
 
+    const showMobileImportedData = () => {
+        return !!readedFileJSON.length && readedFileJSON.map((line, idx) => (
+            <div key={idx} className="simple-card">
+                <span className="line"><strong>{bundle('date')}:&nbsp;</strong>{moment(line.date).format('DD/MM/YYYY')}</span>
+                <span className="line"><strong>{bundle('description')}:&nbsp;</strong>{line.description}</span>
+                <span className="line"><strong>{bundle('amount')}:&nbsp;</strong>{bundle('currency')}&nbsp;{formatMoney(line.amount)}</span>
+                <span className="line"><strong>{bundle('type')}:&nbsp;</strong><span className={line.type}>{bundle(line.type)}</span></span>
+                <span className="line"><strong>{bundle('category')}:&nbsp;</strong>
+                    <SelectSearch
+                        value={line.category}
+                        options={categories} 
+                        className="select-search-box"
+                        search={true}
+                        onChange={value => setCategory(idx, value)}
+                    />
+                </span>
+            </div>
+        ));
+    }
+
     const handleImport = () => {
         console.log('Import: ', readedFileJSON);
     }
@@ -128,22 +148,25 @@ const ItauExtract = () => {
                                 <div className="panel-title">{bundle('collected.data')}</div>
                             </div>
                             <div className="panel-body">
-                                <div className="table-responsive  data-grid" style={{overflow: 'inherit'}}>
-                                    <table className="table table-striped">
-                                        <thead> 
-                                            <tr>
-                                                <th>{bundle('date')}</th> 
-                                                <th>{bundle('description')}</th> 
-                                                <th>{bundle('amount')}</th> 
-                                                <th>{bundle('type')}</th> 
-                                                <th>{bundle('category')}</th> 
-                                            </tr> 
-                                        </thead> 
-                                        <tbody> 
-                                            {showImportedData()}
-                                        </tbody> 
-                                    </table>
-                                </div>
+                                {isMobile() && showMobileImportedData()}
+                                {!isMobile() && 
+                                    <div className="table-responsive  data-grid" style={{overflow: 'inherit'}}>
+                                        <table className="table table-striped">
+                                            <thead> 
+                                                <tr>
+                                                    <th>{bundle('date')}</th> 
+                                                    <th>{bundle('description')}</th> 
+                                                    <th>{bundle('amount')}</th> 
+                                                    <th>{bundle('type')}</th> 
+                                                    <th>{bundle('category')}</th> 
+                                                </tr> 
+                                            </thead> 
+                                            <tbody> 
+                                                {showImportedData()}
+                                            </tbody> 
+                                        </table>
+                                    </div>
+                                }
                             </div>
                             <div className="panel-footer t-a-r">
                                 <button type="button" className="btn btn-primary" onClick={handleImport}>{bundle('do.import')}</button>
