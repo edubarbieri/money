@@ -8,16 +8,19 @@ import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { useDropzone } from 'react-dropzone'
 import 'sass/dropzone';
 import moment from 'moment';
-import {formatMoney, isMobile} from 'service/util';
+import { formatMoney, isMobile } from 'service/util';
 import Errors from 'components/message/Error';
-import SelectSearch  from 'react-select-search';
+import SelectSearch from 'react-select-search';
 import _ from 'lodash';
 import { importItau } from 'mymoney-sdk';
+import Success from 'components/message/Success';
+
 const ItauExtract = () => {
     const dispatch = useDispatch();
     dispatch({ type: SET_ACTIVE_PAGE, payload: route('import.itau.extract') })
     const [readedFileJSON, setReadedFileJSON] = useState([]);
     const [errors, setErrors] = useState([]);
+    const [success, setSuccess] = useState([]);
     let categories = useSelector(state => state.wallet.categories);
 
     const pages = [{
@@ -46,25 +49,31 @@ const ItauExtract = () => {
     }, [])
 
     const mountExtractData = (readedFile) => {
-			const lines = readedFile.split('\n');
-			importItau.previewImport(lines)
-				.then(resp => setReadedFileJSON(resp || []))
-				.catch(e => setErrors(e.errors));
+        const lines = readedFile.split('\n');
+        importItau.previewImport(lines)
+            .then(resp => setReadedFileJSON(resp || []))
+            .catch(e => setErrors(e.errors));
     }
 
     const setCategory = (idx, value) => {
         readedFileJSON[idx].categoryId = value.value;
         setReadedFileJSON(readedFileJSON);
-		}
-		
-		const handleImport = () => {
-			importItau.save(readedFileJSON)
-				.then((resp) => {
-					setReadedFileJSON([]);
-					const msg = bundleFormat('import.resume', ((resp.credits) ? resp.credits.length : 0), ((resp.debits) ? resp.debits.length : 0), resp.alreadyImporteds )
-					window.alert(msg);
-				})
-				.catch(e => setErrors(e.errors))
+    }
+
+    const handleImport = () => {
+        importItau.save(readedFileJSON)
+            .then((resp) => {
+                setReadedFileJSON([]);
+                setSuccess([
+                    <div>
+                        <h4 >{bundle('import.resume')}</h4>
+                        <strong className="credit">{bundleFormat('import.resume.credit')}</strong>{(resp.credits) ? resp.credits.length : 0}&nbsp;
+                        <strong className="debit">{bundleFormat('import.resume.debit')}</strong>{(resp.debits) ? resp.debits.length : 0}&nbsp;
+                        <strong>{bundleFormat('import.resume.already')}</strong>{resp.alreadyImporteds}
+                    </div>
+                ]);
+            })
+            .catch(e => setErrors(e.errors))
     }
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop })
@@ -75,11 +84,13 @@ const ItauExtract = () => {
                 <td>{moment(line.date).format('DD/MM/YYYY')}</td>
                 <td>{line.description}</td>
                 <td>{bundle('currency')}&nbsp;{formatMoney(line.amount)}</td>
-                <td className={line.type}>{bundle(line.type)}</td>
+                <td className={line.isExpense ? 'debit' : 'credit'}>
+                    {line.isExpense ? bundle('debit') : bundle('credit')}
+                </td>
                 <td className="t-a-l">
                     <SelectSearch
                         value={line.categoryId}
-                        options={categories} 
+                        options={categories}
                         className="select-search-box"
                         search={true}
                         onChange={value => setCategory(idx, value)}
@@ -95,11 +106,15 @@ const ItauExtract = () => {
                 <span className="line"><strong>{bundle('date')}:&nbsp;</strong>{moment(line.date).format('DD/MM/YYYY')}</span>
                 <span className="line"><strong>{bundle('description')}:&nbsp;</strong>{line.description}</span>
                 <span className="line"><strong>{bundle('amount')}:&nbsp;</strong>{bundle('currency')}&nbsp;{formatMoney(line.amount)}</span>
-                <span className="line"><strong>{bundle('type')}:&nbsp;</strong><span className={line.type}>{bundle(line.type)}</span></span>
+                <span className="line"><strong>{bundle('type')}:&nbsp;</strong>
+                    <span className={line.isExpense ? 'debit' : 'credit'}>
+                        {line.isExpense ? bundle('debit') : bundle('credit')}
+                    </span>
+                </span>
                 <span className="line"><strong>{bundle('category')}:&nbsp;</strong>
                     <SelectSearch
-                        value={line.category}
-                        options={categories} 
+                        value={line.categoryId}
+                        options={categories}
                         className="select-search-box"
                         search={true}
                         onChange={value => setCategory(idx, value)}
@@ -120,16 +135,20 @@ const ItauExtract = () => {
                 <div className="col-md-6 col-sm-12">
                     <div className="panel panel-minimal">
                         <div className="panel-body">
-                            <Errors errors={errors} setErrors={setErrors} />
                             <div {...getRootProps({ className: 'dropzone' })}>
                                 <input {...getInputProps()} />
                                 <p>{bundle('drag.drop')}</p>
                             </div>
                         </div>
                     </div>
+                    <div className="panel panel-minimal">
+                        <Errors errors={errors} setErrors={setErrors} />
+                        <Success success={success} setSuccess={setSuccess}/>
+                    </div>
                 </div>
             </div>
-            {!!readedFileJSON.length &&
+            {
+                !!readedFileJSON.length &&
                 <div className="row">
                     <div className="col-md-6 col-sm-12">
                         <div className="panel panel-primary">
@@ -138,21 +157,21 @@ const ItauExtract = () => {
                             </div>
                             <div className="panel-body">
                                 {isMobile() && showMobileImportedData()}
-                                {!isMobile() && 
-                                    <div className="table-responsive  data-grid" style={{overflow: 'inherit'}}>
+                                {!isMobile() &&
+                                    <div className="table-responsive  data-grid" style={{ overflow: 'inherit' }}>
                                         <table className="table table-striped">
-                                            <thead> 
+                                            <thead>
                                                 <tr>
-                                                    <th>{bundle('date')}</th> 
-                                                    <th>{bundle('description')}</th> 
-                                                    <th>{bundle('amount')}</th> 
-                                                    <th>{bundle('type')}</th> 
-                                                    <th>{bundle('category')}</th> 
-                                                </tr> 
-                                            </thead> 
-                                            <tbody> 
+                                                    <th>{bundle('date')}</th>
+                                                    <th>{bundle('description')}</th>
+                                                    <th>{bundle('amount')}</th>
+                                                    <th>{bundle('type')}</th>
+                                                    <th>{bundle('category')}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                                 {showImportedData()}
-                                            </tbody> 
+                                            </tbody>
                                         </table>
                                     </div>
                                 }
@@ -163,8 +182,8 @@ const ItauExtract = () => {
                         </div>
                     </div>
                 </div>
-						}
-        </div>
+            }
+        </div >
     );
 }
 

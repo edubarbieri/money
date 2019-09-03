@@ -174,6 +174,10 @@ back:
   pt-BR: "Voltar"
   en-US: "Back"
 
+amount:
+  pt-BR: "Valor"
+  en-US: "Amount"
+
 invite.confirmation.title:
   pt-BR: "Convite Enviado!"
   en-US: "Invite Send!"
@@ -588,6 +592,22 @@ invalid.file:
   pt-BR: "O arquivo importado deve ser do formato: '{0}'"
   en-US: "Imported file format should be: '{0}'"
 
+import.saveItau.error:
+  pt-BR: "Erro na importação de dados do extrato do Branco Itaú"
+  en-US: "Error on import data from Itaú Bank extract"
+
 import.resume:
-  pt-BR: "Resumo itens importados:\n- Créditos: {0}\n- Débitos: {1}\n- Já importados: {2}"
-  en-US: "Imported Items Summary:\n- Credits: {0}\n- Debits: {1}\n- Already Imported: {2}"
+  pt-BR: "Resumo itens importados:"
+  en-US: "Imported Items Summary:"
+
+import.resume.credit:
+  pt-BR: "Créditos: "
+  en-US: "Credits: "
+
+import.resume.debit:
+  pt-BR: "Débitos: "
+  en-US: "Debits: "
+
+import.resume.already:
+  pt-BR: "Já importados: "
+  en-US: "Already Imported: "
