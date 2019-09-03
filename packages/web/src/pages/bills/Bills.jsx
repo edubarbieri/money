@@ -102,9 +102,9 @@ const Bills = () => {
       bill.formatedDueDate = moment(bill.dueDate).format(bundle('moment.date.format'));
       bill.formatedPaymentDate = (bill.paymentDate) ? moment(bill.paymentDate).format(bundle('moment.date.format')) : null;
       bill.formattedAmount = formatMoneyWithCurrency(Number(bill.amount).toFixed(2))
-      bill.formattedAmountPayed = formatMoneyWithCurrency(Number(bill.amountPaid).toFixed(2))
+      bill.formattedAmountPayed = (bill.amountPaid > 0) && formatMoneyWithCurrency(Number(bill.amountPaid).toFixed(2))
       bill.dueDate = moment(bill.dueDate).toDate();
-      bill.recurrency = (bill.recurrentTotal) ? `${bill.recurrentCount} / ${bill.recurrentTotal || 0}` : null
+      bill.recurrency = (bill.recurrentTotal) ? `${bill.recurrentCount}${bundle('of')}${bill.recurrentTotal || 0}` : (bill.recurrent) ? bundle('yes') : bundle('no');
     }
     return resultData;
   }
@@ -114,11 +114,11 @@ const Bills = () => {
   const [columns, setColumns] = useState([
     { id: 'description', title: bundle('description') },
     { id: 'formattedAmount', title: bundle('value') },
-    { id: 'formattedAmountPayed', title: bundle('value.payed') },
-    { id: 'user.name', title: bundle('member') },
     { id: 'formatedDueDate', title: bundle('due.date') },
     { id: 'formatedPaymentDate', title: bundle('payment.date') },
     { id: 'category.name', title: bundle('category') },
+    { id: 'formattedAmountPayed', title: bundle('value.payed') },
+    { id: 'user.name', title: bundle('member') },
     { id: 'recurrency', title: bundle('recurrency') },
   ]);
 
@@ -157,6 +157,10 @@ const Bills = () => {
     }
     window.scrollTo(0, top);
     setEditFocus(true);
+    let focus = document.getElementById('inpt-description');
+    if(focus){
+      focus.focus();
+    }
     setTimeout(() => {
       setEditFocus(false);
     }, 1500);

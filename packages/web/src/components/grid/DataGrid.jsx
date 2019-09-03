@@ -58,7 +58,7 @@ const DataGrid = ({ columns, rows, actions, conf, sorters, setSort, page = 1, to
 
     const extractOrdenatedRows = (row) => {
         return columns.map((col, idx) => (
-            <td key={idx}>{_.get(row, col.id) || '-'}</td>
+            <td key={idx}>{_.get(row, col.id) || ''}</td>
         ))
     }
 
@@ -66,7 +66,7 @@ const DataGrid = ({ columns, rows, actions, conf, sorters, setSort, page = 1, to
         return columns.map((col, idx) => (
             <div key={idx}>
                 <strong>{col.title}:&nbsp;</strong>
-                {_.get(action, col.id) || '-'}
+                {_.get(action, col.id) || ''}
             </div>
         ))
     }

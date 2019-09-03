@@ -122,6 +122,18 @@ value:
   pt-BR: "Valor"
   en-US: "Value"
 
+yes:
+  pt-BR: "Sim"
+  en-US: "Yes"
+
+of:
+  pt-BR: " de "
+  en-US: " of "
+
+no:
+  pt-BR: "Não"
+  en-US: "No"
+
 value.payed:
   pt-BR: "Valor Pago"
   en-US: "Payed Value"
@@ -561,8 +573,8 @@ do.import:
   en-US: "Import"
 
 import.itau.extract:
-  pt-BR: "Extrato do Itaú"
-  en-US: "Itaú Extract"
+  pt-BR: "Extrato Banco Itaú"
+  en-US: "Itaú Bank Extract"
 
 drag.drop:
   pt-BR: "Arraste e solte o arquivo aqui, ou click e selecione em seu computador."

@@ -83,6 +83,7 @@ const BillsEditor = ({ bill, onSave, onCancel}) => {
                                 <label>{bundle("description")}</label>
                                 <input type="text"
                                     className="form-control"
+                                    id="inpt-description"
                                     value={editBill.description}
                                     onChange={event => setEditBill({ ...editBill, description: event.target.value })} />
                             </div>
