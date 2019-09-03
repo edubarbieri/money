@@ -12,7 +12,7 @@ import {formatMoney, isMobile} from 'service/util';
 import Errors from 'components/message/Error';
 import SelectSearch  from 'react-select-search';
 import _ from 'lodash';
-
+import { importItau } from 'mymoney-sdk';
 const ItauExtract = () => {
     const dispatch = useDispatch();
     dispatch({ type: SET_ACTIVE_PAGE, payload: route('import.itau.extract') })
@@ -46,34 +46,25 @@ const ItauExtract = () => {
     }, [])
 
     const mountExtractData = (readedFile) => {
-        let lines = readedFile.split('\n');
-        if (lines.lentgh < 1) {
-            return;
-        }
-
-        let auxJson = [];
-        for (let index = 0; index < lines.length; index++) {
-            const line = lines[index];
-            let lineParts = line.split(';');
-
-            if (!lineParts || lineParts.length < 3) {
-                continue;
-            }
-            const amount = Number(lineParts[2].replace(',', '.'));
-            auxJson.push({
-                date: moment(lineParts[0], 'DD/MM/YYYY').toDate(),
-                description: lineParts[1],
-                amount: amount,
-                type: (amount > 0) ? 'credit' : 'debit',
-                categoryId: ''
-            })
-        }
-        setReadedFileJSON(auxJson);
+			const lines = readedFile.split('\n');
+			importItau.previewImport(lines)
+				.then(resp => setReadedFileJSON(resp || []))
+				.catch(e => setErrors(e.errors));
     }
 
     const setCategory = (idx, value) => {
         readedFileJSON[idx].categoryId = value.value;
         setReadedFileJSON(readedFileJSON);
+		}
+		
+		const handleImport = () => {
+			importItau.save(readedFileJSON)
+				.then((resp) => {
+					setReadedFileJSON([]);
+					const msg = bundleFormat('import.resume', ((resp.credits) ? resp.credits.length : 0), ((resp.debits) ? resp.debits.length : 0), resp.alreadyImporteds )
+					window.alert(msg);
+				})
+				.catch(e => setErrors(e.errors))
     }
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop })
@@ -87,7 +78,7 @@ const ItauExtract = () => {
                 <td className={line.type}>{bundle(line.type)}</td>
                 <td className="t-a-l">
                     <SelectSearch
-                        value={line.category}
+                        value={line.categoryId}
                         options={categories} 
                         className="select-search-box"
                         search={true}
@@ -118,9 +109,7 @@ const ItauExtract = () => {
         ));
     }
 
-    const handleImport = () => {
-        console.log('Import: ', readedFileJSON);
-    }
+
 
     return (
         <div>
@@ -140,7 +129,7 @@ const ItauExtract = () => {
                     </div>
                 </div>
             </div>
-            {!!readedFileJSON.length && 
+            {!!readedFileJSON.length &&
                 <div className="row">
                     <div className="col-md-6 col-sm-12">
                         <div className="panel panel-primary">
@@ -174,7 +163,7 @@ const ItauExtract = () => {
                         </div>
                     </div>
                 </div>
-            }
+						}
         </div>
     );
 }

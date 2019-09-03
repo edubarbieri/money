@@ -587,3 +587,7 @@ collected.data:
 invalid.file:
   pt-BR: "O arquivo importado deve ser do formato: '{0}'"
   en-US: "Imported file format should be: '{0}'"
+
+import.resume:
+  pt-BR: "Resumo itens importados:\n- Créditos: {0}\n- Débitos: {1}\n- Já importados: {2}"
+  en-US: "Imported Items Summary:\n- Credits: {0}\n- Debits: {1}\n- Already Imported: {2}"
