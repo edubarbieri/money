@@ -1,3 +1,4 @@
 const models = require('./models');
 const util = require('./util');
-module.exports = {...models, ...util};
+const queryUtil = require('./queryUtil');
+module.exports = {...models, ...util, queryUtil};

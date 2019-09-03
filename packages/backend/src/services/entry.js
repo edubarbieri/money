@@ -1,0 +1,179 @@
+const { Entry, Category, paginatedQuery , queryUtil, sanitazyQuery, sequelize} = require('../db');
+const _ = require('lodash');
+const ENTRY_ATTRIBUTES = [
+	'id',
+	'description',
+	'entryDate',
+	'amount',
+	'recurrent',
+	'recurrentTotal',
+	'recurrentCount',
+	'categoryId'
+];
+
+const defaultsFindAll = {
+	withCategory: false,
+	withUser: false,
+	order: 'entryDate_ASC',
+	page: 1,
+	pageSize: 15
+};
+function _fixRecurrent(data){
+	if(data.recurrentTotal == '' || data.recurrentTotal == 0){
+		data.recurrentTotal = null;
+		data.recurrentCount = null;
+	}else if(data.recurrentTotal && !data.recurrentCount){
+		data.recurrentCount = 1;
+	}
+}
+
+
+function _createEntry(data) {
+	_fixRecurrent(data);
+	return Entry.create(data)
+		.then(entry => _.pick(entry, ENTRY_ATTRIBUTES));
+}
+
+function _updateEntry(data, id, walletId, type) {
+	delete data.walletId;
+	delete data.type;
+	delete data.id;
+	_fixRecurrent(data);
+	return Entry.update(data, {
+		where: {
+			id: id,
+			walletId: walletId,
+			type: type
+		}
+	}).then(affectedRows => affectedRows[0]);
+}
+
+function _deleteEntry(id, walletId, type) {
+	return Entry.destroy({
+		where: {
+			id: id,
+			walletId: walletId,
+			type: type
+		}
+	}).then(affectedRows => affectedRows[0]);
+}
+
+function _getEntry(id, walletId, type) {
+	return Entry.findOne({
+		attributes: ENTRY_ATTRIBUTES,
+		where: { id, walletId, type },
+		include: {
+			model: Category,
+			attributes: ['id', 'name']
+		}
+	});
+}
+
+function _findAll(options, type){
+	const finalOptions = { ...defaultsFindAll, ...options };
+	return paginatedQuery(Entry, {
+		attributes: ENTRY_ATTRIBUTES,
+		where: queryUtil.where(finalOptions, w => w.type = type, 'entryDate'),
+		include: queryUtil.include(finalOptions),
+		order: [queryUtil.order(finalOptions)]
+	}, finalOptions.page, finalOptions.pageSize);
+}
+
+function createDebit(data, walletId) {
+	return _createEntry({
+		...data,
+		walletId: walletId,
+		type: Entry.DEBIT
+	});
+}
+
+function createCredit(data, walletId) {
+	return _createEntry({
+		...data,
+		walletId: walletId,
+		type: Entry.CREDIT
+	});
+}
+
+async function _entryAmountMonthResume(walletId, type){
+	const query = sanitazyQuery(`
+		select * from (
+			select 
+				EXTRACT(year from entry.entry_date) as "year",
+				EXTRACT(month from entry.entry_date) as "month", 	
+				sum(entry.amount) as "amount"
+			FROM entry
+			WHERE
+			  entry.entry_date >= date_trunc('month', current_date - interval '6' month)
+				AND entry.wallet_id = :walletId
+				AND entry.type = :type
+			group by EXTRACT(year from entry.entry_date), EXTRACT(month from entry.entry_date)
+		) as b
+		order by 1, 2
+	`);
+
+	try {
+		
+		return await sequelize.query(query, {
+			replacements: {
+				walletId, type
+			},
+			type: sequelize.QueryTypes.SELECT
+		});
+	} catch (error) {
+		console.error('_entryAmountMonthResume - error', error);
+		return {
+			errors: ['entry.entryAmountMonthResume.genericError']
+		}
+	}
+}
+
+function updateDebit(data, id, walletId) {
+	return _updateEntry(data, id, walletId, Entry.DEBIT);
+}
+function updateCredit(data, id, walletId) {
+	return _updateEntry(data, id, walletId, Entry.CREDIT);
+}
+function deleteDebit(id, walletId) {
+	return _deleteEntry(id, walletId, Entry.DEBIT);
+}
+function deleteCredit(id, walletId) {
+	return _deleteEntry(id, walletId, Entry.CREDIT);
+}
+function getCredit(id, walletId) {
+	return _getEntry(id, walletId, Entry.CREDIT);
+}
+function getDebit(id, walletId) {
+	return _getEntry(id, walletId, Entry.DEBIT);
+}
+function findAllDebits(options) {
+	return _findAll(options, Entry.DEBIT);
+}
+function findAllCredits(options) {
+	return _findAll(options, Entry.CREDIT);
+}
+
+function creditAmountMonthResume(walletId){
+	return _entryAmountMonthResume(walletId, Entry.CREDIT)
+}
+
+function debitAmountMonthResume(walletId){
+	return _entryAmountMonthResume(walletId, Entry.DEBIT)
+}
+
+
+module.exports = {
+	createDebit: createDebit,
+	createCredit: createCredit,
+	updateDebit: updateDebit,
+	updateCredit: updateCredit,
+	deleteDebit: deleteDebit,
+	deleteCredit: deleteCredit,
+	getCredit: getCredit,
+	getDebit: getDebit,
+	findAllDebits: findAllDebits,
+	findAllCredits: findAllCredits,
+	creditAmountMonthResume: creditAmountMonthResume,
+	debitAmountMonthResume : debitAmountMonthResume,
+	ENTRY_ATTRIBUTES: ENTRY_ATTRIBUTES
+};

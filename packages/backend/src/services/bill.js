@@ -2,6 +2,7 @@ const { Bill, User, Category, paginatedQuery, sanitazyQuery, sequelize } = requi
 const { Op, col} = require('sequelize');
 const _ = require('lodash');
 const moment = require('moment');
+const queryUtil = require('../db/queryUtil')
 const BILL_ATTRIBUTES = [
 	'id',
 	'description',
@@ -33,80 +34,26 @@ function findAll(options) {
 	}, finalOptions.page, finalOptions.pageSize);
 }
 function _include(options) {
-	const includes = [];
-	if (options.withUser === 'true') {
-		includes.push({
-			model: User,
-			attributes: ['id', 'name', 'avatar']
-		});
-	}
-
-	if (options.withCategory === 'true') {
-		includes.push({
-			model: Category,
-			attributes: ['id', 'name']
-		});
-	}
-
-	return includes;
+	return queryUtil.include(options);
 }
 function _where(options) {
-	const where = {
-		wallet_id: options.walletId
-	};
-
-	if (_.has(options, 'isPayd')) {
-		if (options.isPayd === 'true') {
-			where.paymentDate = {
-				[Op.not]: null
-			};
-		} else {
-			where.paymentDate = {
-				[Op.is]: null
-			};
+	return queryUtil.where(options, (where) => {
+		if (_.has(options, 'isPayd')) {
+			if (options.isPayd === 'true') {
+				where.paymentDate = {
+					[Op.not]: null
+				};
+			} else {
+				where.paymentDate = {
+					[Op.is]: null
+				};
+			}
 		}
-	}
-	if (_.has(options, 'month')) {
-		let month = parseInt(options.month);
-		if (month > 12) {
-			month = 12;
-		}
-		const year = _.has(options, 'year') ? parseInt(options.year) : new Date().getFullYear();
-		const monthYear = year + '-' + (month < 10 ? '0' + month : month);
-		where.dueDate = {
-			[Op.gte]: monthYear + '-01',
-			[Op.lt]: moment(monthYear).add(1, 'month').format('YYYY-MM-DD')
-		};
-	}
-
-	return where;
+	});
 }
-
-const orderModelMap = {
-	'user': User,
-	'category': Category
-};
 function _order(options) {
-	let orders = options.order.split('_');
-
-	if (orders.length === 1) {
-		orders.push('DESC');
-	}
-	if (orders[0].split('.').length > 1) {
-		const [model, field] = orders[0].split('.');
-		if (orderModelMap[model]) {
-			const direction = orders.length === 1 ? 'DESC' : orders[1];
-			orders = [];
-			orders.push(orderModelMap[model]);
-			orders.push(field);
-			orders.push(direction);
-		}
-	}
-
-	return orders;
+	return queryUtil.order(options);
 }
-
-
 
 async function generateMonthRecurrentBills(walletId, month, year){
 	const query = sanitazyQuery(`
@@ -143,7 +90,6 @@ async function generateMonthRecurrentBills(walletId, month, year){
 	try {
 		// month in js start in 0
 		const previewMonthDate = moment([year, month - 1]).subtract(1, 'month');
-
 		
 		const resp = await sequelize.query(query, {
 			replacements: {

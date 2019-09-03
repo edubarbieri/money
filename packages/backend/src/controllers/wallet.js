@@ -167,9 +167,4 @@ route.post('/wallet/:walletId/setOwner', async (req, resp) => {
 	}
 });
 
-
-
-
-
-
 module.exports = route;

@@ -273,11 +273,54 @@ Bill.belongsTo(Wallet, {foreignKey: 'wallet_id', allowNull: false});
 Bill.belongsTo(User, {foreignKey: 'user_id'});
 Bill.belongsTo(Bill, {foreignKey: 'source_bill_id', as: 'sourceBill'});
 
+/**
+ * @class Entry model
+ */
+class Entry extends Model {}
+Entry.CREDIT = 'CREDIT';
+Entry.DEBIT = 'DEBIT';
+Entry.init({
+	id: { type: Sequelize.DataTypes.UUID, primaryKey: true, allowNull: false, field: 'id',
+		defaultValue: Sequelize.UUIDV4
+	},
+	description: { type: Sequelize.STRING, allowNull: false, field: 'description'},
+	entryDate: { type: Sequelize.DATEONLY, allowNull: false, field: 'entry_date'},
+	amount: { type: Sequelize.DECIMAL(10, 2), allowNull: false, field: 'amount',
+		validate: { min: 0 },
+		get() {
+			// Workaround until sequelize issue #8019 is fixed
+			const value = this.getDataValue('amount');
+			return value === null ? null : parseFloat(value);
+		}
+	},
+	type: { type: Sequelize.ENUM(Entry.CREDIT, Entry.DEBIT), allowNull: false, field: 'type'},
+	recurrent: { type: Sequelize.BOOLEAN, defaultValue: false, field: 'recurrent'},
+	recurrentTotal: { type: Sequelize.INTEGER, field: 'recurrent_total', validate: { min: 0 }},
+	recurrentCount: { type: Sequelize.INTEGER, field: 'recurrent_count', validate: { min: 0 }},
+	importHash: { type: Sequelize.STRING, field: 'import_hash'},
+	importSource: { type: Sequelize.STRING, field: 'import_source'},
+
+	categoryId: { type: Sequelize.INTEGER, allowNull: true, field: 'category_id'},
+	walletId: { type: Sequelize.DataTypes.UUID, allowNull: false, field: 'wallet_id'},
+	userId: { type: Sequelize.DataTypes.UUID, allowNull: true, field: 'user_id'}
+}, {
+	sequelize,
+	modelName: 'entry',
+	tableName: 'entry'
+});
+
+Entry.belongsTo(Category, {foreignKey: 'category_id'});
+Entry.belongsTo(Wallet, {foreignKey: 'wallet_id', allowNull: false});
+Entry.belongsTo(User, {foreignKey: 'user_id'});
+Entry.belongsTo(Entry, {foreignKey: 'source_entry_id', as: 'sourceEntry'});
+
+
 module.exports = {
 	sequelize,
 	Category,
 	User,
 	Wallet,
 	UserWallet,
-	Bill
+	Bill,
+	Entry
 }

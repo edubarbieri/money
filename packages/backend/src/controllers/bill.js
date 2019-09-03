@@ -64,6 +64,8 @@ function _fixRecurrent(data){
 async function _update(req, res, data) {
 	try {
 		_fixRecurrent(data);
+		delete data.walletId;
+		delete data.id;
 		const affectedRows = await Bill.update(data, {
 			where: { id: req.params.id, walletId: req.walletId }
 		});
