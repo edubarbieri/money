@@ -3,6 +3,7 @@ const { Op, col} = require('sequelize');
 const _ = require('lodash');
 const moment = require('moment');
 const queryUtil = require('../db/queryUtil')
+const entryService = require('./entry')
 const BILL_ATTRIBUTES = [
 	'id',
 	'description',
@@ -144,10 +145,76 @@ async function billAmountMonthResume(walletId){
 	}
 }
 
+function _fixRecurrent(data){
+	if(data.recurrentTotal == '' || data.recurrentTotal == 0){
+		data.recurrentTotal = null;
+		data.recurrentCount = null;
+	}else if(data.recurrentTotal && !data.recurrentCount){
+		data.recurrentCount = 1;
+	}
+	
+}
+
+async function _update(data, id, walletId) {
+	try {
+		_fixRecurrent(data);
+		delete data.walletId;
+		delete data.id;
+		const affectedRows = await Bill.update(data, {
+			where: { id: id, walletId: walletId }
+		});
+		return affectedRows[0];
+	} catch (e) {
+		console.log('Update bill error', e);
+		throw e;
+	}
+}
+
+function updateBill(data, id, walletId){
+	return _update(data, id, walletId)
+}
+
+function getBill(id, walletId) {
+	if (walletId) {
+		return Bill.findOne({
+			where: {
+				id: id,
+				walletId: walletId
+			}
+		});
+	}
+	return Bill.findByPk(id, { attributes: BILL_ATTRIBUTES });
+}
+
+function createBill(data){
+	_fixRecurrent(data);
+	return Bill.create(data);
+}
+
+
+
+async function setBillAsPayd(amountPaid, paymentDate, id, walletId) {
+	const affectedRows = await Bill.update(
+		{ amountPaid, paymentDate	},
+		{where: { id: id, walletId: walletId }}
+	);
+	if (affectedRows[0] > 0) {
+		const {description, amountPaid, paymentDate} = await getBill(id, walletId);
+		await entryService.findOrCreateDebit(description, amountPaid, paymentDate, walletId, 'BILL');
+		return true;
+	}
+	return false;
+}
+
+
 
 module.exports = {
 	findAll: findAll,
 	BILL_ATTRIBUTES: BILL_ATTRIBUTES,
 	generateMonthRecurrentBills: generateMonthRecurrentBills,
-	billAmountMonthResume: billAmountMonthResume
+	billAmountMonthResume: billAmountMonthResume,
+	updateBill: updateBill,
+	getBill: getBill,
+	createBill: createBill,
+	setBillAsPayd : setBillAsPayd
 };

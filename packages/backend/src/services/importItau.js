@@ -2,7 +2,8 @@ const moment = require('moment');
 const crypto = require('crypto');
 const { Category, Entry } = require('../db');
 const _ = require('lodash');
-const entryService = require('./entry')
+const entryService = require('./entry');
+const {Op} = require('sequelize')
 
 async function generatePreview(rawLines, walletId) {
 	const result = [];
@@ -17,10 +18,32 @@ async function generatePreview(rawLines, walletId) {
 		if (withSameHash > 0) {
 			data.importHash = data.importHash + '_' + (withSameHash - 1);
 		}
+		data.possibleEntries = await _findPossibleEntries(walletId, data);
 		result.push(data);
 	}
 	return result;
 }
+
+function _findPossibleEntries(walletId, {entryDate, amount, isExpense}){
+	return Entry.findAll({
+		attributes: ['id', 'description', 'entryDate', 'importSource'],
+		where: {
+			walletId, 
+			entryDate, 
+			amount,
+			type: (isExpense) ? Entry.DEBIT : Entry.CREDIT,
+			importHash: {
+				[Op.is] : null
+			}
+		}, 
+		include: [{
+			model: Category,
+			attributes: ['id', 'name']
+		}]
+	})
+}
+
+
 
 function processLine(line, categories) {
 	const split = line.split(';');
@@ -97,7 +120,8 @@ async function insert(data, walletId) {
 	const created = await Entry.create({
 		...data,
 		walletId : walletId,
-		type: type
+		type: type,
+		importSource: 'ITAU'
 	});
 	return await Entry.findByPk(created.get('id'),{
 		attributes: [...entryService.ENTRY_ATTRIBUTES, 'type']

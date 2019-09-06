@@ -161,6 +161,32 @@ function debitAmountMonthResume(walletId){
 	return _entryAmountMonthResume(walletId, Entry.DEBIT)
 }
 
+async function findOrCreateDebit(description, amount, date, walletId, source) {
+	const debit = await Entry.findOne({
+		attributes: ['id'],
+		where: {
+			amount: amount,
+			entryDate: date,
+			walletId: walletId,
+			type: Entry.DEBIT
+		}
+	});
+	if(debit){
+		return {status: 'ALREADY_EXISTS'}
+	}
+	const newDebit = await createDebit({
+		description: description,
+		amount: amount,
+		entryDate: date,
+		importSource: source
+	}, walletId);
+
+	return {
+		status: 'CREATED',
+		entry: newDebit
+	};
+}
+
 
 module.exports = {
 	createDebit: createDebit,
@@ -175,5 +201,6 @@ module.exports = {
 	findAllCredits: findAllCredits,
 	creditAmountMonthResume: creditAmountMonthResume,
 	debitAmountMonthResume : debitAmountMonthResume,
-	ENTRY_ATTRIBUTES: ENTRY_ATTRIBUTES
+	ENTRY_ATTRIBUTES: ENTRY_ATTRIBUTES,
+	findOrCreateDebit: findOrCreateDebit
 };

@@ -39,8 +39,7 @@ route.get('/bill/:id', (req, res) => {
 
 route.post('/bill', (req, res) => {
 	const bill = req.body;
-	_fixRecurrent(bill);
-	Bill.create({
+	billService.createBill({
 		...bill,
 		walletId: req.walletId,
 		userId: req.body.userId || req.userId
@@ -51,30 +50,14 @@ route.post('/bill', (req, res) => {
 			formatDbError(res, e);
 		});
 });
-function _fixRecurrent(data){
-	if(data.recurrentTotal == '' || data.recurrentTotal == 0){
-		data.recurrentTotal = null;
-		data.recurrentCount = null;
-	}else if(data.recurrentTotal && !data.recurrentCount){
-		data.recurrentCount = 1;
-	}
-	
-}
 
 async function _update(req, res, data) {
 	try {
-		_fixRecurrent(data);
-		delete data.walletId;
-		delete data.id;
-		const affectedRows = await Bill.update(data, {
-			where: { id: req.params.id, walletId: req.walletId }
-		});
-		if (affectedRows[0] === 0) {
+		const affectedRows = await billService.updateBill(data, req.params.id, req.walletId)
+		if (affectedRows === 0) {
 			return res.status(400).send({ errors: ['bill.update.noUpdateItem'] });
 		}
-		res.json(
-			await Bill.findByPk(req.params.id, { attributes: billService.BILL_ATTRIBUTES })
-		);
+		res.json(await billService.getBill(req.params.id, req.walletId));
 	} catch (e) {
 		console.log('Update bill error', e);
 		formatDbError(res, e);
@@ -101,12 +84,23 @@ route.delete('/bill/:id', async (req, res) => {
 	}
 });
 
-route.put('/bill/:id/setAsPayd', async (req, res) => {
+route.put('/bill/:id/setAsPayd', (req, res) => {
 	const bill = _.pick(req.body, ['amountPaid', 'paymentDate']);
 	if (!bill.amountPaid || !bill.paymentDate) {
 		return res.status(400).send({ errors: ['bill.setAsPayd.invalidParams'] });
 	}
-	return _update(req, res, bill);
+	billService
+		.setBillAsPayd(bill.amountPaid, bill.paymentDate, req.params.id, req.walletId)
+		.then(success => {
+			if (success) {
+				return res.sendStatus(200);
+			}
+			res.status(500).send({ errors: ['bill.setAsPayd.genericError'] });
+		})
+		.catch(error => {
+			console.error('setAsPayd error', error);
+			res.status(500).send({ errors: ['bill.setAsPayd.genericError'] });
+		});
 });
 
 route.put('/bill/:id/setCategory', async (req, res) => {
