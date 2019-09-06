@@ -8,7 +8,7 @@ import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { useDropzone } from 'react-dropzone'
 import 'sass/dropzone';
 import moment from 'moment';
-import { formatMoney, isMobile } from 'service/util';
+import { formatCurrency, isMobile } from 'service/util';
 import Errors from 'components/message/Error';
 import SelectSearch from 'react-select-search';
 import _ from 'lodash';
@@ -80,10 +80,10 @@ const ItauExtract = () => {
 
     const showImportedData = () => {
         return !!readedFileJSON.length && readedFileJSON.map((line, idx) => (
-            <tr key={idx}>
-                <td>{moment(line.date).format('DD/MM/YYYY')}</td>
+            <tr key={line.importHash}>
+                <td>{moment(line.entryDate).format('DD/MM/YYYY')}</td>
                 <td>{line.description}</td>
-                <td>{bundle('currency')}&nbsp;{formatMoney(line.amount)}</td>
+                <td>{formatCurrency(line.amount)}</td>
                 <td className={line.isExpense ? 'debit' : 'credit'}>
                     {line.isExpense ? bundle('debit') : bundle('credit')}
                 </td>
@@ -103,9 +103,9 @@ const ItauExtract = () => {
     const showMobileImportedData = () => {
         return !!readedFileJSON.length && readedFileJSON.map((line, idx) => (
             <div key={idx} className="simple-card">
-                <span className="line"><strong>{bundle('date')}:&nbsp;</strong>{moment(line.date).format('DD/MM/YYYY')}</span>
+                <span className="line"><strong>{bundle('date')}:&nbsp;</strong>{moment(line.entryDate).format('DD/MM/YYYY')}</span>
                 <span className="line"><strong>{bundle('description')}:&nbsp;</strong>{line.description}</span>
-                <span className="line"><strong>{bundle('amount')}:&nbsp;</strong>{bundle('currency')}&nbsp;{formatMoney(line.amount)}</span>
+                <span className="line"><strong>{bundle('amount')}:&nbsp;</strong>{formatCurrency(line.amount)}</span>
                 <span className="line"><strong>{bundle('type')}:&nbsp;</strong>
                     <span className={line.isExpense ? 'debit' : 'credit'}>
                         {line.isExpense ? bundle('debit') : bundle('credit')}

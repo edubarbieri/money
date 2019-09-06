@@ -2,6 +2,7 @@ import {toMoney} from 'vanilla-masker';
 // @ts-ignore
 import config from '../config'
 import bundle from 'i18n/bundle';
+import moment from 'moment';
 
  /**
  * Chek if is a valid email
@@ -44,6 +45,30 @@ export const formatMoneyWithCurrency = (value) => {
         zeroCents: false
     });
 }
+
+
+const _currencyFormatter = new Intl.NumberFormat('pt-BR', {
+	style: 'currency',
+	currency: 'BRL',
+});
+/**
+	* Format number to  currency format like R$ 123.456,00
+ * @param {number} value
+ * @returns {string} formattedValue like R$ 123.456,00
+ */
+export const formatCurrency = (value) => {
+	return _currencyFormatter.format(value);
+}
+
+
+export const formatDate = (date) => {
+	console.log(date)
+	if((typeof date === 'string') && date.length === 10){
+		return date.split('-').reverse().join('/');
+	}
+	return moment(date).format('DD/MM/YYYY')
+}
+
 
  /**
   * Check if is to render mobile content based on window.size
