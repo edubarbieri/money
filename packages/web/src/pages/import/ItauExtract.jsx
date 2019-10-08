@@ -87,7 +87,7 @@ const ItauExtract = () => {
         let auxArray = [];
         for (let index = 0; index < possibleEntries.length; index++) {
             const element = possibleEntries[index];
-            const name = element.description + ' - ' + moment(element.entryDate, 'YYYY-MM-DDD').format(bundle('moment.date.format'));
+            const name = element.description + ' - ' + moment(element.entryDate, 'YYYY-MM-DD').format(bundle('moment.date.format'));
             auxArray.push({name: name, value: element.id});
         }
         return auxArray;
