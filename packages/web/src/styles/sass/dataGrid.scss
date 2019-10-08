@@ -11,10 +11,6 @@
         border: 0px;
     }
 
-    .table-striped>tbody>tr:nth-of-type(odd) {
-        background-color: $brand-white;
-    }
-
     .table > thead > tr > th{
         font-weight: 600;
     }
@@ -29,11 +25,17 @@
     tbody {
         tr{
             color: $gray;
+            &:nth-of-type(odd) {
+                background-color: $gray-lighter;
+            }
+            &:hover{
+                box-shadow: 0 0px 2px 0px $brand-primary inset;
+            }
+            &.disabled{
+                color: $gray-light;
+            }
         }
     
-        tr.disabled{
-            color: $gray-light;
-        }
     }
 
     td.actions{
@@ -163,6 +165,13 @@
     thead{
         border-color: $brand-danger;
     }
+    tbody {
+        tr{
+            &:hover{
+                box-shadow: 0 0px 2px 0px $brand-danger inset;
+            }
+        }
+    }
 }
 
 .panel-default,
@@ -179,11 +188,16 @@
 
 .panel-extract{
     .data-grid{
-        tbody tr{
-            color: $brand-danger;
-        }
-        tbody tr.disabled{
-            color: $gray;
+        tbody{
+            tr{
+                color: $brand-danger;
+                &.disabled{
+                    color: $gray;
+                }
+                &:hover{
+                    box-shadow: 0 0px 2px 0px $gray inset;
+                }
+            }
         }
     }
     .data-list{
