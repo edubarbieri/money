@@ -1,1 +1,1 @@
-My Money app
+My Money app v0.0.1
