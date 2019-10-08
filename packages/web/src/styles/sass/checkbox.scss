@@ -64,8 +64,37 @@
 }
 
 .styled-checkbox.danger{
-    &:checked + label:before {
+    &:checked:not(:disabled) + label:before {
         background: $brand-danger;
+    }
+    &:checked:disabled + label {
+        color: $brand-danger;
+        &:after{
+          background: $brand-danger;
+          box-shadow: 
+            2px 0 0 $brand-danger,
+            4px 0 0 $brand-danger,
+            4px -2px 0 $brand-danger,
+            4px -4px 0 $brand-danger,
+            4px -6px 0 $brand-danger,
+            4px -8px 0 $brand-danger;
+        }
+    }
+}
+
+.styled-checkbox{
+    &:checked:disabled + label {
+        color: $brand-primary;
+        &:after{
+          background: $brand-primary;
+          box-shadow: 
+            2px 0 0 $brand-primary,
+            4px 0 0 $brand-primary,
+            4px -2px 0 $brand-primary,
+            4px -4px 0 $brand-primary,
+            4px -6px 0 $brand-primary,
+            4px -8px 0 $brand-primary;
+        }
     }
 }
   

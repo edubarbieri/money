@@ -111,7 +111,7 @@ const Bills = () => {
 
 
 
-  const [columns, setColumns] = useState([
+  const columns = [
     { id: 'description', title: bundle('description') },
     { id: 'formattedAmount', title: bundle('value') },
     { id: 'formatedDueDate', title: bundle('due.date') },
@@ -120,7 +120,7 @@ const Bills = () => {
     { id: 'formattedAmountPayed', title: bundle('value.payed') },
     { id: 'user.name', title: bundle('member') },
     { id: 'recurrency', title: bundle('recurrency') },
-  ]);
+  ];
 
   const sorters = [
     { id: "formattedAmount", filter: 'amount', reverse: false },
@@ -207,24 +207,6 @@ const Bills = () => {
     const payedData = {
       amountPaid: editedData.amount,
       paymentDate: editedData.date
-    }
-    dispatch({ type: SET_LOADING, payload: true })
-    billService.setAsPayed(bill.id, payedData).then(res => {
-      dispatch({ type: SET_LOADING, payload: false })
-      if (res.status >= 400) {
-        setErrors(res.errors);
-        return;
-      }
-      setRefresh(new Date().getTime());
-    }).catch(err => {
-      console.log(err);
-    })
-  }
-
-  const openBill = (bill) => {
-    const payedData = {
-      amountPaid: null,
-      paymentDate: null
     }
     dispatch({ type: SET_LOADING, payload: true })
     billService.setAsPayed(bill.id, payedData).then(res => {

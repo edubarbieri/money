@@ -244,11 +244,21 @@
     }
 }
 
+
+.extract-panel-title{
+    float: left;
+    line-height: 30px;
+}
 @media screen and (max-width: 767px){
     .card .card-remove,
     .panel-heading .panel-tool-options > li ,
     .panel-heading .panel-tool-options > li > a{
         font-size: 16px;
+    }
+    
+    .extract-panel-title{
+        width: 100%;
+        text-align: center;
     }
     
 }

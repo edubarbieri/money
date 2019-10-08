@@ -1,17 +1,77 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import bundle from 'i18n/bundle';
 import MemberSelector from './MemberSelector';
 import 'sass/calendar';
 import 'sass/select';
-import { formatMoney } from 'service/util';
 import Datepicker from './Datepicker';
 import SelectSearch  from 'react-select-search';
 import { checkSize } from 'service/util';
+import { credit as creditService, debit as debitService} from 'mymoney-sdk';
+import Errors from 'components/message/Error';
 
-const ExpensesEditor = ({ extract, setExtract, onSave, onCancel }) => {
+const ExtractsEditor = ({ extract, onSave, onCancel}) => {
     let windowSize  = useSelector(state => state.global.width);
     let categories = useSelector(state => state.wallet.categories);
+    let [errors, setErrors] = useState([]);
+
+    const emptyExtract = {
+        id: '',
+        description: '',
+        amount: '',
+        user: {
+            id: null,
+            name: ''
+        },
+        category: {
+            id: null,
+            name: ''
+        },
+        objectEntryDate: new Date(),
+        entryDate: new Date(),
+        formattedDueDate: '',
+        recurrent: false,
+        recurrentTotal: '',
+        type: ''
+    }
+
+    let [editExtract, setEditExtract] = useState(emptyExtract);
+
+    useEffect(()=>{
+        if(!extract.id){
+            return;
+        }
+        setEditExtract(extract);
+    }, [extract]);
+
+    const saveExtract = () => {
+        const service  = editExtract.type === 'credit' ? creditService : debitService;
+
+        if(editExtract.id){
+            service.update(editExtract).then(res => {
+                if(res.status >= 400){
+                    setErrors(res.errors);
+                    return;
+                }
+                onSave();
+                setEditExtract(emptyExtract);
+            });
+            return;
+        }
+        service.add(editExtract).then(res => {
+            if(res.status >= 400){
+                setErrors(res.errors);
+                return;
+            }
+            onSave();
+            setEditExtract(emptyExtract);
+        });
+    }
+
+    const cancel = () => {
+        setEditExtract(emptyExtract);
+        onCancel(emptyExtract);
+    }
 
     return (
         <div className="panel panel-primary">
@@ -19,6 +79,7 @@ const ExpensesEditor = ({ extract, setExtract, onSave, onCancel }) => {
                 {(extract && extract.id) ? bundle('edit.extract') : bundle('new.extract')}
             </div>
             <div className="panel-body m-h-282">
+                <Errors errors={errors}  setErrors={setErrors}/>
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row">
@@ -26,8 +87,9 @@ const ExpensesEditor = ({ extract, setExtract, onSave, onCancel }) => {
                                 <label>{bundle("description")}</label>
                                 <input type="text"
                                     className="form-control"
-                                    value={extract.description}
-                                    onChange={event => setExtract({ ...extract, description: event.target.value })} />
+                                    id="inpt-description"
+                                    value={editExtract.description}
+                                    onChange={event => setEditExtract({ ...editExtract, description: event.target.value })} />
                             </div>
                         </div>
                         <div className="row">
@@ -37,59 +99,81 @@ const ExpensesEditor = ({ extract, setExtract, onSave, onCancel }) => {
                                     <span className="input-group-addon p-0">
                                         {bundle('currency')}
                                     </span>
-                                    <input type="text"
+                                    <input type="number"
                                         className="form-control"
-                                        value={extract.value}
+                                        value={editExtract.amount}
                                         placeholder="0.00"
-                                        onChange={event => setExtract({ ...extract, value: formatMoney(event.target.value) })} />
+                                        step="any"
+                                        min="0"
+                                        onChange={event => setEditExtract({ ...editExtract, amount: event.target.value})} />
                                 </div>
                             </div>
                             <div className="col-md-6 col-xs-6">
                                 <MemberSelector
-                                    member={extract.member}
-                                    setMember={member => setExtract({ ...extract, member: member })}/>
+                                    member={editExtract.user}
+                                    setMember={member => setEditExtract({ ...editExtract, user: member })} />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-12 m-t-20">
                                 <label>{bundle("category")}</label>
                                 <SelectSearch 
-                                    value={extract.category}
+                                    value={(editExtract.category) ? editExtract.category.id : ''}
                                     options={categories} 
                                     className="select-search-box"
                                     search={true}
-                                    onChange={value => setExtract({ ...extract, category: value.value })}
+                                    onChange={value => setEditExtract({ ...editExtract, category: {...editExtract.category, id: value.value}})}
                                 />
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-6 col-xs-6 m-t-20">
+                            <div className="col-md-3 col-xs-3 m-t-20">
                                 <input className="styled-checkbox"
                                     id="isCredit"
                                     type="radio"
                                     name="editType"
-                                    checked={(extract.isCredit) ? true : false}
-                                    value={extract.isCredit}
-                                    onChange={event => setExtract({ ...extract, isCredit: event.target.checked })} />
-                                <label htmlFor="isCredit">{bundle('credit')}</label>
+                                    checked={editExtract.type === 'credit'}
+                                    disabled={!!editExtract.id}
+                                    onChange={event => setEditExtract({ ...editExtract, type: (event.target.checked) ? 'credit' : 'debit' })} />
+                                <label htmlFor="isCredit"><span>{bundle('credit')}</span></label>
                             </div>
-                            <div className="col-md-6 col-xs-6 m-t-20">
+                            <div className="col-md-3 col-xs-3 m-t-20">
                                 <input className="styled-checkbox danger"
                                     id="isDebit"
                                     type="radio"
                                     name="editType"
-                                    checked={(extract.isCredit) ? false : true}
-                                    value={extract.isCredit}
-                                    onChange={event => setExtract({ ...extract, isCredit: !event.target.checked })} />
-                                <label htmlFor="isDebit">{bundle('debit')}</label>
+                                    disabled={!!editExtract.id}
+                                    checked={editExtract.type === 'debit'}
+                                    onChange={event => setEditExtract({ ...editExtract, type: (!event.target.checked) ? 'credit' : 'debit'  })} />
+                                <label htmlFor="isDebit"><span>{bundle('debit')}</span></label>
+                            </div>
+                            <div className="col-md-3 col-xs-6 m-t-20">
+                                <input className="styled-checkbox danger" id="repeatInpt" type="checkbox"
+                                    checked={(editExtract.recurrent) ? true : false}
+                                    onChange={event => setEditExtract({ ...editExtract, recurrent: event.target.checked })} />
+                                <label htmlFor="repeatInpt">
+                                    <span>{bundle('recurrent')}</span>
+                                </label>
+                            </div>
+                            <div className="col-md-3  col-xs-12">
+                                <label className="center">{bundle("installment.qtd")}</label>
+                                <div className="input-group">
+                                    <input type="number"
+                                        className="form-control right"
+                                        value={editExtract.recurrentTotal}
+                                        onChange={event => setEditExtract({ ...editExtract, recurrentTotal: event.target.value })} />
+                                    <span className="input-group-addon p-0">
+                                        <i className="fas fa-times" style={{'fontSize': '10px', 'lineHeight': '25px'}}/>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className={(checkSize(991, windowSize)) ?  'col-md-4 m-t-20' : 'col-md-4'}>
                         <Datepicker
                             title={bundle("date")}
-                            date={extract.date}
-                            setDate={(value, formattedValue) => setExtract({ ...extract, dueDate: value, formattedDate: formattedValue })}
+                            date={editExtract.objectEntryDate}
+                            setDate={(value, formattedEntryDate) => setEditExtract({ ...editExtract, entryDate: value, formattedEntryDate: formattedEntryDate })}
                         />
                     </div>
                 </div>
@@ -97,12 +181,12 @@ const ExpensesEditor = ({ extract, setExtract, onSave, onCancel }) => {
             <div className="panel-footer">
                 <div className="row">
                     <div className="col-md-3  col-xs-6 pull-right">
-                        <button className="btn btn-primary w-100" onClick={() => onSave(extract)} type="button">
+                        <button className="btn btn-danger w-100" onClick={saveExtract} type="button">
                             {bundle('save')}
                         </button>
                     </div>
                     <div className="col-md-3  col-xs-6 pull-right">
-                        <button className="btn btn-light w-100" onClick={() => onCancel(extract)} type="button">
+                        <button className="btn btn-light w-100" onClick={cancel} type="button">
                             {bundle('cancel')}
                         </button>
                     </div>
@@ -112,4 +196,4 @@ const ExpensesEditor = ({ extract, setExtract, onSave, onCancel }) => {
     );
 }
 
-export default ExpensesEditor;
+export default ExtractsEditor;

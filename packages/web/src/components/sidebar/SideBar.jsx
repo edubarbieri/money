@@ -38,12 +38,12 @@ const SideBar = () => {
             <span className="title">{bundle('opened.bills')}</span>
           </Link>
         </li>
-        <li className={activePage === route('receipts') ? 'active' : ''}>
+        {/* <li className={activePage === route('receipts') ? 'active' : ''}>
           <Link to={route('receipts')} onClick={() => setCollapseSidebar(!collapseSidebar)}>
             <i className="fas fa-hand-holding-usd"></i>
             <span className="title">{bundle('receipts')}</span>
           </Link>
-        </li>
+        </li> */}
         <li className={activePage === route('extract') ? 'active' : ''}>
           <Link to={route('extract')} onClick={() => setCollapseSidebar(!collapseSidebar)}>
             <i className="fas fa-money-bill-wave"></i>

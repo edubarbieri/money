@@ -70,6 +70,14 @@ credit:
   pt-BR: "Crédito"
   en-US: "Credit"
 
+debits:
+  pt-BR: "Débitos"
+  en-US: "Debits"
+
+credits:
+  pt-BR: "Créditos"
+  en-US: "Credits"
+
 receipts:
   pt-BR: "Entradas"
   en-US: "Receipts"
@@ -555,6 +563,22 @@ remove.bill:
 remove.bill.confirmation:
   pt-BR: "Você tem certeza que deseja remover a conta: {0}"
   en-US: "You really want remove bill: {0}"
+
+remove.credit:
+  pt-BR: "Remoção de credito"
+  en-US: "Credit remove"
+
+remove.credit.confirmation:
+  pt-BR: "Você tem certeza que deseja remover o credito: {0}"
+  en-US: "You really want remove credit: {0}"
+
+remove.debit:
+  pt-BR: "Remoção de débito"
+  en-US: "Debit remove"
+
+remove.debit.confirmation:
+  pt-BR: "Você tem certeza que deseja remover o débito: {0}"
+  en-US: "You really want remove debit: {0}"
 
 payment.date:
   pt-BR: "Data de pagamento"

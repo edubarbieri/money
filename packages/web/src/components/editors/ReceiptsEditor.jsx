@@ -6,7 +6,7 @@ import 'sass/calendar';
 import 'sass/select';
 import Datepicker from './Datepicker';
 import SelectSearch  from 'react-select-search';
-import { checkSize, isMobile } from 'service/util';
+import { checkSize } from 'service/util';
 import { bill as receiptService} from 'mymoney-sdk';
 import Errors from 'components/message/Error';
 

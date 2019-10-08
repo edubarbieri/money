@@ -111,7 +111,7 @@ const Receipts = () => {
 
   
 
-  const [columns, setColumns] = useState([
+  const columns= [
     { id: 'description', title: bundle('description') },
     { id: 'formattedAmount', title: bundle('value') },
     { id: 'formattedAmountPayed', title: bundle('value.payed') },
@@ -120,7 +120,7 @@ const Receipts = () => {
     { id: 'formatedPaymentDate', title: bundle('payment.date') },
     { id: 'category.name', title: bundle('category') },
     { id: 'recurrency', title: bundle('recurrency') },
-  ]);
+  ];
 
   const sorters = [
     {id:"formattedAmount", filter: 'amount', reverse: false},
@@ -217,24 +217,6 @@ const Receipts = () => {
     })
   }
   
-  const openReceipt = (receipt) => {
-    const payedData = {
-      amountPaid: null,
-      paymentDate: null
-    }
-    dispatch({ type: SET_LOADING, payload: true })
-    receiptService.setAsPayed(receipt.id, payedData).then(res => {
-      dispatch({ type: SET_LOADING, payload: false })
-      if(res.status >= 400){
-        setErrors(res.errors);
-        return;
-      }
-      setRefresh(new Date().getTime());
-    }).catch(err => {
-      console.log(err);
-    })
-  }
-
   const [paymentDateModal, setPaymentDateModal] = useState({
     show: false,
     setShow: (value) => setPaymentDateModal({...paymentDateModal, show: value}),

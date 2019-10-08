@@ -1,217 +1,287 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_ACTIVE_PAGE } from 'store/globalActions';
+import { SET_ACTIVE_PAGE, SET_LOADING } from 'store/globalActions';
 import { SHOW_EXTRACT_ACTIONS } from 'store/uxActions';
-import bundle from 'i18n/bundle';
+import bundle, { bundleFormat } from 'i18n/bundle';
 import route from 'i18n/route'
 import ExtractEditor from 'components/editors/ExtractEditor';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { LANG } from 'i18n/service';
 import 'moment/locale/pt-br';
 import moment from 'moment';
-import _ from 'lodash';
 import DataGrid from 'components/grid/DataGrid';
 import SimpleGraph from 'components/graph/SimpleGraph';
-import { getHumanDate } from 'service/dateUtil';
-import { Mobile, Desktop } from 'components/wrapper';
-import { isMobile } from 'service/util';
-import Filter from 'components/editors/Filter';
+import { isMobile, formatMoneyWithCurrency } from 'service/util';
 import SelectWalletMessage from 'components/global/SelectWalletMessage';
+import { credit as creditService, debit as debitService } from 'mymoney-sdk';
+import Modal from 'components/modal/Modal';
+import Errors from 'components/message/Error';
+import { setTimeout } from 'timers';
+import 'sass/panels';
 
 const Extracts = () => {
-  const dispatch = useDispatch();
-  dispatch({ type: SET_ACTIVE_PAGE, payload: route('extract') })
-  const pages = [{ label: bundle('extract') }]
-  const showExtractActions = useSelector(state => state.ux.showExtractActions);
-
-  const emptyExtract = { description: '', value: '', repeat: false, member: {}, date: new Date(), formattedDate: getHumanDate(), category: '' }
-  
   moment.locale(LANG.toLowerCase());
-  var filterDate = moment();
+
+  const dispatch = useDispatch();
+  let started = useSelector(state => state.global.started);
+  let width = useSelector(state => state.global.width);
+  let wallet = useSelector(state => state.user.activeWallet);
+  const pages = [{ label: bundle('opened.extracts') }]
+  const showExtractActions = useSelector(state => state.ux.showExtractActions);
+  const [userCredits, setUserCredits] = useState([]);
+  const [userDebits, setUserDebits] = useState([]);
+  const [editExtract, setEditEntry] = useState({});
+  const [refresh, setRefresh] = useState(null);
+  const [errors, setErrors] = useState([]);
+  const [creditTotalPages, setCreditTotalPages] = useState(1);
+  const [debitTotalPages, setDebitTotalPages] = useState(1);
+  const [editFocus, setEditFocus] = useState(false);
+
+  const filterDate = moment();
   const month = filterDate.month();
-  const [filter, setFilter] = useState({
+  const [filterCredit, setFilterCredit] = useState({
     month: month + 1,
     year: filterDate.get('year'),
-    category: '',
-    dateStart: new Date(),
-    dateEnd: new Date(),
-    isRange: false,
-    isCredit: false
+    order: '',
+    page: 1,
+    pageSize: 20
   });
 
-  const onFilter = () => {
-    console.log(filter);
-  }
+  const [filterDebit, setFilterDebit] = useState({
+    month: month + 1,
+    year: filterDate.get('year'),
+    order: '',
+    page: 1,
+    pageSize: 20
+  });
 
-  const categories = [
-    { value: 'chocolate', name: 'Chocolate' },
-    { value: 'strawberry', name: 'Strawberry' },
-    { value: 'vanilla', name: 'Vanilla' }
-  ]
+  const [graphData, setgraphData] = useState([]);
 
-  const [graphData, setgraphData] = useState([
-    {
-      "id": bundle('debit'),
-      "data": [
-        { "x": moment.months(month - 4), "y": 1220 },
-        { "x": moment.months(month - 3), "y": 952 },
-        { "x": moment.months(month - 2), "y": 1352 },
-        { "x": moment.months(month - 1), "y": 790 },
-        { "x": moment.months(month), "y": 748 }
-      ]
-    },
-    {
-      "id": bundle('credit'),
-      "data": [
-        { "x": moment.months(month - 4), "y": 790 },
-        { "x": moment.months(month - 3), "y": 1352 },
-        { "x": moment.months(month - 2), "y": 1220 },
-        { "x": moment.months(month - 1), "y": 748 },
-        { "x": moment.months(month), "y": 952 }
-      ]
-    },
-  ]);
+  const [removeExtractConfirmationData, setRemoveExtractConfirmationData] = useState({
+    show: false,
+    title: '',
+    text: '',
+    id: '',
+    type: '',
+    onConfirm: null,
+    onCancel: null,
+    category: null
+  });
 
-  const mockExtracts = [
-    {
-      "id": "123",
-      "description": "teste",
-      "value": "123,12",
-      "repeat": false,
-      "isCredit": false,
-      "member": {
-        "avatar": "https://media.licdn.com/dms/image/C4E03AQEFqbs3VysSmA/profile-displayphoto-shrink_200_200/0?e=1570665600&v=beta&t=us26AsComdfJSMCx2ja8B3ue_ZoNgm1BmPOPb2M0X5Q",
-        "name": "Matheus dos Santos",
-        "id": "124",
-        "active": true,
-        "owner": false
-      },
-      "memberName": "Matheus dos Santos",
-      "formattedDate": moment("2019-08-14T03:00:00.000Z").format('DD/MM/YYYY'),
-      "formattedValue": bundle('currency') + " 123,12",
-      "dueDate": "2019-08-14T03:00:00.000Z",
-      "type": bundle('debit')
-    },
-    {
-      "id": "124",
-      "description": "asdasda",
-      "value": "54,02",
-      "repeat": false,
-      "isCredit": true,
-      "member": {
-        "avatar": "https://gravatar.com/avatar/b733b54fa7871a4f97cd5968c3c26833",
-        "name": "Matheus Barbieri",
-        "id": "123",
-        "active": true,
-        "owner": true
-      },
-      "memberName": "Matheus Barbieri",
-      "dueDate": "2019-08-22T03:00:00.000Z",
-      "formattedDate": moment("2019-08-22T03:00:00.000Z").format('DD/MM/YYYY'),
-      "formattedValue": bundle('currency') + " 54,02",
-      "type": bundle('credit')
+  dispatch({ type: SET_ACTIVE_PAGE, payload: route('opened.extracts') })
+
+  useEffect(() => {
+    if (!started || !wallet.id) {
+      return;
     }
-  ]
+    dispatch({ type: SET_LOADING, payload: true })
+    creditService.amountMonthResume().then(result => {
+      if (result.status >= 400) {
+        console.log('Error on fetch extracts data');
+        return;
+      }
+      let creditGraph = [];
+      for (let index = 0; index < result.length; index++) {
+        const data = result[index];
+        creditGraph.push({
+          "x": moment.months(data.month - 1),
+          "y": Number(data.amount)
+        })
+      }
 
-  const [userExtracts, setUserExtracts] = useState(mockExtracts);
+      debitService.amountMonthResume().then(result => {
+        if (result.status >= 400) {
+          console.log('Error on fetch extracts data');
+          return;
+        }
+        let debitGraph = [];
+        for (let index = 0; index < result.length; index++) {
+          const data = result[index];
+          debitGraph.push({
+            "x": moment.months(data.month - 1),
+            "y": Number(data.amount)
+          })
+        }
+        setgraphData([
+          { "id": bundle('credit'), data: creditGraph },
+          { "id": bundle('debit'), data: debitGraph }
+        ]);
+      }).catch(err => {
+        console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    
+  }, [started, refresh, dispatch, wallet]);
 
-  const [columns, setColumns] = useState([
-    { id: 'description', title: bundle('description') },
-    { id: 'formattedValue', title: bundle('value') },
-    { id: 'memberName', title: bundle('member') },
-    { id: 'formattedDate', title: bundle('due.date') },
-    { id: 'type', title: bundle('type') },
-  ]);
+  useEffect(() => {
+    if (!started || !wallet.id) {
+      return;
+    }
+    dispatch({ type: SET_LOADING, payload: true })
+    creditService.get(filterCredit).then(result => {
+      dispatch({ type: SET_LOADING, payload: false })
+      if (result.status >= 400) {
+        console.log('Error on fetch extracts data');
+        return;
+      }
+      setUserCredits(parseExtractsData(result.data));
+      setCreditTotalPages(result.totalPages);
+    }).catch(err => {
+      console.log(err)
+    })
+  }, [started, filterCredit, refresh, dispatch, wallet]);
 
-  const [editExtract, setEditExtract] = useState({});
 
-  var sorters = [
-    "formattedValue",
-    "formattedDate",
-    "description",
-    "type"
-  ]
+  useEffect(() => {
+    if (!started || !wallet.id) {
+      return;
+    }
+    dispatch({ type: SET_LOADING, payload: true })
+    debitService.get(filterDebit).then(result => {
+      dispatch({ type: SET_LOADING, payload: false })
+      if (result.status >= 400) {
+        console.log('Error on fetch extracts data');
+        return;
+      }
+      setUserDebits(parseExtractsData(result.data));
+      setDebitTotalPages(result.totalPages);
+    }).catch(err => {
+      console.log(err)
+    })
+  }, [started, filterDebit, refresh, dispatch, wallet]);
 
-  var conf = {
-    disabledProperty: 'isCredit'
+
+  const parseExtractsData = (resultData) => {
+    for (let index = 0; index < resultData.length; index++) {
+      const extract = resultData[index];
+      extract.formattedEntryDate = moment(extract.entryDate).format(bundle('moment.date.format'));
+      extract.formattedAmount = formatMoneyWithCurrency(Number(extract.amount).toFixed(2))
+      extract.objectEntryDate = moment(extract.entryDate).toDate();
+      extract.recurrency = (extract.recurrentTotal) ? `${extract.recurrentCount}${bundle('of')}${extract.recurrentTotal || 0}` : (extract.recurrent) ? bundle('yes') : bundle('no');
+    }
+    return resultData;
   }
 
-  const actions = (extract) => {
+  const creditColumns = [
+    { id: 'description', title: bundle('description') },
+    { id: 'formattedAmount', title: bundle('value') },
+    { id: 'formattedEntryDate', title: bundle('date') },
+    { id: 'category.name', title: bundle('category') },
+    { id: 'user.name', title: bundle('member') },
+    { id: 'recurrency', title: bundle('recurrency') },
+  ];
+  
+  const debitColumns = [
+    { id: 'description', title: bundle('description') },
+    { id: 'formattedAmount', title: bundle('value') },
+    { id: 'formattedEntryDate', title: bundle('date') },
+    { id: 'category.name', title: bundle('category') },
+    { id: 'user.name', title: bundle('member') },
+    { id: 'recurrency', title: bundle('recurrency') },
+  ];
+
+  const sorters = [
+    { id: "formattedAmount", filter: 'amount', reverse: false },
+    { id: "formattedEntryDate", filter: 'entryDate', reverse: false },
+    { id: "description", filter: 'description', reverse: false }
+  ]
+
+  const conf = {
+    disabledProperty: 'paymentDate'
+  }
+
+  const actions = (extract, type) => {
     return (
       <div className="actions-container">
-        {actionsButtons(extract)}
+        {actionsButtons(extract, type)}
       </div>
     )
   }
 
-  const actionsButtons = (extract) => {
-    return ([
-      <div key="edit" onClick={() => openEditExtract(extract)}
-        className="row-options edit">
-        <i className="far fa-edit" />
-        <label>{bundle('edit')}</label>
-      </div>,
-      <div key="remove" onClick={() => removeExtract(extract)}
-        className="row-options remove">
-        <i className="fa fa-trash-alt" />
-        <label>{bundle('remove')}</label>
-      </div>
-    ])
-  };
-
-  const generateRecurrence = (extract) => {
-    if (extract.fixed) {
-      return bundle('fixed')
-    } else if (extract.installment) {
-      return extract.installmentQtd + ' ' + bundle('installment.qtd')
-    }
-    return bundle('unique')
+  const creditAction = (extract) => {
+    return actions(extract, 'credit');
+  }
+  
+  const debitAction = (extract) => {
+    return actions(extract, 'debit');
   }
 
-  const onSaveExtract = (data) => {
-    let auxExtracts = _.clone(userExtracts);
-    data.recurrence = generateRecurrence(data);
-    data.memberName = (data.member) ? data.member.name : '';
-    data.type = (data.isCredit) ? bundle('credit') : bundle('debit');
-    data.formattedValue = bundle('currency') + ' ' + data.value;
-    console.log(data);
-    if (!data.id) {
-      data.id = new Date().getTime();
-      auxExtracts.push(data);
-    } else {
-      _.remove(auxExtracts, { id: data.id });
-      auxExtracts.push(data);
-    }
-    setUserExtracts(auxExtracts);
-    setEditExtract(emptyExtract);
-    if (isMobile()) {
-      dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: false });
-    }
+  const onSaveExtract = () => {
+    setRefresh(new Date().getTime());
   }
 
-  const openEditExtract = (extract) => {
-    if (extract.payed) {
-      return;
+  const onCancel = (emptyExtract) => {
+    setEditEntry(emptyExtract);
+  }
+
+  const buildEditFocus = () => {
+    const content = document.querySelector('.breadcrumb');
+    let top = 0;
+    if (content && isMobile()) {
+      // @ts-ignore
+      top = content.offsetTop;
     }
+    window.scrollTo(0, top);
+    setEditFocus(true);
+    let focus = document.getElementById('inpt-description');
+    if (focus) {
+      focus.focus();
+    }
+    setTimeout(() => {
+      setEditFocus(false);
+    }, 1500);
+  }
+
+  const openEditEntry = (entry, type) => {
+    entry.type = type;
+    buildEditFocus();
+    entry.recurrentTotal = entry.recurrentTotal || '';
     dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: true });
-    extract.dueDate = moment(extract.formattedDate, 'DD/MM/YYYY').toDate();
-    setEditExtract(extract);
+    setEditEntry(entry);
   }
 
-  const onCancelExtract = () => {
-    setEditExtract(emptyExtract);
-    if (isMobile()) {
-      dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: false });
-    }
+  const removeEntry = (extract, type) => {
+    setRemoveExtractConfirmationData({
+      ...removeExtractConfirmationData,
+      show: true,
+      title: type === 'credit' ? bundle('remove.credit') : bundle('remove.debit'),
+      text: type === 'credit' ? bundleFormat('remove.credit.confirmation', extract.description): bundleFormat('remove.debit.confirmation', extract.description),
+      onConfirm: removeExtractConfirmationCallBack,
+      onCancel: () => setRemoveExtractConfirmationData({ ...removeExtractConfirmationData, show: false }),
+      id: extract.id
+    });
   }
 
-  const removeExtract = (extract) => {
-    if (extract.payed) {
-      return;
-    }
-    let auxExtracts = _.clone(userExtracts);
-    _.remove(auxExtracts, { id: extract.id });
-    setUserExtracts(auxExtracts);
+  const removeExtractConfirmationCallBack = (id, type) => {
+    setRemoveExtractConfirmationData({ ...removeExtractConfirmationData, show: false });
+    dispatch({ type: SET_LOADING, payload: true })
+    const service  = type === 'credit' ? creditService : debitService;
+    service.remove(id).then(res => {
+      dispatch({ type: SET_LOADING, payload: false })
+      if (res.status >= 400) {
+        setErrors(res.errors);
+        return;
+      }
+      setRefresh(new Date().getTime());
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  const generateRecurrency = () => {
+    dispatch({ type: SET_LOADING, payload: true })
+    creditService.generateMonthRecurrentExtracts(moment().year(), moment().month() + 1).then(res => {
+      dispatch({ type: SET_LOADING, payload: false })
+      if (res.status >= 400) {
+        setErrors(res.errors);
+        return;
+      }
+      setRefresh(new Date().getTime());
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   const checkShowActions = () => {
@@ -224,25 +294,18 @@ const Extracts = () => {
                 onClick={() => dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: false })}
                 type="button">
                 <i className="fas fa-minus" />
-                <Mobile>
-                  {bundle('cancel.edit')}
-                </Mobile>
-                <Desktop>
-                  {bundle('hide.info')}
-                </Desktop>
+                {isMobile(width) ? bundle('cancel.edit') : bundle('hide.info')}
               </button>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12 col-lg-8 col-xl-6 col-xxl-5">
+            <div className={(editFocus) ? "col-md-12 col-lg-8 col-xl-6 col-xxl-5 focus" : "col-md-12 col-lg-8 col-xl-6 col-xxl-5"}>
               <ExtractEditor
-                categories={categories}
                 extract={editExtract}
-                setExtract={setEditExtract}
                 onSave={onSaveExtract}
-                onCancel={onCancelExtract} />
+                onCancel={onCancel} />
             </div>
-            <Desktop>
+            {!isMobile(width) &&
               <div className="col-md-12 col-lg-4 col-xl-6 col-xxl-7">
                 <SimpleGraph
                   data={graphData}
@@ -250,7 +313,7 @@ const Extracts = () => {
                   colorScheme="set1"
                 />
               </div>
-            </Desktop>
+            }
           </div>
         </div>
       )
@@ -259,54 +322,192 @@ const Extracts = () => {
     return (
       <div className="row">
         <div className="col-md-12">
-          <Mobile>
+          {isMobile(width) &&
             <button className="btn btn-primary btn-icon pull-right"
               onClick={() => dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: true })}
               type="button">
               <i className="fas fa-plus" />
               {bundle('add.extract')}
             </button>
-          </Mobile>
-          <Desktop>
+          }
+          {!isMobile(width) &&
             <button className="btn btn-primary btn-text btn-icon pull-right"
               onClick={() => dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: true })}
               type="button">
               <i className="fas fa-plus" />
               {bundle('expand.info')}
             </button>
-          </Desktop>
+          }
         </div>
       </div>
     )
   }
 
+  const getMonthSelector = () => {
+    return (
+      <div className="horizontal-form-group">
+        <label className="control-label">{bundle('month')}:</label>
+        <select className="form-control"
+          value={filterCredit.month}
+          onChange={event => {
+            setFilterCredit({ ...filterCredit, month: Number(event.target.value) });
+            setFilterDebit({ ...filterDebit, month: Number(event.target.value) });
+          }}>
+          {
+            moment.months().map((month, idx) => (
+              <option key={idx} value={idx + 1}>{month}</option>
+            ))
+          }
+        </select>
+      </div>
+    )
+  }
+
+  const getYearsSelector = () => {
+    const year = filterDate.get('year');
+    return (
+      <div className="horizontal-form-group">
+        <label className="control-label">{bundle('year')}:</label>
+        <select className="form-control"
+          value={filterCredit.year}
+          onChange={event => {
+            setFilterCredit({ ...filterCredit, year: Number(event.target.value) })
+            setFilterDebit({ ...filterDebit, year: Number(event.target.value) })
+          }}>
+          <option value={year - 2}>{year - 2}</option>
+          <option value={year - 1}>{year - 1}</option>
+          <option value={year}>{year}</option>
+          <option value={year + 1}>{year + 1}</option>
+          <option value={year + 2}>{year + 2}</option>
+        </select>
+      </div>
+    )
+  }
+
+  const renderRemoveConfirmation = () => {
+    return removeExtractConfirmationData.show &&
+      <Modal
+        text={removeExtractConfirmationData.text}
+        title={removeExtractConfirmationData.title}
+        fixed={true}
+        onConfirm={() => removeExtractConfirmationData.onConfirm(removeExtractConfirmationData.id, removeExtractConfirmationData.type)}
+        onClose={() => removeExtractConfirmationData.onCancel(removeExtractConfirmationData.id, removeExtractConfirmationData.type)}
+        onCancel={() => removeExtractConfirmationData.onCancel(removeExtractConfirmationData.id, removeExtractConfirmationData.type)}
+      />
+  }
+
+  const actionsButtons = (entry, type) => {
+    return ([
+      <div key="edit" onClick={() => openEditEntry(entry, type)}
+        className={'row-options edit'}>
+        <i className="far fa-edit" />
+        <label>{bundle('edit')}</label>
+      </div>,
+      <div key="remove" onClick={() => removeEntry(entry, type)}
+        className="row-options remove">
+        <i className="fa fa-trash-alt" />
+        <label>{bundle('remove')}</label>
+      </div>
+    ])
+  };
+
+  const renderRecurrencyButton = () => {
+    return <span className="recurrency-btn">
+      <span className="tooltip-trigger recurrency-tooltip pull-right">
+        <i className="fas fa-info" />
+        <span className="tooltip-text">{bundle('generate.recurency.info')}</span>
+      </span>
+      <button className="btn btn-primary pull-right"
+        onClick={generateRecurrency}
+        type="button">
+        {bundle('generate.recurency')}
+      </button>
+    </span>
+  }
+
   return (
-    <div>
-      <h1 className="page-title">{bundle('extract')}</h1>
+    <div className="extracts-page">
+      <h1 className="page-title">
+        {bundle('extract')}
+        {renderRecurrencyButton()}
+      </h1>
       <SelectWalletMessage />
       <Breadcrumb pages={pages} />
       {checkShowActions()}
+      {renderRemoveConfirmation()}
       <div className="row m-t-20">
         <div className="col-md-12">
-          <div className="panel panel-primary panel-extract">
-            <div className="panel-heading reset-color">
+          <div className="panel panel-primary">
+            <div className="panel-heading reset-color b-0">
               <div className="filter row">
-                <Filter
-                  filter={filter}
-                  setFilter={setFilter}
-                  categories={categories}
-                  onFilter={onFilter}
-                />
+                <div className="form-group">
+                  <div className="col-sm-12">
+                    {getYearsSelector()}
+                    {getMonthSelector()}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row m-t-20">
+        <div className="col-md-12">
+          <div className="panel panel-primary">
+            <div className="panel-heading">
+              <div className="filter row">
+                <div className="form-group">
+                  <div className="col-sm-12">
+                    <div className="panel-title">{bundle('credits')}</div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="panel-body">
+              <Errors errors={errors} setErrors={setErrors} />
               <div className="row">
                 <DataGrid
-                  columns={columns}
-                  rows={userExtracts}
-                  actions={actions}
+                  columns={creditColumns}
+                  rows={userCredits}
+                  actions={creditAction}
                   conf={conf}
                   sorters={sorters}
+                  page={filterCredit.page}
+                  setSort={value => setFilterCredit({ ...filterCredit, order: value })}
+                  setPage={page => setFilterCredit({ ...filterCredit, page: page })}
+                  totalPages={creditTotalPages}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row m-t-20">
+        <div className="col-md-12">
+          <div className="panel panel-danger panel-extracts">
+            <div className="panel-heading">
+              <div className="filter row">
+                <div className="form-group">
+                  <div className="col-sm-12">
+                    <div className="panel-title">{bundle('debits')}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="panel-body">
+              <Errors errors={errors} setErrors={setErrors} />
+              <div className="row">
+                <DataGrid
+                  columns={debitColumns}
+                  rows={userDebits}
+                  actions={debitAction}
+                  conf={conf}
+                  sorters={sorters}
+                  page={filterDebit.page}
+                  setSort={value => setFilterDebit({ ...filterDebit, order: value })}
+                  setPage={page => setFilterDebit({ ...filterDebit, page: page })}
+                  totalPages={debitTotalPages}
                 />
               </div>
             </div>

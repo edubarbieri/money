@@ -10,7 +10,6 @@ import 'sass/wallet';
 import 'sass/labels';
 import 'sass/views';
 import 'sass/modals';
-import config from 'app/config';
 import { user, wallet as walletService } from 'mymoney-sdk';
 import { SET_REFRESH } from 'store/globalActions';
 import Error from 'components/message/Error';

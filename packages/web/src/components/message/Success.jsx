@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import bundle from 'i18n/bundle'
 
 const Success = ({success, setSuccess}) => {
     
