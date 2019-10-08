@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import SideBar from './components/sidebar/SideBar';
 import Container from './components/container/Container';
 import Auth from './pages/auth/Auth';
@@ -12,13 +12,14 @@ import './styles/sass/footer';
 import './styles/sass/tables';
 import {auth} from 'mymoney-sdk';
 import {debounce} from 'lodash';
+import LoaderFragment from 'components/loader/LoaderFragment';
 
 const App = () => {
     const dispatch = useDispatch();
-    let isTransient  = useSelector(state => state.user.transient);
-    let token  = useSelector(state => state.user.token);
+    const isTransient  = useSelector(state => state.user.transient);
+    const token  = useSelector(state => state.user.token);
     const emptyUser = {transient: true, activeWallet: {}, profile: {}, token: ''};
-    
+    const [validatedToken, setValidateToken] = useState(false);
     const debouncedCheckSize = debounce(() => {
         dispatch({ type: WINDOW_WIDTH, payload: window.innerWidth });
     }, 100);
@@ -29,6 +30,7 @@ const App = () => {
 
     const checkIsValidToken = () => {
         auth.validateToken(token).then(isValid => {
+            setValidateToken(true);
             dispatch({ type: SET_STARTED, payload: true });
             if(isValid){
                 dispatch({ type: SET_TRANSIENT, payload: false });
@@ -42,15 +44,17 @@ const App = () => {
 
     useEffect(checkIsValidToken, [token]);
 
-    return <BrowserRouter>
-        {isTransient ?  
-            <Auth />
-             : 
+
+    const getContent = () => {
+        return isTransient ?  <Auth /> : 
             <div className="page-container">
                 <SideBar/>
                 <Container/>
             </div >
-        }
+    }
+
+    return <BrowserRouter>
+        {validatedToken ? getContent() : <LoaderFragment />}
     </BrowserRouter>
     
 }
