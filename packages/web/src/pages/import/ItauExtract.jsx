@@ -59,6 +59,11 @@ const ItauExtract = () => {
         readedFileJSON[idx].categoryId = value.value;
         setReadedFileJSON(readedFileJSON);
     }
+   
+    const setAssociation = (idx, value) => {
+        readedFileJSON[idx].association = value.value;
+        setReadedFileJSON(readedFileJSON);
+    }
 
     const handleImport = () => {
         importItau.save(readedFileJSON)
@@ -76,7 +81,17 @@ const ItauExtract = () => {
             .catch(e => setErrors(e.errors))
     }
 
-    const { getRootProps, getInputProps } = useDropzone({ onDrop })
+    const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+    const buildAssociations = (possibleEntries) => {
+        let auxArray = [];
+        for (let index = 0; index < possibleEntries.length; index++) {
+            const element = possibleEntries[index];
+            const name = element.description + ' - ' + moment(element.entryDate, 'YYYY-MM-DDD').format(bundle('moment.date.format'));
+            auxArray.push({name: name, value: element.id});
+        }
+        return auxArray;
+    }
 
     const showImportedData = () => {
         return !!readedFileJSON.length && readedFileJSON.map((line, idx) => (
@@ -95,6 +110,17 @@ const ItauExtract = () => {
                         search={true}
                         onChange={value => setCategory(idx, value)}
                     />
+                </td>
+                <td className="t-a-l">
+                    {_.isEmpty(line.possibleEntries) ? bundle('possible.entries') :
+                        <SelectSearch
+                            value=""
+                            options={buildAssociations(line.possibleEntries)}
+                            className="select-search-box"
+                            search={true}
+                            onChange={value => setAssociation(idx, value)}
+                        />
+                    }
                 </td>
             </tr>
         ));
@@ -132,7 +158,7 @@ const ItauExtract = () => {
             <Breadcrumb pages={pages} />
             <SelectWalletMessage />
             <div className="row">
-                <div className="col-md-6 col-sm-12">
+                <div className="col-md-12 col-sm-12">
                     <div className="panel panel-minimal">
                         <div className="panel-body">
                             <div {...getRootProps({ className: 'dropzone' })}>
@@ -150,7 +176,7 @@ const ItauExtract = () => {
             {
                 !!readedFileJSON.length &&
                 <div className="row">
-                    <div className="col-md-6 col-sm-12">
+                    <div className="col-md-12 col-sm-12">
                         <div className="panel panel-primary">
                             <div className="panel-heading ">
                                 <div className="panel-title">{bundle('collected.data')}</div>
@@ -167,6 +193,7 @@ const ItauExtract = () => {
                                                     <th>{bundle('amount')}</th>
                                                     <th>{bundle('type')}</th>
                                                     <th>{bundle('category')}</th>
+                                                    <th>{bundle('association')}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

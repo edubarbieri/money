@@ -608,6 +608,10 @@ import.resume.debit:
   pt-BR: "Débitos: "
   en-US: "Debits: "
 
+association:
+  pt-BR: "Associação:"
+  en-US: "Association "
+
 import.resume.already:
   pt-BR: "Já importados: "
   en-US: "Already Imported: "
@@ -619,3 +623,7 @@ generate.recurency:
 generate.recurency.info:
   pt-BR: "Está opção realizará a importação das contas do mes anterior marcadas como fixas ou recorrentes."
   en-US: "This option will import the bills of last month flagged like fixed or recurrent"
+
+possible.entries:
+  pt-BR: "Nenhuma associação possível localizada"
+  en-US: "Not found any possible association "
