@@ -58,7 +58,7 @@ const Bills = () => {
   });
 
   dispatch({ type: SET_ACTIVE_PAGE, payload: route('opened.bills') })
-  
+
   useEffect(() => {
     if (!started || !wallet.id) {
       return;
@@ -89,7 +89,7 @@ const Bills = () => {
         })
       }
       setgraphData([
-        {"id": bundle('bills'), data: graph}
+        { "id": bundle('bills'), data: graph }
       ]);
     }).catch(err => {
       console.log(err)
@@ -109,7 +109,7 @@ const Bills = () => {
     return resultData;
   }
 
-  
+
 
   const [columns, setColumns] = useState([
     { id: 'description', title: bundle('description') },
@@ -123,9 +123,9 @@ const Bills = () => {
   ]);
 
   const sorters = [
-    {id:"formattedAmount", filter: 'amount', reverse: false},
-    {id:"formatedDueDate", filter: 'dueDate', reverse: false},
-    {id:"description", filter: 'description', reverse: false}
+    { id: "formattedAmount", filter: 'amount', reverse: false },
+    { id: "formatedDueDate", filter: 'dueDate', reverse: false },
+    { id: "description", filter: 'description', reverse: false }
   ]
 
   const conf = {
@@ -151,14 +151,14 @@ const Bills = () => {
   const buildEditFocus = () => {
     const content = document.querySelector('.breadcrumb');
     let top = 0;
-    if(content && isMobile()){
+    if (content && isMobile()) {
       // @ts-ignore
       top = content.offsetTop;
     }
     window.scrollTo(0, top);
     setEditFocus(true);
     let focus = document.getElementById('inpt-description');
-    if(focus){
+    if (focus) {
       focus.focus();
     }
     setTimeout(() => {
@@ -193,7 +193,7 @@ const Bills = () => {
     dispatch({ type: SET_LOADING, payload: true })
     billService.remove(id).then(res => {
       dispatch({ type: SET_LOADING, payload: false })
-      if(res.status >= 400){
+      if (res.status >= 400) {
         setErrors(res.errors);
         return;
       }
@@ -202,7 +202,7 @@ const Bills = () => {
       console.log(err);
     })
   }
-  
+
   const setPaymentDate = (bill, editedData) => {
     const payedData = {
       amountPaid: editedData.amount,
@@ -211,7 +211,7 @@ const Bills = () => {
     dispatch({ type: SET_LOADING, payload: true })
     billService.setAsPayed(bill.id, payedData).then(res => {
       dispatch({ type: SET_LOADING, payload: false })
-      if(res.status >= 400){
+      if (res.status >= 400) {
         setErrors(res.errors);
         return;
       }
@@ -220,7 +220,7 @@ const Bills = () => {
       console.log(err);
     })
   }
-  
+
   const openBill = (bill) => {
     const payedData = {
       amountPaid: null,
@@ -229,7 +229,21 @@ const Bills = () => {
     dispatch({ type: SET_LOADING, payload: true })
     billService.setAsPayed(bill.id, payedData).then(res => {
       dispatch({ type: SET_LOADING, payload: false })
-      if(res.status >= 400){
+      if (res.status >= 400) {
+        setErrors(res.errors);
+        return;
+      }
+      setRefresh(new Date().getTime());
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  const generateRecurrency = () => {
+    dispatch({ type: SET_LOADING, payload: true })
+    billService.generateMonthRecurrentBills(moment().year(), moment().month() + 1).then(res => {
+      dispatch({ type: SET_LOADING, payload: false })
+      if (res.status >= 400) {
         setErrors(res.errors);
         return;
       }
@@ -241,16 +255,16 @@ const Bills = () => {
 
   const [paymentDateModal, setPaymentDateModal] = useState({
     show: false,
-    setShow: (value) => setPaymentDateModal({...paymentDateModal, show: value}),
+    setShow: (value) => setPaymentDateModal({ ...paymentDateModal, show: value }),
     data: {},
     onSet: setPaymentDate
   });
 
   const payBill = (bill) => {
-    if(bill.amountPaid){
+    if (bill.amountPaid) {
       return;
     }
-    setPaymentDateModal({...paymentDateModal, show: true, data: bill})
+    setPaymentDateModal({ ...paymentDateModal, show: true, data: bill })
   }
 
   const checkShowActions = () => {
@@ -380,14 +394,31 @@ const Bills = () => {
     ])
   };
 
+  const renderRecurrencyButton = () => {
+    return <span className="recurrency-btn">
+      <span className="tooltip-trigger recurrency-tooltip pull-right">
+        <i className="fas fa-info" />
+        <span className="tooltip-text">{bundle('generate.recurency.info')}</span>
+      </span>
+      <button className="btn btn-danger pull-right"
+        onClick={generateRecurrency}
+        type="button">
+        {bundle('generate.recurency')}
+      </button>
+    </span>
+  }
+
   return (
-    <div>
-      <h1 className="page-title">{bundle('opened.bills')}</h1>
+    <div className="bills-page"> 
+      <h1 className="page-title">
+        {bundle('opened.bills')}
+        {renderRecurrencyButton()}
+      </h1>
       <SelectWalletMessage />
       <Breadcrumb pages={pages} />
       {checkShowActions()}
       {renderRemoveConfirmation()}
-      <PaymentDateEditor 
+      <PaymentDateEditor
         data={paymentDateModal.data}
         onSet={paymentDateModal.onSet}
         show={paymentDateModal.show}
@@ -407,7 +438,7 @@ const Bills = () => {
               </div>
             </div>
             <div className="panel-body">
-              <Errors errors={errors} setErrors={setErrors}/>
+              <Errors errors={errors} setErrors={setErrors} />
               <div className="row">
                 <DataGrid
                   columns={columns}
@@ -416,8 +447,8 @@ const Bills = () => {
                   conf={conf}
                   sorters={sorters}
                   page={filter.page}
-                  setSort={value => setFilter({ ...filter, order: value})}
-                  setPage={page => setFilter({...filter, page: page})}
+                  setSort={value => setFilter({ ...filter, order: value })}
+                  setPage={page => setFilter({ ...filter, page: page })}
                   totalPages={totalPages}
                 />
               </div>

@@ -35,3 +35,37 @@
         visibility: visible;
     }
 }
+
+.recurrency-tooltip{
+    &:hover{
+        i{
+            color: $brand-danger;
+        }
+        border-color: $brand-danger;
+    }
+    color: $gray-light;
+    border: 1px solid $gray-light;
+    top: 8px;
+    width: 18px;
+    font-size: 10px;
+    margin-left: 5px;
+    text-align: center;
+    padding: 2px;
+    border-radius: 50%;
+    .tooltip-text{
+        right: -5px;
+        left: auto;
+        width: 267px;
+        background-color: $gray-lighter;
+        color: $gray-dark;
+        font-size: 12px;
+        transform: translate(0%, 0px);
+        padding: 7px;
+        border: 1px solid $brand-danger;
+        &::after{
+            right: 8px;
+            left: auto;
+            border-color: transparent transparent $brand-danger transparent;
+        }
+    }
+}

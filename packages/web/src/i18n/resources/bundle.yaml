@@ -611,3 +611,11 @@ import.resume.debit:
 import.resume.already:
   pt-BR: "Já importados: "
   en-US: "Already Imported: "
+
+generate.recurency:
+  pt-BR: "Importar contas recorrentes"
+  en-US: "Importar recurrent bills"
+
+generate.recurency.info:
+  pt-BR: "Está opção realizará a importação das contas do mes anterior marcadas como fixas ou recorrentes."
+  en-US: "This option will import the bills of last month flagged like fixed or recurrent"
