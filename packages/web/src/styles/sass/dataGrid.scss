@@ -198,6 +198,9 @@
 
 
 .panel-danger{
+    .amount{
+        color: $brand-danger;
+    }
     .data-list{
         .disabled .list-row:after{
             background-color: $brand-danger;
@@ -208,9 +211,6 @@
             }
         }
         .list-row{
-            .amount{
-                color: $brand-danger;
-            }
             &.active{
                 .header{
                     border-bottom: 2px solid $brand-danger;
@@ -256,19 +256,6 @@
 }
 
 .panel-extract{
-    .data-grid{
-        tbody{
-            tr{
-                color: $brand-danger;
-                &.disabled{
-                    color: $gray;
-                }
-                &:hover{
-                    box-shadow: 0 0px 2px 0px $gray inset;
-                }
-            }
-        }
-    }
     .data-list{
         .disabled .list-row:after{
             background-color: $gray;
