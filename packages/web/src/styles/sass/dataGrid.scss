@@ -207,12 +207,9 @@
                 }
             }
         }
-
         .list-row{
-            .header{
-                .amount{
-                    color: $brand-danger;
-                }
+            .amount{
+                color: $brand-danger;
             }
             &.active{
                 .header{
