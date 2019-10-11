@@ -7,9 +7,6 @@ import {SET_TRANSIENT, SET_USER} from 'store/userActions'
 import { BrowserRouter } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import './styles/sass/global';
-import './styles/sass/base';
-import './styles/sass/footer';
-import './styles/sass/tables';
 import {auth} from 'mymoney-sdk';
 import {debounce} from 'lodash';
 import LoaderFragment from 'components/loader/LoaderFragment';

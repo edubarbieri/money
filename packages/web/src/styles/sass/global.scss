@@ -1,14 +1,24 @@
-@import "mixins";
-@import 'hack';
-@import 'checkbox';
-@import 'collumns';
+@import "mixins.scss";
+@import 'hack.scss';
+@import 'checkbox.scss';
+@import 'collumns.scss';
 @import 'tooltip.scss';
+@import 'panels.scss';
+@import 'wallet.scss';
+@import 'base.scss';
+@import 'footer.scss';
+@import 'tables.scss';
+@import 'modals.scss';
 
 /* Globals
    ========================================================================== */
 
 html {
     height: 100%;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
 }
 
 body {
@@ -401,5 +411,11 @@ input[type=number]::-webkit-outer-spin-button {
             margin: 0 0 10px 0;
             display: inline-block;
         }
+    }
+}
+
+.odd{
+    &>div:nth-child(odd){
+        background-color: $gray-lighter;
     }
 }

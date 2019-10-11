@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { SET_LOADING } from 'store/globalActions'
-import 'sass/wallet';
 import bundle, {bundleFormat} from 'i18n/bundle';
 import route from 'i18n/route';
 import WalletMemberSelector from './WalletMemberSelector';

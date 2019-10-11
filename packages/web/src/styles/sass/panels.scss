@@ -26,12 +26,6 @@
     border-color: #ddd;
 }
 
-.panel-minimal>.panel-heading,
-.panel-minimal>.panel-body {
-    padding-left: 0;
-    padding-right: 0;
-}
-
 .panel-minimal>.panel-heading>.nav-right {
     float: right;
     margin: -1px 0 -13px;
@@ -261,4 +255,9 @@
         text-align: center;
     }
     
+}
+.panel-extract{
+    .list-row:after{
+        content: '';
+    }
 }

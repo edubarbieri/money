@@ -87,7 +87,7 @@ const DataGrid = ({ columns, rows, actions, conf, sorters, setSort, page = 1, to
             row.active = false;
             return <div key={row.id} className={(checkDisabled(row)) ? 'item col-sm-12 disabled' : 'item col-sm-12'}>
                 <div className="card list-row">
-                    <div className={row.active ? "header active" : 'header'} onClick={(elem) => toogleActiveClass(elem.target.closest('.card'))}>
+                    <div className="header" onClick={(elem) => toogleActiveClass(elem.target.closest('.card'))}>
                         {renderHeaderInfo(row)}
                         <div className="html-icon-plus"></div>
                     </div>

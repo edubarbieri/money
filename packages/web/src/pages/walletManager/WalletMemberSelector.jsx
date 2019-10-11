@@ -6,7 +6,6 @@ import Modal from 'components/modal/Modal';
 import LoaderFragment from 'components/loader/LoaderFragment';
 import { validateEmail } from 'service/util';
 import _ from 'lodash';
-import 'sass/wallet';
 import 'sass/labels';
 import 'sass/views';
 import 'sass/modals';

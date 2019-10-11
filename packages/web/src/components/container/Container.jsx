@@ -1,20 +1,20 @@
-import React from 'react';
-import Home from 'pages/home/Home';
+import React, {lazy, Suspense } from 'react';
 import Header from 'components/header/Header';
 import Loader from 'components/loader/Loader';
-import Extract from 'pages/extract/Extract';
-import WalletManager from 'pages/walletManager/WalletManager';
-import Account from 'pages/account/Account';
-import FutureProjects from 'pages/futureProjects/FutureProjects';
-import Receipts from 'pages/receipts/Receipts';
-import WalletEditor from 'pages/walletManager/WalletEditor';
-import CategoryMaintenance from 'pages/maintenance/category/CategoryMaintenace';
 import { Route, Switch} from "react-router-dom";
 import route from 'i18n/route';
 import Bills from 'pages/bills/Bills';
 import { isMobile } from 'service/util';
 import Footer from 'components/footer/Footer';
-import ItauExtract from 'pages/import/ItauExtract';
+import LoaderFragment from 'components/loader/LoaderFragment';
+
+const ItauExtract = lazy(() => import('pages/import/ItauExtract'));
+const Extract = lazy(() => import('pages/extract/Extract'));
+const WalletManager = lazy(() => import('pages/walletManager/WalletManager'));
+const Account = lazy(() => import('pages/account/Account'));
+const WalletEditor = lazy(() => import('pages/walletManager/WalletEditor'));
+const Home = lazy(() => import('pages/home/Home'));
+const CategoryMaintenance = lazy(() => import('pages/maintenance/category/CategoryMaintenace'));
 
 const Container = () => {
   return ( 
@@ -24,19 +24,19 @@ const Container = () => {
           </div>
           <div className="main-content row">
             <Loader />
-            <Switch>
-              <Route path={route('extract')} component={Extract} />
-              <Route path={route('my.account')} component={Account} />
-              <Route path={route('receipts')} component={Receipts} />
-              <Route path={route('future.projects')} component={FutureProjects} />
-              <Route path={route('wallet.manager')} component={WalletManager} />
-              <Route path={route('wallet.create')} component={WalletEditor} />
-              <Route path={route('wallet.editor') + '/:id'} component={WalletEditor} />
-              <Route path={route('maintenance.category')} component={CategoryMaintenance} />
-              <Route path={route('opened.bills')} component={Bills} />
-              <Route path={route('import.itau.extract')} component={ItauExtract} />
-              <Route component={Home} />
-            </Switch>
+            <Suspense fallback={<LoaderFragment />}>
+              <Switch>
+                <Route path={route('extract')} component={Extract} />
+                <Route path={route('my.account')} component={Account} />
+                <Route path={route('wallet.manager')} component={WalletManager} />
+                <Route path={route('wallet.create')} component={WalletEditor} />
+                <Route path={route('wallet.editor') + '/:id'} component={WalletEditor} />
+                <Route path={route('maintenance.category')} component={CategoryMaintenance} />
+                <Route path={route('opened.bills')} component={Bills} />
+                <Route path={route('import.itau.extract')} component={ItauExtract} />
+                <Route component={Home} />
+              </Switch>
+            </Suspense>
           </div>
           {isMobile() && <Footer />}
       </div >

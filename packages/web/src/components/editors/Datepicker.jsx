@@ -8,7 +8,6 @@ const Datepicker = ({date, setDate, title = '', collapsed = false}) => {
     const [formattedDate, setFormattedDate] = useState(getHumanDate(date))
     const [showDatepicker, setShowDatepicer] = useState(!collapsed);
 
-
     const handleFormattedDate = (value) => {
         const parsedDate = getParsedDate(value);
         if(parsedDate.isValid()){
@@ -32,7 +31,7 @@ const Datepicker = ({date, setDate, title = '', collapsed = false}) => {
             {title && <label className="date-label">{title}</label>}
             <input type="text"
                 className="form-control"
-                value={formattedDate}
+                value={getHumanDate(date)}
                 onFocus={()=> (collapsed) ? setShowDatepicer(!showDatepicker) : ''}
                 onChange={event => handleFormattedDate(event.target.value)} />
             <If test={showDatepicker}>

@@ -6,9 +6,11 @@ import SelectWalletMessage from 'components/global/SelectWalletMessage';
 import route from 'i18n/route';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { useDropzone } from 'react-dropzone'
-import 'sass/dropzone';
+import 'sass/dropzone.scss';
+import 'sass/dataGrid.scss';
+import 'sass/icons.scss';
 import moment from 'moment';
-import { formatCurrency, isMobile } from 'service/util';
+import { formatCurrency, isMobile, toogleActiveClass } from 'service/util';
 import Errors from 'components/message/Error';
 import SelectSearch from 'react-select-search';
 import _ from 'lodash';
@@ -128,24 +130,41 @@ const ItauExtract = () => {
 
     const showMobileImportedData = () => {
         return !!readedFileJSON.length && readedFileJSON.map((line, idx) => (
-            <div key={idx} className="simple-card">
-                <span className="line"><strong>{bundle('date')}:&nbsp;</strong>{moment(line.entryDate).format('DD/MM/YYYY')}</span>
-                <span className="line"><strong>{bundle('description')}:&nbsp;</strong>{line.description}</span>
-                <span className="line"><strong>{bundle('amount')}:&nbsp;</strong>{formatCurrency(line.amount)}</span>
-                <span className="line"><strong>{bundle('type')}:&nbsp;</strong>
-                    <span className={line.isExpense ? 'debit' : 'credit'}>
-                        {line.isExpense ? bundle('debit') : bundle('credit')}
+            <div key={idx} className="card list-row">
+                <div className="header" onClick={(elem) => toogleActiveClass(elem.target.closest('.card'))}>
+                    {line.description}<strong className="bold pull-right">{formatCurrency(line.amount)}</strong>
+                    <div className="html-icon-plus"></div>
+                </div>
+                <div className="content">
+                    <span className="line"><strong>{bundle('date')}:&nbsp;</strong>{moment(line.entryDate).format('DD/MM/YYYY')}</span>
+                    <span className="line"><strong>{bundle('description')}:&nbsp;</strong>{line.description}</span>
+                    <span className="line"><strong>{bundle('amount')}:&nbsp;</strong>{formatCurrency(line.amount)}</span>
+                    <span className="line"><strong>{bundle('type')}:&nbsp;</strong>
+                        <span className={line.isExpense ? 'debit' : 'credit'}>
+                            {line.isExpense ? bundle('debit') : bundle('credit')}
+                        </span>
                     </span>
-                </span>
-                <span className="line"><strong>{bundle('category')}:&nbsp;</strong>
-                    <SelectSearch
-                        value={line.categoryId}
-                        options={categories}
-                        className="select-search-box"
-                        search={true}
-                        onChange={value => setCategory(idx, value)}
-                    />
-                </span>
+                    <span className="line"><strong>{bundle('category')}:&nbsp;</strong>
+                        <SelectSearch
+                            value={line.categoryId}
+                            options={categories}
+                            className="select-search-box"
+                            search={true}
+                            onChange={value => setCategory(idx, value)}
+                        />
+                    </span>
+                    <span className="line m-t-10"><strong>{bundle('association')}&nbsp;</strong>
+                        {_.isEmpty(line.possibleEntries) ? bundle('possible.entries') :
+                            <SelectSearch
+                                value=""
+                                options={buildAssociations(line.possibleEntries)}
+                                className="select-search-box"
+                                search={true}
+                                onChange={value => setAssociation(idx, value)}
+                            />
+                        }
+                    </span>
+                </div>
             </div>
         ));
     }
@@ -177,12 +196,12 @@ const ItauExtract = () => {
                 !!readedFileJSON.length &&
                 <div className="row">
                     <div className="col-md-12 col-sm-12">
-                        <div className="panel panel-primary">
+                        <div className="panel panel-primary panel-extract">
                             <div className="panel-heading ">
                                 <div className="panel-title">{bundle('collected.data')}</div>
                             </div>
-                            <div className="panel-body">
-                                {isMobile() && showMobileImportedData()}
+                            <div className="panel-body data-list">
+                                {isMobile() && <div className="odd">{showMobileImportedData()}</div>}
                                 {!isMobile() &&
                                     <div className="table-responsive  data-grid" style={{ overflow: 'inherit' }}>
                                         <table className="table table-striped">

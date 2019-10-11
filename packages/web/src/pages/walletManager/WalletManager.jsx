@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_ACTIVE_PAGE, SET_LOADING } from 'store/globalActions'
 import { Link } from 'react-router-dom';
-import 'sass/panels';
-import 'sass/wallet';
 import bundle, { bundleFormat } from 'i18n/bundle';
 import route from 'i18n/route';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';

@@ -4,7 +4,6 @@ import bundle from 'i18n/bundle';
 import { credit as creditService, debit as debitService } from 'mymoney-sdk';
 import { SET_LOADING } from 'store/globalActions';
 import moment from 'moment';
-import { isMobile } from 'service/util';
 
 const ExtractRecurrency = ({ setErrors, setRefresh }) => {
     const dispatch = useDispatch();

@@ -31,6 +31,12 @@
     border-bottom: 1px solid #ebebeb;
 }
 
+.panel-minimal {
+    .panel-body.members-selector{
+        padding-bottom: 20px;
+    }
+}
+
 .members-selector{
     .cards-container.box-view .card {
         border-radius: 4px;

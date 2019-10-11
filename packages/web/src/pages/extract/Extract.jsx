@@ -17,7 +17,6 @@ import { credit as creditService, debit as debitService } from 'mymoney-sdk';
 import Modal from 'components/modal/Modal';
 import Errors from 'components/message/Error';
 import { setTimeout } from 'timers';
-import 'sass/panels';
 import ExtractRecurrency from './fragments/ExtractRecurrency';
 
 const Extracts = () => {
@@ -27,7 +26,7 @@ const Extracts = () => {
   let started = useSelector(state => state.global.started);
   let width = useSelector(state => state.global.width);
   let wallet = useSelector(state => state.user.activeWallet);
-  const pages = [{ label: bundle('opened.extracts') }]
+  const pages = [{ label: bundle('extract') }]
   const showExtractActions = useSelector(state => state.ux.showExtractActions);
   const [userCredits, setUserCredits] = useState([]);
   const [userDebits, setUserDebits] = useState([]);
@@ -69,7 +68,7 @@ const Extracts = () => {
     category: null
   });
 
-  dispatch({ type: SET_ACTIVE_PAGE, payload: route('opened.extracts') })
+  dispatch({ type: SET_ACTIVE_PAGE, payload: route('extract') })
 
   useEffect(() => {
     if (!started || !wallet.id) {
