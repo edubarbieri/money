@@ -6,7 +6,7 @@ import 'sass/calendar';
 import 'sass/select';
 import Datepicker from './Datepicker';
 import SelectSearch  from 'react-select-search';
-import { checkSize } from 'service/util';
+import { checkSize, isMobile } from 'service/util';
 import { bill as billService} from 'mymoney-sdk';
 import Errors from 'components/message/Error';
 
@@ -122,8 +122,8 @@ const BillsEditor = ({ bill, onSave, onCancel}) => {
                                 />
                             </div>
                         </div>
-                        <div>
-                            <div className="col-md-4 col-xs-6 m-t-20">
+                        <div className="row">
+                            <div className="col-md-4 col-xs-6 m-t-20 col-md-6 col-xs-6">
                                 <input className="styled-checkbox danger" id="repeatInpt" type="checkbox"
                                     checked={(editBill.recurrent) ? true : false}
                                     onChange={event => setEditBill({ ...editBill, recurrent: event.target.checked })} />
@@ -131,7 +131,7 @@ const BillsEditor = ({ bill, onSave, onCancel}) => {
                                     <span>{bundle('recurrent')}</span>
                                 </label>
                             </div>
-                            <div className="col-md-5  col-xs-12">
+                            <div className="col-md-5  col-xs-12 col-md-6 col-xs-6">
                                 <label className="center">{bundle("installment.qtd")}</label>
                                 <div className="input-group">
                                     <input type="number"
@@ -145,9 +145,10 @@ const BillsEditor = ({ bill, onSave, onCancel}) => {
                             </div>
                         </div>
                     </div>
-                    <div className={(checkSize(991, windowSize)) ?  'col-md-4 m-t-20' : 'col-md-4'}>
+                    <div className={(checkSize(991, windowSize)) ?  'col-md-4 m-t-20 datepicker-container' : 'col-md-4'}>
                         <Datepicker
                             title={bundle("due.date")}
+                            collapsed={checkSize(991, windowSize)}
                             date={editBill.dueDate}
                             setDate={(value, formattedDueDate) => setEditBill({ ...editBill, dueDate: value, formattedDueDate: formattedDueDate })}
                         />

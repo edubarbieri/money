@@ -94,3 +94,14 @@ export const checkSize = (width, windowSize) => {
     }
     return width >= windowSize;
 }
+
+export const toogleActiveClass = (elem) =>{
+    if(!elem){
+        return;
+    }
+    if(elem.classList.contains('active')){
+        elem.classList.remove('active')
+        return;
+    }
+    elem.classList.add('active')
+}

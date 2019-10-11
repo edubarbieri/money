@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import 'sass/dataGrid';
+import 'sass/icons.scss';
 import _ from 'lodash';
-import { isMobile } from 'service/util';
+import { isMobile, toogleActiveClass } from 'service/util';
 import Pagination from 'components/pagination/Pagination';
+import { element } from 'prop-types';
 
-const DataGrid = ({ columns, rows, actions, conf, sorters, setSort, page = 1, totalPages = 1, setPage = () => {}}) => {
+const DataGrid = ({ columns, rows, actions, conf, sorters, setSort, page = 1, totalPages = 1, setPage = () => {}, headerInfo}) => {
     const [localSorters, setLocalSorters] = useState(sorters);
 
     const doSort = (col) => {
@@ -70,20 +72,32 @@ const DataGrid = ({ columns, rows, actions, conf, sorters, setSort, page = 1, to
             </div>
         ))
     }
+    
+    const renderHeaderInfo = (action) => {
+        return headerInfo.map((col, idx) => (
+            <span key={idx} className={col.className}>{_.get(action, col.id) || ''}</span>
+        ))
+    }
 
     const renderContents = () => {
         if (!columns || !rows) {
             return;
         }
-        return rows.map((row, idx) => (
-            <div key={idx} className={(checkDisabled(row)) ? 'col-sm-6 disabled' : 'col-sm-6'}>
+        return rows.map((row, idx) => {
+            row.active = false;
+            return <div key={row.id} className={(checkDisabled(row)) ? 'item col-sm-12 disabled' : 'item col-sm-12'}>
                 <div className="card list-row">
-                    {renderContentInfo(row)}
-                    {actions(row)}
+                    <div className={row.active ? "header active" : 'header'} onClick={(elem) => toogleActiveClass(elem.target.closest('.card'))}>
+                        {renderHeaderInfo(row)}
+                        <div className="html-icon-plus"></div>
+                    </div>
+                    <div className="content">
+                        {renderContentInfo(row)}
+                        {actions(row)}
+                    </div>
                 </div>
             </div>
-        ))
-
+        })
     }
 
     return (

@@ -18,6 +18,7 @@ import Modal from 'components/modal/Modal';
 import Errors from 'components/message/Error';
 import PaymentDateEditor from 'components/editors/PaymentDateEditor';
 import { setTimeout } from 'timers';
+import BillsRecurrency from './fragments/BillsRecurrency';
 
 const Bills = () => {
   moment.locale(LANG.toLowerCase());
@@ -121,6 +122,11 @@ const Bills = () => {
     { id: 'user.name', title: bundle('member') },
     { id: 'recurrency', title: bundle('recurrency') },
   ];
+  
+  const headerInfo = [
+    {id:'description', className: ''},
+    {id:'formattedAmount', className: 'amount'}
+  ];
 
   const sorters = [
     { id: "formattedAmount", filter: 'amount', reverse: false },
@@ -221,19 +227,6 @@ const Bills = () => {
     })
   }
 
-  const generateRecurrency = () => {
-    dispatch({ type: SET_LOADING, payload: true })
-    billService.generateMonthRecurrentBills(moment().year(), moment().month() + 1).then(res => {
-      dispatch({ type: SET_LOADING, payload: false })
-      if (res.status >= 400) {
-        setErrors(res.errors);
-        return;
-      }
-      setRefresh(new Date().getTime());
-    }).catch(err => {
-      console.log(err);
-    })
-  }
 
   const [paymentDateModal, setPaymentDateModal] = useState({
     show: false,
@@ -255,7 +248,7 @@ const Bills = () => {
         <div>
           <div className="row">
             <div className="col-md-12">
-              <button className="btn btn-danger btn-text btn-icon pull-right m-b-10"
+              <button className="btn btn-danger btn-text btn-icon pull-right m-b-10 w-100"
                 onClick={() => dispatch({ type: SHOW_BILL_ACTIONS, payload: false })}
                 type="button">
                 <i className="fas fa-minus" />
@@ -264,12 +257,14 @@ const Bills = () => {
             </div>
           </div>
           <div className="row">
+            {!isMobile() && <BillsRecurrency setErrors={setErrors} setRefresh={setRefresh} />}
             <div className={(editFocus) ? "col-md-12 col-lg-8 col-xl-6 col-xxl-5 focus" : "col-md-12 col-lg-8 col-xl-6 col-xxl-5"}>
               <BillsEditor
                 bill={editBill}
                 onSave={onSaveBill}
                 onCancel={onCancel} />
             </div>
+            {isMobile() && <BillsRecurrency setErrors={setErrors} setRefresh={setRefresh} />}
             {!isMobile(width) &&
               <div className="col-md-12 col-lg-4 col-xl-6 col-xxl-7">
                 <SimpleGraph
@@ -288,7 +283,7 @@ const Bills = () => {
       <div className="row">
         <div className="col-md-12">
           {isMobile(width) &&
-            <button className="btn btn-danger btn-icon pull-right"
+            <button className="btn btn-danger btn-icon pull-right w-100"
               onClick={() => dispatch({ type: SHOW_BILL_ACTIONS, payload: true })}
               type="button">
               <i className="fas fa-plus" />
@@ -296,7 +291,7 @@ const Bills = () => {
             </button>
           }
           {!isMobile(width) &&
-            <button className="btn btn-danger btn-text btn-icon pull-right"
+            <button className="btn btn-danger btn-icon w-100"
               onClick={() => dispatch({ type: SHOW_BILL_ACTIONS, payload: true })}
               type="button">
               <i className="fas fa-plus" />
@@ -376,25 +371,11 @@ const Bills = () => {
     ])
   };
 
-  const renderRecurrencyButton = () => {
-    return <span className="recurrency-btn">
-      <span className="tooltip-trigger recurrency-tooltip pull-right">
-        <i className="fas fa-info" />
-        <span className="tooltip-text">{bundle('generate.recurency.info')}</span>
-      </span>
-      <button className="btn btn-danger pull-right"
-        onClick={generateRecurrency}
-        type="button">
-        {bundle('generate.recurency')}
-      </button>
-    </span>
-  }
 
   return (
     <div className="bills-page"> 
       <h1 className="page-title">
         {bundle('opened.bills')}
-        {renderRecurrencyButton()}
       </h1>
       <SelectWalletMessage />
       <Breadcrumb pages={pages} />
@@ -424,6 +405,7 @@ const Bills = () => {
               <div className="row">
                 <DataGrid
                   columns={columns}
+                  headerInfo={headerInfo}
                   rows={userBills}
                   actions={actions}
                   conf={conf}

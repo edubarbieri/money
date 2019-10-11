@@ -6,7 +6,7 @@ import 'sass/calendar';
 import 'sass/select';
 import Datepicker from './Datepicker';
 import SelectSearch  from 'react-select-search';
-import { checkSize } from 'service/util';
+import { checkSize, isMobile } from 'service/util';
 import { credit as creditService, debit as debitService} from 'mymoney-sdk';
 import Errors from 'components/message/Error';
 
@@ -127,7 +127,7 @@ const ExtractsEditor = ({ extract, onSave, onCancel}) => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-3 col-xs-3 m-t-20">
+                            <div className="col-md-3 col-xs-6 m-t-20">
                                 <input className="styled-checkbox"
                                     id="isCredit"
                                     type="radio"
@@ -137,7 +137,7 @@ const ExtractsEditor = ({ extract, onSave, onCancel}) => {
                                     onChange={event => setEditExtract({ ...editExtract, type: (event.target.checked) ? 'credit' : 'debit' })} />
                                 <label htmlFor="isCredit"><span>{bundle('credit')}</span></label>
                             </div>
-                            <div className="col-md-3 col-xs-3 m-t-20">
+                            <div className="col-md-3 col-xs-6 m-t-20">
                                 <input className="styled-checkbox danger"
                                     id="isDebit"
                                     type="radio"
@@ -155,7 +155,7 @@ const ExtractsEditor = ({ extract, onSave, onCancel}) => {
                                     <span>{bundle('recurrent')}</span>
                                 </label>
                             </div>
-                            <div className="col-md-3  col-xs-12">
+                            <div className="col-md-3 col-xs-6">
                                 <label className="center">{bundle("installment.qtd")}</label>
                                 <div className="input-group">
                                     <input type="number"
@@ -169,9 +169,10 @@ const ExtractsEditor = ({ extract, onSave, onCancel}) => {
                             </div>
                         </div>
                     </div>
-                    <div className={(checkSize(991, windowSize)) ?  'col-md-4 m-t-20' : 'col-md-4'}>
+                    <div className={(checkSize(991, windowSize)) ?  'col-md-4 col-xs-12 m-t-20 datepicker-container' : 'col-md-4'}>
                         <Datepicker
                             title={bundle("date")}
+                            collapsed={isMobile()}
                             date={editExtract.objectEntryDate}
                             setDate={(value, formattedEntryDate) => setEditExtract({ ...editExtract, entryDate: value, formattedEntryDate: formattedEntryDate })}
                         />

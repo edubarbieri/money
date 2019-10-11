@@ -114,19 +114,58 @@
     .disabled .list-row:after{
         background-color: $brand-success;
     }
+    .row{
+        .item:nth-child(odd){
+            .card{
+                background-color: $gray-lighter;
+            }
+        }
+    }
     .list-row{
         padding: 10px;
-        border: 1px solid $gray-lighter;
-        margin-bottom: 10px;
         position: relative;
         overflow: hidden;
+        padding-right: 30px;
+        .header{
+            cursor: pointer;
+            .html-icon-plus{
+                top: 18px;
+            }
+            .amount{
+                float: right;
+                font-weight: 600;
+            }
+        }
+        .content{
+            display: none;
+        }
+        &.active{
+            .header{
+                border-bottom: 2px solid $brand-primary;
+                padding-bottom: 3px;
+                margin-bottom: 5px;
+                font-weight: 600;
+                .html-icon-plus{
+                    &:before,
+                    &:after {
+                        background: $brand-primary;
+                    }
+                }
+            }
+            .content{
+                display: block;
+            }
+        }
     }
     .actions-container {
         display: flex;
+        margin-top: 10px;
+        background-color: #f5f5f5;
         .row-options{
             width: 100%;
             display: inline-flex;
             margin: 5px 0px;
+            justify-content: center;
             color: $gray-dark;
             i{
                 line-height: 24px;
@@ -160,6 +199,30 @@
     .data-list{
         .disabled .list-row:after{
             background-color: $brand-danger;
+            .header{
+                .amount{
+                    color: $brand-danger;
+                }
+            }
+        }
+
+        .list-row{
+            .header{
+                .amount{
+                    color: $brand-danger;
+                }
+            }
+            &.active{
+                .header{
+                    border-bottom: 2px solid $brand-danger;
+                    .html-icon-plus{
+                        &:before,
+                        &:after {
+                            background: $brand-danger;
+                        }
+                    }
+                }
+            }
         }
     }
     thead{
@@ -179,6 +242,13 @@
     .data-list{
         .disabled .list-row:after{
             background-color: $brand-primary;
+        }
+        .list-row{
+            .header{
+                .amount{
+                    color: $brand-primary;
+                }
+            }
         }
     }
     thead{

@@ -168,14 +168,14 @@
 .btn-text{
     background-color: transparent;
     color: $gray;
-    border: 0px;
+    border-color: $gray-light;
     &.btn:hover,
     &.btn.focus,
     &.btn:focus {
         color: $gray;
         background-color: transparent !important;
         box-shadow: none;
-        border: 0px;
+        border-color: $gray-light;
     }
 }
 

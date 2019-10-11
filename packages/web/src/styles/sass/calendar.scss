@@ -80,6 +80,15 @@
     }
 }
 
+.datepicker-container{
+    .date.collapsed .react-calendar{
+        top: 60px;
+    }
+    .input-group{
+        width: 100%;
+    }
+}
+
 @media screen and (max-width: 980px){
     .input-group{
         &.date{

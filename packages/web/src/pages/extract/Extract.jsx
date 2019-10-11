@@ -18,6 +18,7 @@ import Modal from 'components/modal/Modal';
 import Errors from 'components/message/Error';
 import { setTimeout } from 'timers';
 import 'sass/panels';
+import ExtractRecurrency from './fragments/ExtractRecurrency';
 
 const Extracts = () => {
   moment.locale(LANG.toLowerCase());
@@ -164,6 +165,11 @@ const Extracts = () => {
     return resultData;
   }
 
+  const headerInfo = [
+    {id:'description', className: ''},
+    {id:'formattedAmount', className: 'amount'}
+  ];
+
   const creditColumns = [
     { id: 'description', title: bundle('description') },
     { id: 'formattedAmount', title: bundle('value') },
@@ -270,27 +276,13 @@ const Extracts = () => {
     })
   }
 
-  const generateRecurrency = () => {
-    dispatch({ type: SET_LOADING, payload: true })
-    creditService.generateMonthRecurrentExtracts(moment().year(), moment().month() + 1).then(res => {
-      dispatch({ type: SET_LOADING, payload: false })
-      if (res.status >= 400) {
-        setErrors(res.errors);
-        return;
-      }
-      setRefresh(new Date().getTime());
-    }).catch(err => {
-      console.log(err);
-    })
-  }
-
   const checkShowActions = () => {
     if (showExtractActions) {
       return (
         <div>
           <div className="row">
             <div className="col-md-12">
-              <button className="btn btn-primary btn-text btn-icon pull-right m-b-10"
+              <button className="btn btn-primary btn-text btn-icon m-b-10 w-100"
                 onClick={() => dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: false })}
                 type="button">
                 <i className="fas fa-minus" />
@@ -299,12 +291,14 @@ const Extracts = () => {
             </div>
           </div>
           <div className="row">
+            {!isMobile() && <ExtractRecurrency setErrors={setErrors} setRefresh={setRefresh} />}
             <div className={(editFocus) ? "col-md-12 col-lg-8 col-xl-6 col-xxl-5 focus" : "col-md-12 col-lg-8 col-xl-6 col-xxl-5"}>
               <ExtractEditor
                 extract={editExtract}
                 onSave={onSaveExtract}
                 onCancel={onCancel} />
             </div>
+            {isMobile() && <ExtractRecurrency setErrors={setErrors} setRefresh={setRefresh} />}
             {!isMobile(width) &&
               <div className="col-md-12 col-lg-4 col-xl-6 col-xxl-7">
                 <SimpleGraph
@@ -323,7 +317,7 @@ const Extracts = () => {
       <div className="row">
         <div className="col-md-12">
           {isMobile(width) &&
-            <button className="btn btn-primary btn-icon pull-right"
+            <button className="btn btn-primary btn-icon pull-right w-100"
               onClick={() => dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: true })}
               type="button">
               <i className="fas fa-plus" />
@@ -331,7 +325,7 @@ const Extracts = () => {
             </button>
           }
           {!isMobile(width) &&
-            <button className="btn btn-primary btn-text btn-icon pull-right"
+            <button className="btn btn-primary btn-icon pull-right w-100"
               onClick={() => dispatch({ type: SHOW_EXTRACT_ACTIONS, payload: true })}
               type="button">
               <i className="fas fa-plus" />
@@ -411,25 +405,11 @@ const Extracts = () => {
     ])
   };
 
-  const renderRecurrencyButton = () => {
-    return <span className="recurrency-btn">
-      <span className="tooltip-trigger recurrency-tooltip pull-right">
-        <i className="fas fa-info" />
-        <span className="tooltip-text">{bundle('generate.recurency.info')}</span>
-      </span>
-      <button className="btn btn-primary pull-right"
-        onClick={generateRecurrency}
-        type="button">
-        {bundle('generate.recurency')}
-      </button>
-    </span>
-  }
 
   return (
     <div className="extracts-page">
       <h1 className="page-title">
         {bundle('extract')}
-        {renderRecurrencyButton()}
       </h1>
       <SelectWalletMessage />
       <Breadcrumb pages={pages} />
@@ -457,10 +437,8 @@ const Extracts = () => {
           <div className="panel panel-primary">
             <div className="panel-heading">
               <div className="filter row">
-                <div className="form-group">
-                  <div className="col-sm-12">
-                    <div className="panel-title">{bundle('credits')}</div>
-                  </div>
+                <div className="col-sm-12">
+                  <div className="panel-title">{bundle('credits')}</div>
                 </div>
               </div>
             </div>
@@ -469,6 +447,7 @@ const Extracts = () => {
               <div className="row">
                 <DataGrid
                   columns={creditColumns}
+                  headerInfo={headerInfo}
                   rows={userCredits}
                   actions={creditAction}
                   conf={conf}
@@ -488,10 +467,8 @@ const Extracts = () => {
           <div className="panel panel-danger panel-extracts">
             <div className="panel-heading">
               <div className="filter row">
-                <div className="form-group">
-                  <div className="col-sm-12">
-                    <div className="panel-title">{bundle('debits')}</div>
-                  </div>
+                <div className="col-sm-12">
+                  <div className="panel-title">{bundle('debits')}</div>
                 </div>
               </div>
             </div>
@@ -500,6 +477,7 @@ const Extracts = () => {
               <div className="row">
                 <DataGrid
                   columns={debitColumns}
+                  headerInfo={headerInfo}
                   rows={userDebits}
                   actions={debitAction}
                   conf={conf}
