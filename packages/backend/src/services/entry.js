@@ -55,7 +55,7 @@ function _deleteEntry(id, walletId, type) {
 			walletId: walletId,
 			type: type
 		}
-	}).then(affectedRows => affectedRows[0]);
+	});
 }
 
 function _getEntry(id, walletId, type) {

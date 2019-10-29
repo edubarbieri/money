@@ -61,10 +61,10 @@ route.put('/credit/:id', async (req, res) => {
 route.delete('/credit/:id', async (req, res) => {
 	try {
 		const affectedRows = await entryService.deleteCredit(req.params.id, req.walletId)
-		if (affectedRows === 0) {
+		if (!affectedRows || affectedRows === 0) {
 			return res.status(400).send({ errors: ['credit.delete.noDeletedItem'] });
 		}
-		res.sendStatus(203)
+		res.sendStatus(200)
 	} catch (e) {
 		console.log('delete credit error', e);
 		formatDbError(res, e);

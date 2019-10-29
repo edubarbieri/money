@@ -62,10 +62,10 @@ route.put('/debit/:id', async (req, res) => {
 route.delete('/debit/:id', async (req, res) => {
 	try {
 		const affectedRows = await entryService.deleteDebit(req.params.id, req.walletId)
-		if (affectedRows === 0) {
+		if (!affectedRows || affectedRows === 0) {
 			return res.status(400).send({ errors: ['debit.delete.noDeletedItem'] });
 		}
-		res.sendStatus(203)
+		res.sendStatus(200)
 	} catch (e) {
 		console.log('delete debit error', e);
 		formatDbError(res, e);
