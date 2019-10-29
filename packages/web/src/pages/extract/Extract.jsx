@@ -255,7 +255,8 @@ const Extracts = () => {
       text: type === 'credit' ? bundleFormat('remove.credit.confirmation', extract.description): bundleFormat('remove.debit.confirmation', extract.description),
       onConfirm: removeExtractConfirmationCallBack,
       onCancel: () => setRemoveExtractConfirmationData({ ...removeExtractConfirmationData, show: false }),
-      id: extract.id
+      id: extract.id,
+      type: type
     });
   }
 
