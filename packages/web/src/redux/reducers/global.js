@@ -1,9 +1,7 @@
 import types from '../globalActions';
-import { BROWSER_LANG } from '../../i18n/service'
 
 const initialState = {
     activePage: '/',
-    lang: BROWSER_LANG,
     loading: false,
     width: window.innerWidth,
     started: false,
@@ -14,9 +12,6 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case types.SET_ACTIVE_PAGE:{
             return { ...state, activePage: action.payload };
-        }
-        case types.SET_LANG:{
-            return { ...state, lang: action.payload };
         }
         case types.SET_LOADING:{
             return { ...state, loading: action.payload };

@@ -660,3 +660,15 @@ generate.extract.recurency.info:
 possible.entries:
   pt-BR: "Nenhuma associação possível localizada"
   en-US: "Not found any possible association "
+
+preffered.language:
+  pt-BR: "Linguagem Preferida"
+  en-US: "Preffered Language"
+
+en-US:
+  pt-BR: "Inglês Americano"
+  en-US: "English"
+
+pt-BR:
+  pt-BR: "Português Brasileiro"
+  en-US: "Portuguese"

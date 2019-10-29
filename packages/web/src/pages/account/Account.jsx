@@ -4,18 +4,21 @@ import bundle, { bundleFormat } from 'i18n/bundle';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import 'sass/account'
 import OneButton from 'components/buttons/OneButton';
-import {user} from 'mymoney-sdk';
-import { SET_PROFILE } from 'store/userActions';
-import { SET_LOADING, SET_ACTIVE_PAGE } from 'store/globalActions';
+import { user } from 'mymoney-sdk';
+import { SET_PROFILE, SET_LANG } from 'store/userActions';
+import { SET_LOADING, SET_ACTIVE_PAGE, SET_REFRESH } from 'store/globalActions';
 import Errors from 'components/message/Error';
 import route from 'i18n/route';
+import { LANG, LANGUAGES, SetLang } from 'i18n/service';
 
 const Home = () => {
   const dispatch = useDispatch();
-  dispatch({ type: SET_ACTIVE_PAGE, payload: route('my.account')})
+  dispatch({ type: SET_ACTIVE_PAGE, payload: route('my.account') })
   const profile = useSelector(state => state.user.profile);
+  const prefferedLang = useSelector(state => state.user.prefferedLang);
   const [editedProfile, setEditedProfile] = useState(profile);
   const [editErrors, setEditErrors] = useState([]);
+  const [language, setLanguage] = useState(prefferedLang || LANG);
   const [errors, setErrors] = useState({
     name: '',
     avatar: ''
@@ -26,25 +29,25 @@ const Home = () => {
   }]
 
   const validateAndSetName = (name) => {
-    setEditedProfile({...editedProfile, name: name});
-    setErrors({...errors, name: ''});
-    if(!name){
-      setErrors({...errors, name: bundle('required.field')})
+    setEditedProfile({ ...editedProfile, name: name });
+    setErrors({ ...errors, name: '' });
+    if (!name) {
+      setErrors({ ...errors, name: bundle('required.field') })
       return;
     }
-    if(name.length < 3){
-      setErrors({...errors, name: bundleFormat('invalid.qtd.chars', 3)})
+    if (name.length < 3) {
+      setErrors({ ...errors, name: bundleFormat('invalid.qtd.chars', 3) })
     }
   }
 
   const doSave = () => {
-    if(errors.name){
+    if (errors.name) {
       return;
     }
-    dispatch({ type: SET_LOADING, payload: true});
+    dispatch({ type: SET_LOADING, payload: true });
     user.updateUser(editedProfile.id, editedProfile.email, editedProfile.name).then(res => {
       dispatch({ type: SET_LOADING, payload: false });
-      if(res.status >= 400){
+      if (res.status >= 400) {
         setEditErrors(res.errors);
         return;
       }
@@ -57,6 +60,11 @@ const Home = () => {
         }
       })
     });
+  }
+  const changeLanguage = (value) => {
+    setLanguage(value);
+    SetLang(value);
+    dispatch({ type: SET_LANG, payload: value });
   }
 
   return (
@@ -78,10 +86,10 @@ const Home = () => {
         <div className="col-md-10 col-sm-12">
           <div className="panel panel-primary">
             <div className="panel-heading ">
-                {bundle('user.data')}
+              {bundle('user.data')}
             </div>
             <div className="panel-body">
-              <Errors errors={editErrors} setErrors={setEditErrors}/>
+              <Errors errors={editErrors} setErrors={setEditErrors} />
               <form>
                 <div className="row">
                   <div className="col-md-12">
@@ -90,7 +98,7 @@ const Home = () => {
                       <input type="text"
                         id="inptEmail"
                         value={editedProfile.email}
-                        onChange={() => {}}
+                        onChange={() => { }}
                         disabled={true}
                         className="form-control" />
                     </div>
@@ -107,8 +115,22 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="col-md-12">
+                    <div>
+                      <label className="control-label" htmlFor="inptLanguage">{bundle('preffered.language')}</label>
+                      <select
+                        className="form-control"
+                        onChange={event => changeLanguage(event.target.value)} value={language}>
+                        {
+                          LANGUAGES.languages.map(value => {
+                            return <option key={value} value={value}>{bundle(value)}</option>
+                          })
+                        }
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-md-12">
                     <label className="control-label" >{bundle('avatar')}</label>
-                    <br/>
+                    <br />
                     {bundle('manage.avatar')}&nbsp;
                     <a href="https://gravatar.com" target="_blank" rel="noopener noreferrer"><strong>Gravatar</strong></a>
                   </div>

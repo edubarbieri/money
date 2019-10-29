@@ -4,7 +4,8 @@ const initialState = {
     transient: true,
     activeWallet: {},
     profile: {},
-    token: ''
+    token: '',
+    prefferedLang: ''
 }
 
 export default function(state = initialState, action) {
@@ -23,6 +24,9 @@ export default function(state = initialState, action) {
     }
     case types.SET_TOKEN: {
       return {...state, token: action.payload};
+    }
+    case types.SET_LANG: {
+      return {...state, prefferedLang: action.payload};
     }
     default:
       return state;

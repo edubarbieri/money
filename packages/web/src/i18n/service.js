@@ -1,6 +1,6 @@
 // @ts-ignore
 import languages from './resources/languages';
-
+import { reidrated } from 'store/store';
 
 let defaultLang = 'en-US';
 
@@ -22,12 +22,17 @@ const checkLang = (lang) => {
 }
 
 const getBrowserLang = () => {
-    let browserLanguage = window.navigator.language || defaultLang;
-    if (!browserLanguage) {
-        browserLanguage = defaultLang;
-    }
-    const activeLang = checkLang(browserLanguage);
-    return defaultLang = activeLang
+    reidrated.then((res) => {
+        let browserLanguage = window.navigator.language || defaultLang;
+        if (!browserLanguage) {
+            browserLanguage = defaultLang;
+        }
+        let activeLang = checkLang(browserLanguage);
+        if(res.user && res.user.prefferedLang){
+            activeLang = res.user.prefferedLang;
+        }
+        return defaultLang = activeLang
+    })
 }
 
 /**

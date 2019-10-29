@@ -31,6 +31,16 @@ if(process.env.NODE_ENV === 'development'){
   store = createStore(conbinedReducers);
 }
 
-let persistor = persistStore(store);
+let reidratedSuccess;
+let reidratedError;
+export const reidrated = new Promise((resolve, reject) =>{
+  reidratedSuccess = resolve;
+  reidratedError = reject;
+});
+
+let persistor = persistStore(store, {}, () => {
+  reidratedSuccess(store.getState());
+});
+
 export const Store = store;
 export const Persistor = persistor;
