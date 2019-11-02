@@ -3,14 +3,24 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist'
 import storageSession from 'redux-persist/lib/storage/session'
 import promise from "redux-promise";
+import multi from "redux-multi";
+import thunk from "redux-thunk";
 import config from 'config/general.yaml';
+
 import auth from 'reducers/auth/authReducer';
 import user from 'reducers/user/userReducer';
 import wallet from 'reducers/wallet/walletReducer';
 import global from 'reducers/global/globalReducer';
-import multi from "redux-multi";
-import thunk from "redux-thunk";
+import bills from 'reducers/bills/billsReducer';
+import credit from 'reducers/credit/creditReducer';
+import debit from 'reducers/debit/debitReducer';
 
+
+const persistWallet = {
+	key: config.appKey + ':wallet',
+	storage: storageSession,
+	blacklist: ['all'] 
+}
 
 const persistAuth = {
 	key: config.appKey + ':auth',
@@ -24,8 +34,11 @@ const persistUser = {
 }
 
 const conbinedReducers = combineReducers({
-	wallet,
 	global,
+	bills,
+	debit,
+	credit,
+	wallet: persistReducer(persistWallet, wallet),
 	auth: persistReducer(persistAuth, auth),
 	user: persistReducer(persistUser, user)
 });

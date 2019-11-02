@@ -4,39 +4,44 @@ import { Link } from 'react-router-dom';
 import 'style/header.scss';
 import { route, bundle } from 'i18n/bundle';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faUserCog, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
+import {faUserCog, faSignOutAlt, faBars} from '@fortawesome/free-solid-svg-icons';
 import { doLogout } from 'reducers/auth/authAction';
+import { setToogle } from 'reducers/global/globalAction';
+import RegisterLink from './RegisterLink';
 
 const Header = () => {
     const user = useSelector(state => state.user.data);
     const dispatch = useDispatch();
-    const [showUserInfo, setShowUserInfo] = useState(false);
+    const toogle = useSelector(state => state.global.toogle);
     return (
         <header className="navbar navbar-light bg-light flex-column flex-md-row">
-            <a className="navbar-brand" href={process.env.PUBLIC_URL}>
+            <div className="menu-header" onClick={() =>dispatch(setToogle('sidebar'))}>
+                <FontAwesomeIcon icon={faBars} />
+            </div>
+            <Link className="navbar-brand" to={process.env.PUBLIC_URL || '/'}>
                 <img src={process.env.PUBLIC_URL + '/img/lh-large.png'} width="160" height="40" alt="" />
-            </a>
+            </Link>
             <div className="user-header">
-                <div className="avatar" onClick={() => setShowUserInfo(!showUserInfo)}>
+                <div className="avatar" onClick={() => dispatch(setToogle('userInfo'))}>
                     <img src={user.avatar} alt={user.name + ' profile picture'} />
                 </div>
-                <div className={showUserInfo ? 'user-info show' : 'user-info '}>
+                <div className={toogle == 'userInfo' ? 'user-info show' : 'user-info '}>
                     <div className="avatar">
                         <img src={user.avatar} alt={user.name + ' profile picture'} />
                     </div>
-                    <h5 className="text-center font-weight-bold">{user.name}</h5>
-                    <h6 className="text-center text-muted">{user.email}</h6>
+                    <h6 className="text-center font-weight-bold">{user.name}</h6>
+                    <p className="text-center text-muted">{user.email}</p>
                     <div className="dropdown-divider"></div>
                     <div className="dopdown-actions">
-                        <Link to={route('my.account')}>
-                            <div className="dropdown-item" onClick={() => setShowUserInfo(false)}>
+                        <RegisterLink to={route('my.account')}>
+                            <div className="dropdown-item" onClick={() =>dispatch(setToogle(''))}>
                                 <FontAwesomeIcon icon={faUserCog} />
-                                <text>{bundle('account.settings')}</text>
+                                <span>{bundle('account.settings')}</span>
                             </div>
-                        </Link>
+                        </RegisterLink>
                         <div className="dropdown-item" onClick={() => dispatch(doLogout())}>
                             <FontAwesomeIcon icon={faSignOutAlt} />
-                            <text>{bundle('logout')}</text>
+                            <span>{bundle('logout')}</span>
                         </div>
                     </div>
                 </div>

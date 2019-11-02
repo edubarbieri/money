@@ -37,6 +37,9 @@ back:
 back.to.login:
     en-US: Back to Login
     pt-BR: Voltar para Login
+bills.last.months:
+    en-US: Bills in last months
+    pt-BR: Balanço de contas dos últimos meses
 bad.request:
     en-US: Error on attempt to do this operation.
     pt-BR: Houve um erro ao tentar realizar essa operação.
@@ -128,7 +131,7 @@ docreate.user:
     en-US: Create User
     pt-BR: Criar Usuário
 drag.drop:
-    en-US: 'Drag ''n'' drop some files here, or click to select files'
+    en-US: "Drag 'n' drop some files here, or click to select files"
     pt-BR: 'Arraste e solte o arquivo aqui, ou click e selecione em seu computador.'
 due.date:
     en-US: Due date
@@ -230,8 +233,8 @@ invalid.email:
     en-US: Please insert a valid email
     pt-BR: Por favor insira um email válido
 invalid.file:
-    en-US: 'Imported file format should be: ''{0}'''
-    pt-BR: 'O arquivo importado deve ser do formato: ''{0}'''
+    en-US: "Imported file format should be: '{0}'"
+    pt-BR: "O arquivo importado deve ser do formato: '{0}'"
 invalid.name:
     en-US: Invalid Name
     pt-BR: Nome inválido
@@ -328,7 +331,7 @@ new.extract:
 new.receipt:
     en-US: New receipt
     pt-BR: Nova Receita
-'no':
+no:
     en-US: 'No'
     pt-BR: Não
 no.data:
@@ -448,6 +451,9 @@ show.filter:
 signup.userAlreadyRegistered:
     en-US: User already registered
     pt-BR: Usuário já registrado
+total:
+    en-US: Total
+    pt-BR: Total
 type:
     en-US: Type
     pt-BR: Tipo

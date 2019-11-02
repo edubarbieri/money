@@ -1,5 +1,6 @@
 // @ts-ignore
 import config from 'config/general.yaml';
+import {toMoney} from 'vanilla-masker';
 import md5 from 'md5';
 
 export const jsonQuerystringfy = (json, removeParams = []) => {
@@ -35,4 +36,11 @@ export const validatePassword = (password) => {
 
 export const getUserAvatar = (email) => {
   return messageFormat(config.gravatarUrl, md5(email));;
+}
+
+export const formatMoney = (value) => {
+  return toMoney(value, {
+      precision: 2,
+      zeroCents: false
+  });
 }

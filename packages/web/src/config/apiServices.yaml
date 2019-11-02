@@ -1,3 +1,4 @@
+########## AUTH ############
 login:
   url: "/login"
   method: "POST"
@@ -10,3 +11,90 @@ validateToken:
   url: "/validateToken"
   method: "POST"
 
+########## WALLET ############
+wallet.getAll:
+  url: "/wallet"
+  method: "GET"
+  pushToken: true
+
+wallet.getAllWithUser:
+  url: "/wallet?withUser=true"
+  method: "GET"
+  pushToken: true
+
+wallet.create:
+  url: "/wallet"
+  method: "POST"
+  pushToken: true
+
+wallet.remove:
+  url: "/wallet/{0}"
+  method: "DELETE"
+  pushToken: true
+
+wallet.update:
+  url: "/wallet/{0}"
+  method: "PUT"
+  pushToken: true
+
+wallet.addUser:
+  url: "/wallet/{0}/addUser"
+  method: "POST"
+  pushToken: true
+
+wallet.removeUser:
+  url: "/wallet/{0}/removeUser"
+  method: "POST"
+  pushToken: true
+
+
+########## BILLS ############
+bills.billAmountMonthResume:
+  url: "/bill/billAmountMonthResume"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+bills.get:
+  url: "/bill"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+bills.add:
+  url: "/bill"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+bills.update:
+  url: "/bill/{0}"
+  method: "PUT"
+  pushToken: true
+  pushWallet: true
+
+bills.delete:
+  url: "/bill/{0}"
+  method: "DELETE"
+  pushToken: true
+  pushWallet: true
+
+bills.generateMonthRecurrentBills:
+  url: "/bill/generateMonthRecurrentBills"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+########## DEBIT ############
+debit.billAmountMonthResume:
+  url: "/debit/amountMonthResume"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+########## CREDIT ############
+credit.billAmountMonthResume:
+  url: "/credit/amountMonthResume"
+  method: "GET"
+  pushToken: true
+  pushWallet: true

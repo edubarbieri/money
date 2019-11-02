@@ -3,14 +3,28 @@
 .navbar{
     height: 4rem;
     z-index: 20;
+    margin: 0 -15px 15px -15px;
+    @include mobile{
+        height: 3.5rem;
+    }
     .navbar-brand{
         padding: 0px;
+        @include mobile{
+            margin-left: 1rem;
+        }
     }
 }
 
 .form-control{
     &:focus{
         box-shadow: none;
+    }
+}
+
+.card{
+    border: none;
+    .card-title{
+        font-weight: 600;
     }
 }
 

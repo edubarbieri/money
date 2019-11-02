@@ -4,6 +4,21 @@ export const setLoading = data => {
         payload: data
     };
 };
+
+export const setCurrentPage = data => {
+    return {
+        type: 'SET_CURRENT_PAGE',
+        payload: data
+    };
+};
+
+export const setToogle = data => {
+    return {
+        type: 'SET_TOOGLE',
+        payload: data
+    };
+};
+
 export const setInitialized = () => {
     return {
         type: 'SET_INITIALIZED',

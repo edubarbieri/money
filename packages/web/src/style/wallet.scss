@@ -1,13 +1,46 @@
 @import 'variables.scss';
 
-.wallet-selector{
+.wallet-selector-container {
     position: relative;
     padding: 0.8rem;
-    margin-right: -15px;
     margin-left: -15px;
-    color: $primary;
+    margin-right: -15px;
     cursor: pointer;
-    .selector{
-        font-weight: 700;
+    font-weight: 700;
+    border-top: 1px solid $lighter-gray;
+    border-bottom: 1px solid $lighter-gray;
+    .display {
+        color: $primary;
+        svg {
+            path {
+                color: $primary;
+            }
+            float: right;
+            margin-top: 4px;
+        }
+    }
+    .selector {
+        transition: max-height 0.25s ease-in;
+        overflow: hidden;
+        display: none;
+        box-shadow: $shadow-sm;
+        &.show {
+            transition: max-height 0.15s ease-out;
+            margin-top: 5px;
+            display: inherit;
+            .item {
+                padding: 5px 10px;
+                background-color: $white;
+                border-bottom: 1px solid $lighter-gray;
+                line-height: 25px;
+                &:hover{
+                    background-color: $lighter-gray;
+                }
+                svg {
+                   font-size: 10px;
+                   margin: 0px 4px 1px 0;
+                }
+            }
+        }
     }
 }

@@ -2,27 +2,42 @@
 @import 'fonts.scss';
 @import 'bootstrap.scss';
 @import 'message.scss';
+@import 'utils.scss';
+
+body {
+    background-color: $white;
+    scrollbar-width: 5px;
+    scroll-behavior: auto;
+    scrollbar-color: $gray $light-gray;
+    font-size: 0.9rem;
+}
 
 * {
     color: $gray;
 }
-h1,
-h2,
-h3,
-h4,
+h1 {
+    font-size: 1.25rem;
+}
+h2 {
+    font-size: 1.2rem;
+}
+h3 {
+    font-size: 1.15rem;
+}
+h4 {
+    font-size: 1.1rem;
+}
 h5 {
-    font-size: 0.9rem;
+    font-size: 1.05rem;
 }
 h6 {
-    font-size: 0.8rem;
+    font-size: 1.02rem;
 }
-
-body {
-    background-color: $lighter-gray;
-    scrollbar-width: 5px;
-    scroll-behavior: auto;
-    scrollbar-color: $gray $light-gray;
-    font-size: 0.8rem;
+a{
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+    }
 }
 
 ::-webkit-scrollbar-track {

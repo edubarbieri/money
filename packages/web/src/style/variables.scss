@@ -66,3 +66,15 @@ $dark-shadow-none: none !important;
     top: 50%;
     left: 50%;
 }
+
+@mixin v-middle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin h-middle {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

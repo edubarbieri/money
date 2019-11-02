@@ -4,6 +4,9 @@ create.user:
 extract:
     en-US: /extract
     pt-BR: /extrato
+dashboard:
+    en-US: /dashboard
+    pt-BR: /acompanhamento
 import.itau.extract:
     en-US: /import/itau-extract
     pt-BR: /importacao/extrato-itau

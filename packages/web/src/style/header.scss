@@ -1,37 +1,62 @@
 @import 'variables.scss';
 
 .navbar{
+    @include desktop{
+        .menu-header{
+            display: none;
+        }
+        .navbar-brand{
+            img{
+                display: none;
+            }
+        }
+    }
+    .menu-header{
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        line-height: 38px;
+        margin-left: -10px;
+        background-color: #fff;
+        text-align: center;
+        border-radius: 2px;
+    }
     .user-header{
-        position: relative;
+        @include desktop {
+            position: relative;
+        }
         .avatar{
             border-radius: 50%;
             width: 40px;
             height: 40px;
             overflow: hidden;
-            box-shadow: $dark-shadow-sm;
             img{
                 width: 100%;
             }
         }
         .user-info{
-            height: 0px;
             overflow: hidden;
-            transition: all 0.1s;
+            display: none;
             position: absolute;
             background-color: $lighter-gray;
-            border: 1px solid $light-gray;
             border-radius: 4px;
             width: 250px;
             top: 45px;
             right: 0;
-            visibility: hidden;
             box-shadow: $shadow;
-            opacity: 0;
+            @include mobile {
+                width: 100%;
+            }
             &.show{
-                height: 280px;
-                opacity: 1;
-                visibility: visible;
-                transition: all 0.1s;
+                display: block;
+                border: 1px solid $light-gray;
+                @include mobile {
+                    top: 3.5rem;
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    background-color: $white;
+                }
             }
             .dropdown-divider{
                 margin-top: 15px;
@@ -47,7 +72,7 @@
                     &:hover{
                         background-color: $light-gray;
                     }
-                    text{
+                    span{
                         font-weight: 700;
                         margin-left: 10px;
                     }
