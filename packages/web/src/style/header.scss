@@ -1,0 +1,63 @@
+@import 'variables.scss';
+
+.navbar{
+    .user-header{
+        position: relative;
+        .avatar{
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            box-shadow: $dark-shadow-sm;
+            img{
+                width: 100%;
+            }
+        }
+        .user-info{
+            height: 0px;
+            overflow: hidden;
+            transition: all 0.1s;
+            position: absolute;
+            background-color: $lighter-gray;
+            border: 1px solid $light-gray;
+            border-radius: 4px;
+            width: 250px;
+            top: 45px;
+            right: 0;
+            visibility: hidden;
+            box-shadow: $shadow;
+            opacity: 0;
+            &.show{
+                height: 280px;
+                opacity: 1;
+                visibility: visible;
+                transition: all 0.1s;
+            }
+            .dropdown-divider{
+                margin-top: 15px;
+            }
+            .dopdown-actions{
+                padding: 0px 10px;
+                a{
+                    text-decoration: none !important;
+                }
+                .dropdown-item{
+                    cursor: pointer;
+                    padding: 10px;
+                    &:hover{
+                        background-color: $light-gray;
+                    }
+                    text{
+                        font-weight: 700;
+                        margin-left: 10px;
+                    }
+                }
+            }
+            .avatar{
+                margin: 30px auto 10px;
+                width: 80px;
+                height: 80px;
+            }
+        } 
+    }
+}

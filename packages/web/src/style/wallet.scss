@@ -1,0 +1,13 @@
+@import 'variables.scss';
+
+.wallet-selector{
+    position: relative;
+    padding: 0.8rem;
+    margin-right: -15px;
+    margin-left: -15px;
+    color: $primary;
+    cursor: pointer;
+    .selector{
+        font-weight: 700;
+    }
+}

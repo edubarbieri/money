@@ -1,0 +1,33 @@
+create.user:
+    en-US: /create-user
+    pt-BR: /criar-usuario
+extract:
+    en-US: /extract
+    pt-BR: /extrato
+import.itau.extract:
+    en-US: /import/itau-extract
+    pt-BR: /importacao/extrato-itau
+login:
+    en-US: /login
+    pt-BR: /fazer-login
+maintenance.category:
+    en-US: /maintenance/categories
+    pt-BR: /manutencao/categorias
+my.account:
+    en-US: /my-account
+    pt-BR: /minha-conta
+opened.bills:
+    en-US: /opened-bills
+    pt-BR: /contas-abertas
+receipts:
+    en-US: /receipts
+    pt-BR: /recebimentos
+wallet.create:
+    en-US: /create-wallet
+    pt-BR: /criar-carteira
+wallet.editor:
+    en-US: /wallet-editor
+    pt-BR: /edicao-carteiras
+wallet.manager:
+    en-US: /wallet-manager
+    pt-BR: /gerenciar-carteiras

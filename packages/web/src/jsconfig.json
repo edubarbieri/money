@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "target": "esnext",
+        "allowSyntheticDefaultImports": true,
+        "checkJs": true,
+        "baseUrl": "./",
+        "paths": {
+            "reducers/*": ["./reducers/*"],
+            "config/*": ["./config/*"],
+            "i18n/*": ["./i18n/*"],
+            "components/*": ["./components/*"],
+            "pages/*": ["./pages/*"],
+            "style/*": ["./style/*"],
+            "services/*": ["services/*"]
+        },
+        "module": "commonjs",
+        "esModuleInterop": true
+    },
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}

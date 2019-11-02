@@ -1,0 +1,12 @@
+login:
+  url: "/login"
+  method: "POST"
+
+signup:
+  url: "/signup"
+  method: "POST"
+
+validateToken:
+  url: "/validateToken"
+  method: "POST"
+

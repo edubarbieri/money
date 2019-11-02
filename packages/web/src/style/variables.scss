@@ -1,0 +1,68 @@
+$white: #fff;
+$dark-gray: #1b1b1b;
+$gray: #3b3b3b;
+$primary: #007fbb;
+$blue: #007fbb !default;
+$danger: #9a0400;
+$success: #28a745;
+$lighter-gray: #f5f5f5;
+$light-gray: #e3e1e1;
+
+$shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);  
+$shadow: 0 .5rem 1rem rgba(0,0,0,.15); 
+$shadow-lg: 0 1rem 3rem rgba(0,0,0,.175);
+$shadow-none: none !important; 
+
+$dark-shadow-sm: 0 .125rem .25rem rgba(0,0,0,.7);  
+$dark-shadow: 0 .5rem 1rem rgba(0,0,0,.3); 
+$dark-shadow-lg: 0 1rem 3rem rgba(0,0,0,.4);
+$dark-shadow-none: none !important; 
+
+@mixin desktop {
+    @media (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: 767px) {
+        @content;
+    }
+}
+
+@mixin extra-small {
+    @media (max-width: 575px){
+        @content;
+    }
+}
+
+@mixin small {
+    @media (min-width: 576px)  and (max-width: 767px) {
+        @content;
+    }
+}
+
+@mixin medium {
+    @media (min-width: 768px)  and (max-width: 991px) {
+        @content;
+    }
+}
+
+@mixin large {
+    @media (min-width: 991px)  and (max-width: 1199px) {
+        @content;
+    }
+}
+
+@mixin extra-large {
+    @media (min-width: 1200px) {
+        @content;
+    }
+}
+
+@mixin middle {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}

@@ -1,0 +1,20 @@
+@import 'variables.scss';
+
+.navbar{
+    height: 4rem;
+    z-index: 20;
+    .navbar-brand{
+        padding: 0px;
+    }
+}
+
+.form-control{
+    &:focus{
+        box-shadow: none;
+    }
+}
+
+.shadow-sm { box-shadow: $shadow-sm!important     }
+.shadow { box-shadow: $shadow !important; }
+.shadow-lg { box-shadow: $shadow-lg !important }
+.shadow-none { box-shadow: none !important; }
