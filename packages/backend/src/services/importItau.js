@@ -102,7 +102,21 @@ function matchAny(keywords, name) {
 }
 
 async function insert(data, walletId) {
+
 	const type = data.isExpense ? Entry.DEBIT : Entry.CREDIT;
+
+	if(data.association){
+		await Entry.update({
+			importHash: data.importHash
+		}, {
+			where: { 
+				id: data.association,
+				walletId : walletId,
+			}
+		});
+		return null;
+	}
+
 	const already = await Entry.findOne({
 		where: { 
 			importHash: data.importHash, 
