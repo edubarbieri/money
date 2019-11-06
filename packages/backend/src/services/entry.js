@@ -1,5 +1,6 @@
 const { Entry, Category, paginatedQuery , queryUtil, sanitazyQuery, sequelize} = require('../db');
 const _ = require('lodash');
+const moment = require('moment');
 const ENTRY_ATTRIBUTES = [
 	'id',
 	'description',
@@ -188,6 +189,68 @@ async function findOrCreateDebit(description, amount, date, walletId, source) {
 }
 
 
+async function generateMonthRecurrentEntries(walletId, month, year){
+	const query = sanitazyQuery(`
+	INSERT INTO entry
+	(id, description, entry_date, amount, "type", recurrent, recurrent_total, recurrent_count, category_id, wallet_id, user_id, source_entry_id, created_at, updated_at)
+	select
+		uuid_generate_v4(), 
+		entry.description, 
+		entry.entry_date + INTERVAL '1 month' entry_date, 
+		entry.amount, 
+		entry.type, 
+		true recurrent, 
+		entry.recurrent_total, 
+		entry.recurrent_count + 1, 
+		category_id, 
+		wallet_id, 
+		user_id, 
+		entry.id, 
+		current_timestamp created_at,
+		current_timestamp updated_at
+	from
+		entry
+	where
+		entry.recurrent = true
+		and (entry.recurrent_count is null or entry.recurrent_count < entry.recurrent_total)
+		and extract(month from entry.entry_date) = :prevMonth
+		and extract(year from entry.entry_date) = :prevYear
+		and entry.wallet_id = :walletId 
+		AND NOT EXISTS (
+			select 1 from entry b2
+			where 
+			b2.source_entry_id = entry.id
+			AND EXTRACT(month from b2.entry_date) = :curMonth
+			AND EXTRACT(year from b2.entry_date) = :curYear
+			and b2.wallet_id = :walletId
+		)
+	`);
+
+	try {
+		// month in js start in 0
+		const previewMonthDate = moment([year, month - 1]).subtract(1, 'month');
+		
+		const resp = await sequelize.query(query, {
+			replacements: {
+				prevMonth: previewMonthDate.month() + 1,
+				prevYear: previewMonthDate.year(),
+				curMonth: month,
+				curYear: year,
+				walletId
+			},
+			type: sequelize.QueryTypes.INSERT
+		});
+		return {
+			entriesCreated: resp[1]
+		}
+	} catch (error) {
+		console.error('generateMonthRecurrentEntries - error', error);
+		return {
+			errors: ['entry.generateMonthRecurrentEntries.genericError']
+		}
+	}
+}
+
 module.exports = {
 	createDebit: createDebit,
 	createCredit: createCredit,
@@ -202,5 +265,6 @@ module.exports = {
 	creditAmountMonthResume: creditAmountMonthResume,
 	debitAmountMonthResume : debitAmountMonthResume,
 	ENTRY_ATTRIBUTES: ENTRY_ATTRIBUTES,
-	findOrCreateDebit: findOrCreateDebit
+	findOrCreateDebit: findOrCreateDebit,
+	generateMonthRecurrentEntries: generateMonthRecurrentEntries
 };
