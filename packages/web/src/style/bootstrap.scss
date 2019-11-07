@@ -15,9 +15,48 @@
     }
 }
 
-.form-control{
+.close{
     &:focus{
-        box-shadow: none;
+        outline: none;
+    }
+}
+
+.modal{
+    &.show{
+        display: block;
+    }
+    .modal-content{
+        box-shadow: $shadow;
+        border: none;
+        .modal-header{
+            padding: 10px 15px;
+            border: none;
+            .modal-title{
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+        }
+        .modal-body{
+            padding: 0px 15px 10px 15px;
+        }
+        .modal-footer{
+            border: 0px;
+            padding: 5px 0px;
+        }
+    }
+}
+
+.form-group{
+    label{
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .form-control{
+        font-size: 0.8rem;
+        &:focus{
+            box-shadow: none;
+        }
     }
 }
 

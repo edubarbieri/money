@@ -3,6 +3,7 @@
 @import 'bootstrap.scss';
 @import 'message.scss';
 @import 'utils.scss';
+@import 'editors.scss';
 
 body {
     background-color: $white;
@@ -54,4 +55,12 @@ a{
     background-color: $gray;
     border-radius: 2px;
     width: 2px;
+}
+
+.page-title{
+    margin-bottom: 15px;
+}
+
+.hidden{
+    display: none;
 }

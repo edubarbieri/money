@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { route, bundle } from 'i18n/bundle';
@@ -8,7 +8,8 @@ import RegisterLink from 'components/global/RegisterLink';
 const SidebarItem = ({ label, icon, children = null }) => {
     const currentPage = useSelector(state => state.global.currentPage);
     const [to] = useState(route(label) || '/');
-    const [expand, setExpand] = useState(true);
+    const [expand, setExpand] = useState(false);
+    
     return children ? (
         <div>
             <li className="list-group-item" onClick={() => setExpand(!expand)}>

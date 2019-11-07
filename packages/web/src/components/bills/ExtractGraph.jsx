@@ -18,12 +18,7 @@ let config = {
         }
     },
     colors: ['#007fbb', '#9a0400'],
-    dataLabels: {
-        enabled: true,
-        formatter: value => {
-            return bundle('currency') + parseFloat(value).toFixed(2);
-        }
-    },
+    dataLabels: {enabled: false},
     stroke: { curve: 'smooth' },
     grid: {
         borderColor: '#e7e7e7'
@@ -61,19 +56,20 @@ const ExtractGraph = () => {
     const dispacth = useDispatch();
     const creditMonthResume = useSelector(state => state.credit.monthResume);
     const debitMonthResume = useSelector(state => state.debit.monthResume);
+    const refresh = useSelector(state => state.global.refresh);
     const [series, setSeries] = useState([]);
-    const [options, setOptions] = useState(config);
+    const [options, setOptions] = useState({});
 
     useEffect(() => {
         dispatch(fetchCreditMonthResume());
         dispatch(fetchDebitMonthResume());
-    }, [dispacth]);
+    }, [dispacth, refresh]);
 
     useEffect(() => {
         if(!creditMonthResume.length || !debitMonthResume.length){
             return;
         }
-        setOptions({ ...options, xaxis: { ...options.xaxis, categories: _.map(creditMonthResume, 'month') } });
+        setOptions({ ...config, xaxis: { ...config.xaxis, categories: _.map(creditMonthResume, 'month') } });
         setSeries([
             {
                 name: bundle('credit'),
@@ -89,7 +85,7 @@ const ExtractGraph = () => {
     return (
         <div className="card">
             <div className="card-body">
-                <h5 className="card-title text-center text-primary">{bundle('bills.last.months')}</h5>
+                <h5 className="card-title text-center text-primary">{bundle('extract.last.months')}</h5>
                 <div className="remove-padding">
                     <ReactApexChart options={options} series={series} type="line" width="100%" height="300px" />
                 </div>

@@ -68,8 +68,8 @@ category.creation:
     en-US: Category creation
     pt-BR: Criação de categoria
 category.editor:
-    en-US: 'Category editor: '
-    pt-BR: 'Edição da categoria: '
+    en-US: 'Category editor'
+    pt-BR: 'Edição da categoria'
 category.name:
     en-US: Category Name
     pt-BR: Nome da Categoria
@@ -160,6 +160,9 @@ expand.info:
 extract:
     en-US: Extract
     pt-BR: Extrato
+extract.last.months:
+    en-US: Credit and Debits in last months
+    pt-BR: Balanço de créditos/débitos dos últimos meses
 filter:
     en-US: Filter
     pt-BR: Filtrar

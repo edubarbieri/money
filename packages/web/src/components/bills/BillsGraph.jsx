@@ -17,12 +17,7 @@ let config = {
         }
     },
     colors: ['#9a0400', '#545454'],
-    dataLabels: {
-        enabled: true,
-        formatter: value => {
-            return bundle('currency') + parseFloat(value).toFixed(2);
-        }
-    },
+    dataLabels: {enabled: false},
     stroke: { curve: 'smooth' },
     grid: {
         borderColor: '#e7e7e7'
@@ -51,15 +46,16 @@ let config = {
 const BillsGraph = () => {
     const dispacth = useDispatch();
     const monthResume = useSelector(state => state.bills.monthResume);
+    const refresh = useSelector(state => state.global.refresh);
     const [series, setSeries] = useState([]);
-    const [options, setOptions] = useState(config);
+    const [options, setOptions] = useState({});
 
     useEffect(() => {
         dispatch(fetchBillsMonthResume());
-    }, [dispacth]);
+    }, [dispacth, refresh]);
 
     useEffect(() => {
-        setOptions({ ...options, xaxis: { ...options.xaxis, categories: _.map(monthResume, 'month') } });
+        setOptions({ ...config, xaxis: { ...config.xaxis, categories: _.map(monthResume, 'month') } });
         setSeries([
             {
                 name: bundle('total'),

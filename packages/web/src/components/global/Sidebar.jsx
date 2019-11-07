@@ -12,7 +12,7 @@ import {
     faAngleDoubleRight,
     faSitemap
 } from '@fortawesome/free-solid-svg-icons';
-import SidebarItem from 'components/fragments/SidebarItem';
+import SidebarItem from 'components/global/fragments/SidebarItem';
 import {Link} from 'react-router-dom';
 
 const Sidebar = () => {

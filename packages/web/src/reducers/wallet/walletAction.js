@@ -1,10 +1,11 @@
 import { call } from "services/Api";
+import { setRefresh } from "reducers/global/globalAction";
 
 export const setWallet = (data) => {
-	return  {
-		type: 'SET_WALLET',
-		payload: data
-	};
+	return dispatch => {
+        dispatch({type: 'SET_WALLET', payload: data});
+		dispatch(setRefresh());
+    };
 }
 
 export const fetchWallets = () => {

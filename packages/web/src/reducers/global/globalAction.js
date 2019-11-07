@@ -26,6 +26,13 @@ export const setInitialized = () => {
     };
 };
 
+export const setRefresh = () => {
+    return {
+        type: 'SET_REFRESH',
+        payload: null
+    };
+};
+
 export const setError = (type, data) => {
     let messageType = 'SET_GENERIC_ERROR';
     switch (type) {

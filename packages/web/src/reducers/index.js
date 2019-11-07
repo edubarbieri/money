@@ -14,6 +14,7 @@ import global from 'reducers/global/globalReducer';
 import bills from 'reducers/bills/billsReducer';
 import credit from 'reducers/credit/creditReducer';
 import debit from 'reducers/debit/debitReducer';
+import category from 'reducers/category/categoryReducer';
 
 
 const persistWallet = {
@@ -38,6 +39,7 @@ const conbinedReducers = combineReducers({
 	bills,
 	debit,
 	credit,
+	category,
 	wallet: persistReducer(persistWallet, wallet),
 	auth: persistReducer(persistAuth, auth),
 	user: persistReducer(persistUser, user)

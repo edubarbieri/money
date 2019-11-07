@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector , useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'style/header.scss';
@@ -15,7 +15,7 @@ const Header = () => {
     const toogle = useSelector(state => state.global.toogle);
     return (
         <header className="navbar navbar-light bg-light flex-column flex-md-row">
-            <div className="menu-header" onClick={() =>dispatch(setToogle('sidebar'))}>
+            <div className="menu-header" onClick={() => dispatch(setToogle('sidebar'))}>
                 <FontAwesomeIcon icon={faBars} />
             </div>
             <Link className="navbar-brand" to={process.env.PUBLIC_URL || '/'}>
@@ -25,7 +25,7 @@ const Header = () => {
                 <div className="avatar" onClick={() => dispatch(setToogle('userInfo'))}>
                     <img src={user.avatar} alt={user.name + ' profile picture'} />
                 </div>
-                <div className={toogle == 'userInfo' ? 'user-info show' : 'user-info '}>
+                <div className={toogle === 'userInfo' ? 'user-info show' : 'user-info '}>
                     <div className="avatar">
                         <img src={user.avatar} alt={user.name + ' profile picture'} />
                     </div>

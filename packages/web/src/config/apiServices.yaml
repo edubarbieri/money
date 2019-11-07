@@ -98,3 +98,40 @@ credit.billAmountMonthResume:
   method: "GET"
   pushToken: true
   pushWallet: true
+
+########## CATEGORY ############
+category.getAll:
+  url: "/category"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+category.create:
+  url: "/category"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+category.remove:
+  url: "/category/{0}"
+  method: "DELETE"
+  pushToken: true
+  pushWallet: true
+
+category.update:
+  url: "/category/{0}"
+  method: "PUT"
+  pushToken: true
+  pushWallet: true
+
+category.setParent:
+  url: "/category/{0}/parent"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+  
+category.getWithPath:
+  url: "/category/path"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
