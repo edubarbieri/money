@@ -1,4 +1,4 @@
-image: node:latest
+image: duduardo23/heroku-deploy:1
 
 stages:
   - production
@@ -6,11 +6,8 @@ stages:
 production:
   type: deploy
   stage: production
-  image: ruby:latest
+  image: duduardo23/heroku-deploy:1
   script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
-    - gem install dpl
     - dpl --provider=heroku --app=meudinheiro-edubarbieri --api-key=$HEROKU_API_KEY
   only:
     - master
