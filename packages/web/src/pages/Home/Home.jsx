@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLoading } from 'reducers/global/globalAction';
-import BillsGraph from 'components/bills/BillsGraph';
-import ExtractGraph from 'components/bills/ExtractGraph';
+import BillsGraph from 'components/graph/BillsGraph';
+import ExtractGraph from 'components/graph/ExtractGraph';
 import { bundle } from 'i18n/bundle';
 
 const Home = () => {

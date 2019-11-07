@@ -9,49 +9,10 @@ import moment from 'moment';
 import { getLang } from 'i18n/lang';
 import { fetchCreditMonthResume } from 'reducers/credit/creditAction';
 import { fetchDebitMonthResume } from 'reducers/debit/debitAction';
+import { extractConfig } from './GraphConfig';
 
 moment.locale(getLang().toLowerCase());
-let config = {
-    chart: {
-        toolbar: {
-            show: true
-        }
-    },
-    colors: ['#007fbb', '#9a0400'],
-    dataLabels: {enabled: false},
-    stroke: { curve: 'smooth' },
-    grid: {
-        borderColor: '#e7e7e7'
-    },
-    markers: {
-        size: 6
-    },
-    yaxis: {
-        title: {
-            text: bundle('total')
-        },
-        labels: {
-            formatter: value => {
-                return bundle('currency') + parseFloat(value).toFixed(2);
-            }
-        }
-    },
-    xaxis: {
-        categories: [],
-        labels: {
-            formatter: value => {
-                return moment.months(value);
-            }
-        }
-    },
-    legend: {
-        position: 'top',
-        horizontalAlign: 'left',
-        floating: true,
-        offsetX: 8,
-        offsetY: -8
-    }
-};
+
 const ExtractGraph = () => {
     const dispacth = useDispatch();
     const creditMonthResume = useSelector(state => state.credit.monthResume);
@@ -69,7 +30,13 @@ const ExtractGraph = () => {
         if(!creditMonthResume.length || !debitMonthResume.length){
             return;
         }
-        setOptions({ ...config, xaxis: { ...config.xaxis, categories: _.map(creditMonthResume, 'month') } });
+        let auxMonth = [];
+        let months = _.map(creditMonthResume, 'month');
+        for (let index = 0; index < months.length; index++) {
+            const element = months[index];
+            auxMonth.push(moment.months(element))
+        }
+        setOptions({ ...extractConfig, xaxis: { ...extractConfig.xaxis, categories: auxMonth } });
         setSeries([
             {
                 name: bundle('credit'),

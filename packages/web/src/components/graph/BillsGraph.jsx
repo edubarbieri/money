@@ -8,41 +8,10 @@ import _ from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 import moment from 'moment';
 import { getLang } from 'i18n/lang';
+import { billsConfig } from './GraphConfig';
 
 moment.locale(getLang().toLowerCase());
-let config = {
-    chart: {
-        toolbar: {
-            show: true
-        }
-    },
-    colors: ['#9a0400', '#545454'],
-    dataLabels: {enabled: false},
-    stroke: { curve: 'smooth' },
-    grid: {
-        borderColor: '#e7e7e7'
-    },
-    markers: {
-        size: 6
-    },
-    yaxis: {
-        title: {
-            text: bundle('total')
-        },
-        labels: {
-            formatter: value => {
-                return bundle('currency') + parseFloat(value).toFixed(2);
-            }
-        }
-    },
-    xaxis: {
-        labels: {
-            formatter: value => {
-                return moment.months(value);
-            }
-        }
-    }
-};
+
 const BillsGraph = () => {
     const dispacth = useDispatch();
     const monthResume = useSelector(state => state.bills.monthResume);
@@ -55,7 +24,16 @@ const BillsGraph = () => {
     }, [dispacth, refresh]);
 
     useEffect(() => {
-        setOptions({ ...config, xaxis: { ...config.xaxis, categories: _.map(monthResume, 'month') } });
+        if(!monthResume.length){
+            return;
+        }
+        let auxMonth = [];
+        let months = _.map(monthResume, 'month');
+        for (let index = 0; index < months.length; index++) {
+            const element = months[index];
+            auxMonth.push(moment.months(element))
+        }
+        setOptions({ ...billsConfig, xaxis: { ...billsConfig.xaxis, categories: auxMonth} });
         setSeries([
             {
                 name: bundle('total'),
