@@ -35,7 +35,6 @@ const WalletSelector = () => {
             <div className={showSelector ? 'selector show' : 'selector'}>
                 {walletList.map((walletItem, idx) => (
                     <div className="item" key={walletItem.id} onClick={() => changeWallet(walletItem)}>
-                        <FontAwesomeIcon icon={faChevronRight} />
                         {walletItem.name}
                     </div>
                 )) }

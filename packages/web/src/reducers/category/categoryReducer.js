@@ -7,6 +7,7 @@ const addTreeOptionsToCategories = (categories) => {
     for (let index = 0; index < categories.length; index++) {
         const element = categories[index];
         element.title = element.name;
+        element.value = element.id;
         element.expanded = true;
         if(element.children && element.children.length){
             addTreeOptionsToCategories(element.children);

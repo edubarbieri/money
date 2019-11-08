@@ -212,17 +212,17 @@ import.itau.extract:
     en-US: Itaú Bank Extract
     pt-BR: Extrato Banco Itaú
 import.resume:
-    en-US: 'Imported Items Summary:'
-    pt-BR: 'Resumo itens importados:'
+    en-US: 'Imported Items Summary'
+    pt-BR: 'Resumo itens importados'
 import.resume.already:
-    en-US: 'Already Imported: '
-    pt-BR: 'Já importados: '
+    en-US: 'Already Imported'
+    pt-BR: 'Já importados'
 import.resume.credit:
-    en-US: 'Credits: '
-    pt-BR: 'Créditos: '
+    en-US: 'Credits'
+    pt-BR: 'Créditos'
 import.resume.debit:
-    en-US: 'Debits: '
-    pt-BR: 'Débitos: '
+    en-US: 'Debits'
+    pt-BR: 'Débitos'
 import.saveItau.error:
     en-US: Error on import data from Itaú Bank extract
     pt-BR: Erro na importação de dados do extrato do Branco Itaú
@@ -306,10 +306,13 @@ member.not.found:
 members:
     en-US: Members
     pt-BR: Membros
-menber.invite:
+member.invite:
     en-US: Send invites to this wallet
     pt-BR: Convide membros para essa carteira
-menber.invite.detailed:
+member.invite.after:
+    en-US: Send invites to this wallet after creation
+    pt-BR: Convide membros para essa carteira depois da criação
+member.invite.detailed:
     en-US: >-
         Insert a valid email from a registered on Money user to send a wallet
         colaboration invite.
@@ -478,6 +481,9 @@ value.payed:
 wallet:
     en-US: Wallet
     pt-BR: Carteira
+wallet.add:
+    en-US: Add Wallet
+    pt-BR: Adicionar Carteira
 wallet.addUser.noPermissionToAddUser:
     en-US: You must be owner to add members.
     pt-BR: Você precisar ser o dono para conseguir adicionar os membros.

@@ -135,3 +135,22 @@ category.getWithPath:
   method: "GET"
   pushToken: true
   pushWallet: true
+
+########## USER ############
+user.findByEmail:
+  url: "/user/findByEmail"
+  method: "POST"
+  pushToken: true
+
+########## IMPORT ############
+import.itau.preview:
+  url: "/import/itau/preview"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+import.itau.save:
+  url: "/import/itau/save"
+  method: "POST"
+  pushToken: true
+  pushWallet: true

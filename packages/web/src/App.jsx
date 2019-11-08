@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Sidebar from 'components/global/Sidebar';
 import Container from 'components/global/Container';
-import Auth from 'pages/Auth/Auth';
+import Auth from 'pages/auth/Auth';
 import { Rehydratated, Store } from './reducers';
 import { callValidateToken } from 'reducers/auth/authAction';
 import Loader from 'components/global/Loader';

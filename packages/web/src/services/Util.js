@@ -2,6 +2,7 @@
 import config from 'config/general.yaml';
 import {toMoney} from 'vanilla-masker';
 import md5 from 'md5';
+import { bundle } from 'i18n/bundle';
 
 export const jsonQuerystringfy = (json, removeParams = []) => {
     return Object.keys(json).reduce(function (str, key, i) {
@@ -43,4 +44,8 @@ export const formatMoney = (value) => {
       precision: 2,
       zeroCents: false
   });
+}
+
+export const formatCurrency = (value) => {
+  return bundle('currency') + ' ' + formatMoney(value);
 }

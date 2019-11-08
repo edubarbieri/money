@@ -15,12 +15,13 @@ import bills from 'reducers/bills/billsReducer';
 import credit from 'reducers/credit/creditReducer';
 import debit from 'reducers/debit/debitReducer';
 import category from 'reducers/category/categoryReducer';
+import importation from 'reducers/import/importReducer';
 
 
 const persistWallet = {
 	key: config.appKey + ':wallet',
 	storage: storageSession,
-	blacklist: ['all'] 
+	blacklist: ['all', 'created'] 
 }
 
 const persistAuth = {
@@ -40,6 +41,7 @@ const conbinedReducers = combineReducers({
 	debit,
 	credit,
 	category,
+	importation,
 	wallet: persistReducer(persistWallet, wallet),
 	auth: persistReducer(persistAuth, auth),
 	user: persistReducer(persistUser, user)

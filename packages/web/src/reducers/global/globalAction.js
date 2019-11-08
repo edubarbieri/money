@@ -39,6 +39,12 @@ export const setError = (type, data) => {
         case 'auth':
             messageType = 'SET_AUTH_ERROR';
             break;
+        case 'userWallet':
+            messageType = 'SET_ADD_USER_ERROR';
+            break;
+        case 'importItau':
+            messageType = 'SET_IMPORT_ITAU_ERROR';
+            break;
         default:
             break;
     }

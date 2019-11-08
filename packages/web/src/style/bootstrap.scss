@@ -1,73 +1,124 @@
 @import 'variables.scss';
 
-.navbar{
+.navbar {
     height: 4rem;
     z-index: 20;
     margin: 0 -15px 15px -15px;
-    @include mobile{
+    @include mobile {
         height: 3.5rem;
     }
-    .navbar-brand{
+    .navbar-brand {
         padding: 0px;
-        @include mobile{
+        @include mobile {
             margin-left: 1rem;
         }
     }
 }
 
-.close{
-    &:focus{
+.close {
+    &:focus {
         outline: none;
     }
 }
 
-.modal{
-    &.show{
+.modal {
+    background-color: rgba(0, 0, 0, 0.3);
+    &.show {
         display: block;
     }
-    .modal-content{
+    .modal-content {
         box-shadow: $shadow;
         border: none;
-        .modal-header{
+        .modal-header {
             padding: 10px 15px;
             border: none;
-            .modal-title{
+            .modal-title {
                 font-weight: 600;
                 font-size: 0.9rem;
             }
         }
-        .modal-body{
+        .modal-body {
             padding: 0px 15px 10px 15px;
         }
-        .modal-footer{
+        .modal-footer {
             border: 0px;
             padding: 5px 0px;
         }
     }
+    @include mobile {
+        .modal-dialog {
+            margin: 0;
+            align-items: initial;
+            min-height: auto;
+            .modal-content {
+                width: 100%;
+                border-radius: 0;
+            }
+        }
+    }
 }
 
-.form-group{
-    label{
+.form-group {
+    label {
         font-size: 0.8rem;
         font-weight: 600;
         margin-bottom: 5px;
     }
-    .form-control{
+    .form-control {
         font-size: 0.8rem;
-        &:focus{
+        &:focus {
             box-shadow: none;
         }
     }
 }
 
-.card{
+.card {
     border: none;
-    .card-title{
+    .card-title {
         font-weight: 600;
+    }
+    .card-footer {
+        background-color: transparent;
+        border: 0px;
     }
 }
 
-.shadow-sm { box-shadow: $shadow-sm!important     }
-.shadow { box-shadow: $shadow !important; }
-.shadow-lg { box-shadow: $shadow-lg !important }
-.shadow-none { box-shadow: none !important; }
+.shadow-sm {
+    box-shadow: $shadow-sm !important;
+}
+.shadow {
+    box-shadow: $shadow !important;
+}
+.shadow-lg {
+    box-shadow: $shadow-lg !important;
+}
+.shadow-none {
+    box-shadow: none !important;
+}
+
+.table {
+    td,
+    th {
+        padding: 0.5em;
+        vertical-align: middle;
+    }
+    &.table-striped {
+        tbody {
+            tr:nth-of-type(odd) {
+                background-color: $lighter-gray;
+            }
+        }
+    }
+    &.table-borderless{
+        td,
+        th {
+            border: none;
+        }
+        thead{
+            td,
+            th {
+                border-bottom: 2px solid #2a2a2a;
+            }
+        }
+    }
+}
