@@ -8,6 +8,7 @@ $primary: #007fbb;
 $blue: $primary;
 $danger: #9a0400;
 $success: #007310;
+$danger-transparency: #9a0500af;
 
 $shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);  
 $shadow: 0 .5rem 1rem rgba(0,0,0,.15); 
@@ -18,6 +19,11 @@ $dark-shadow-sm: 0 .125rem .25rem rgba(0,0,0,.7);
 $dark-shadow: 0 .5rem 1rem rgba(0,0,0,.3); 
 $dark-shadow-lg: 0 1rem 3rem rgba(0,0,0,.4);
 $dark-shadow-none: none !important; 
+
+$danger-shadow-sm: 0 .125rem .25rem $danger-transparency;  
+$danger-shadow: 0 .5rem 1rem $danger-transparency; 
+$danger-shadow-lg: 0 1rem 3rem $danger-transparency;
+$danger-shadow-none: none !important; 
 
 @mixin desktop {
     @media (min-width: 768px) {

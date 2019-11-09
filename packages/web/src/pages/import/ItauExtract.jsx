@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import 'style/dropzone.scss';
@@ -6,29 +6,22 @@ import moment from 'moment';
 import SelectSearch from 'react-select-search';
 import _ from 'lodash';
 import { bundle } from 'i18n/bundle';
-import { formatMoney, formatCurrency } from 'services/Util';
+import { formatCurrency } from 'services/Util';
 import { setError } from 'reducers/global/globalAction';
 import { setItauPreview, setChangeItauPreview, setImportItau, setClearItauImport, setClearItauPreview } from 'reducers/import/importAction';
 import { fetchAllCategories } from 'reducers/category/categoryAction';
 
 const ItauExtract = () => {
     const dispatch = useDispatch();
-
-    const [readedFileJSON, setReadedFileJSON] = useState([]);
-    let categories = useSelector(state => state.category.all);
-    let itauPreview = useSelector(state => state.importation.itauPreview);
-    let importItau = useSelector(state => state.importation.importItau);
+    const categories = useSelector(state => state.category.all);
+    const itauPreview = useSelector(state => state.importation.itauPreview);
+    const importItau = useSelector(state => state.importation.importItau);
 
     useEffect(() => {
         dispatch(fetchAllCategories());
-    }, []);
-
-    useEffect(() => {
-        console.log(importItau)
-    }, [importItau]);
+    }, [dispatch]);
 
     const onDrop = useCallback(acceptedFiles => {
-        setReadedFileJSON([]);
         if (!acceptedFiles || acceptedFiles.lentgh < 1) {
             return;
         }
@@ -44,24 +37,21 @@ const ItauExtract = () => {
         let reader = new FileReader();
         reader.onload = function() {
             let readedFile = reader.result;
-            mountExtractData(readedFile);
+            const lines = readedFile.toString().split('\n');
+            dispatch(setClearItauImport());
+            dispatch(setItauPreview({ lines }));
         };
         reader.readAsText(firstFile);
-    }, []);
+    }, [dispatch]);
 
-    const mountExtractData = readedFile => {
-        const lines = readedFile.split('\n');
-        dispatch(setClearItauImport());
-        dispatch(setItauPreview({ lines }));
-    };
-
+  
     const setCategory = (idx, value) => {
         itauPreview[idx].categoryId = value.value;
         dispatch(setChangeItauPreview(itauPreview));
     };
 
     const setAssociation = (idx, value) => {
-        itauPreview[idx].association = value.id;
+        itauPreview[idx].association = value.value;
         dispatch(setChangeItauPreview(itauPreview));
     };
     
@@ -139,7 +129,7 @@ const ItauExtract = () => {
                 </div>
             </div>}
             {importItau && <div>
-                <table className="table border border-primary">
+                <table className="table border border-primary  table-responsive-sm">
                     <thead>
                         <tr className="border-0">
                             <th colSpan={3} className="border-0  text-center text-white bg-primary">{bundle('import.resume')}</th>
@@ -165,7 +155,7 @@ const ItauExtract = () => {
                         <div className="card">
                             <div className="card-body p-0">
                                 <h5 className="card-title text-primary mt-3">{bundle('collected.data')}</h5>
-                                <table className="table table-striped table-borderless table-responsive-sm">
+                                <table className="table table-striped custom-table  table-responsive-sm">
                                     <thead>
                                         <tr>
                                             <th>{bundle('date')}</th>
@@ -179,7 +169,7 @@ const ItauExtract = () => {
                                     <tbody>{showImportedData()}</tbody>
                                 </table>
                             </div>
-                            <div className="card-footer text-right">
+                            <div className="card-footer text-right mobile-two-buttons">
                                 <button type="button" className="btn btn-outline-secondary mr-2" onClick={() => dispatch(setClearItauPreview())}>
                                     {bundle('cancel')}
                                 </button>

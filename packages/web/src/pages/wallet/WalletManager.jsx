@@ -6,7 +6,7 @@ import WalletCard from './fragments/WalletCard';
 import Modal from 'components/global/fragments/Modal';
 import WalletEditor from './fragments/WalletEditor';
 import _ from 'lodash';
-import { setRemoveWallet, setCreatedWallet } from 'reducers/wallet/walletAction';
+import { setCreatedWallet } from 'reducers/wallet/walletAction';
 
 const WalletManager = () => {
     const dispatch = useDispatch();

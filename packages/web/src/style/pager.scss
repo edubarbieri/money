@@ -1,0 +1,61 @@
+@import "variables.scss";
+
+/* Pager pagination
+   ========================================================================== */
+.pager {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    div{
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        color: $primary;
+        text-decoration: none;
+        background-color: $white;
+        border: 1px solid $lighter-gray;
+        cursor: pointer;
+        display: inline-block;
+        svg, 
+        svg:focus, 
+        svg:hover{
+            path{
+                color: inherit;
+            }
+        }
+        &.active{
+            color: $white;
+            background-color: $primary;
+        }
+    }
+    &.danger{
+        div{
+            color: $danger;
+            svg, 
+            svg:focus, 
+            svg:hover{
+                path{
+                    color: $danger;
+                }
+            }
+            &.active{
+                color: $white;
+                background-color: $danger;
+            }
+        }
+    }
+    .disabled, 
+    .disabled:focus, 
+    .disabled:hover, 
+    .disabled>i, 
+    .disabled>i:focus, 
+    .disabled>i:hover {
+        color: $light-gray;
+        cursor: not-allowed;
+        border-color: $lighter-gray;
+        path{
+            color: $light-gray !important;
+        }
+    }
+}

@@ -71,7 +71,7 @@ const CategoryMaintenance = () => {
     };
 
     return (
-        <div>
+        <div className="category-maintenance">
             {categoryHint && (
                 <Modal title={bundle('category.editor')} setShow={() => setCategoryHint(null)}>
                     <CategoryEditor

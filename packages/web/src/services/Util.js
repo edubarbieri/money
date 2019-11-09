@@ -4,6 +4,7 @@ import {toMoney} from 'vanilla-masker';
 import md5 from 'md5';
 import { bundle } from 'i18n/bundle';
 
+
 export const jsonQuerystringfy = (json, removeParams = []) => {
     return Object.keys(json).reduce(function (str, key, i) {
       var delimiter, val;
@@ -48,4 +49,11 @@ export const formatMoney = (value) => {
 
 export const formatCurrency = (value) => {
   return bundle('currency') + ' ' + formatMoney(value);
+}
+
+export const isMobile = (windowSize) => {
+  if(!windowSize){
+      windowSize = window.innerWidth;
+  }
+  return windowSize <= 767;
 }

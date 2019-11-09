@@ -154,6 +154,9 @@ email:
 en-US:
     en-US: English
     pt-BR: Inglês Americano
+error:
+    en-US: Error
+    pt-BR: Erro
 expand.info:
     en-US: Expand info
     pt-BR: Expandir informações
@@ -186,8 +189,8 @@ generate.extract.recurency.info:
         Realizar a importação dos créditos/débitos do mes anterior marcadas como
         fixas ou recorrentes.
 generate.recurency:
-    en-US: Do Import
-    pt-BR: Realizar importação
+    en-US: Generate Recurrencys
+    pt-BR: Gerar Recorrências
 generate.recurency.info:
     en-US: Do Import of the bills of last month flagged like fixed or recurrent
     pt-BR: >-
@@ -358,9 +361,15 @@ owner:
 password.confirmation:
     en-US: Password confirmation
     pt-BR: Confirmação de senha
+pay:
+    en-US: Pay
+    pt-BR: Pagar
 payed:
     en-US: Payed
     pt-BR: Pago
+payment:
+    en-US: Payment
+    pt-BR: Pagamento
 payment.date:
     en-US: Payment Date
     pt-BR: Data de pagamento
@@ -460,6 +469,12 @@ signup.userAlreadyRegistered:
 total:
     en-US: Total
     pt-BR: Total
+total.bill:
+    en-US: Total Bills 
+    pt-BR: Total Devido
+total.payed:
+    en-US: Total Payed
+    pt-BR: Total Pago
 type:
     en-US: Type
     pt-BR: Tipo

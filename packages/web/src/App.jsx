@@ -7,11 +7,18 @@ import { Rehydratated, Store } from './reducers';
 import { callValidateToken } from 'reducers/auth/authAction';
 import Loader from 'components/global/Loader';
 import {BrowserRouter} from 'react-router-dom';
+import _ from 'lodash';
+import { setResize } from 'reducers/global/globalAction';
 
 function App() {
     const transient = useSelector(state => state.auth.transient);
     const initialized = useSelector(state => state.global.initialized);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const debounceDispatch = _.debounce(() =>{dispatch(setResize())}, 66);
+        window.addEventListener('resize', debounceDispatch);
+    }, [dispatch]);
 
     useEffect(() => {
         Rehydratated.then(() => {

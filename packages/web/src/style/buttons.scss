@@ -1,0 +1,60 @@
+@import 'variables.scss';
+
+.tooltip-btn{
+    position: relative;
+    padding-right: 20px;
+    svg{
+        @include v-middle;
+        right: 2px;
+        path{
+            color: $primary;
+        }
+        &:hover + span{
+            display: block;
+        }
+    }
+    &.bill{
+        svg{
+            path{
+                color: $danger;
+            }
+        }
+    }
+    span{
+        display: none;
+        position: absolute;
+        left: 0px;
+        top: 33px;
+        width: 100%;
+        text-align: center;
+        background-color: $white;
+        padding: 5px;
+        box-shadow: $shadow-sm;
+        font-size: 0.75rem;
+        padding: 10px;
+        font-weight: 600;
+        z-index: 2;
+    }
+
+    @include mobile{
+        width: 100%;
+        padding: 10px;
+        box-shadow: $shadow-sm;
+        margin-left: 0px !important;
+        margin-top: 10px;
+        .btn{
+            width: 100%;
+        }
+        svg{
+            display: none;
+        }
+        span{
+            top: 0;
+            margin-top: 10px;
+            padding: 0;
+            position: relative;
+            display: block;
+            box-shadow: none;
+        }
+    }
+} 

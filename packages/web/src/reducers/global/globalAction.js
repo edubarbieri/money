@@ -5,6 +5,13 @@ export const setLoading = data => {
     };
 };
 
+export const setResize = () => {
+    return {
+        type: 'SET_RESIZE',
+        payload: window.innerWidth
+    };
+};
+
 export const setCurrentPage = data => {
     return {
         type: 'SET_CURRENT_PAGE',
@@ -44,6 +51,9 @@ export const setError = (type, data) => {
             break;
         case 'importItau':
             messageType = 'SET_IMPORT_ITAU_ERROR';
+            break;
+        case 'bill':
+            messageType = 'SET_BILL_ERROR';
             break;
         default:
             break;

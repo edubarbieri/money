@@ -4,7 +4,7 @@ import 'style/wallet.scss';
 import { bundle } from 'i18n/bundle';
 import { fetchWallets, setWallet } from 'reducers/wallet/walletAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown} from '@fortawesome/free-solid-svg-icons';
 
 const WalletSelector = () => {
     const wallet = useSelector(state => state.wallet.wallet);

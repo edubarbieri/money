@@ -4,6 +4,10 @@
 @import 'message.scss';
 @import 'utils.scss';
 @import 'editors.scss';
+@import 'buttons.scss';
+@import 'table.scss';
+@import 'forms.scss';
+@import 'content.scss';
 
 body {
     background-color: $white;
@@ -63,4 +67,21 @@ a{
 
 .hidden{
     display: none;
+}
+
+
+@include mobile{
+    .mobile-100{
+        width: 100%;
+    }
+    .mobile-center{
+        text-align: center !important;
+    }
+    .mobile-two-buttons{
+        padding-left: 0;
+        padding-right: 0;
+        .btn{
+            width: 50%;
+        }
+    }
 }

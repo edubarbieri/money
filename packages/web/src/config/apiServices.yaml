@@ -73,7 +73,7 @@ bills.update:
   pushToken: true
   pushWallet: true
 
-bills.delete:
+bills.remove:
   url: "/bill/{0}"
   method: "DELETE"
   pushToken: true
