@@ -196,6 +196,11 @@ user.findByEmail:
   method: "POST"
   pushToken: true
 
+user.update:
+  url: "/user/{0}"
+  method: "PUT"
+  pushToken: true
+
 ########## IMPORT ############
 import.itau.preview:
   url: "/import/itau/preview"

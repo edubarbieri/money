@@ -32,11 +32,34 @@ const getMessage = (bundle, key, ...args) =>{
     }
     return translatedMessage
 }
+const getMessageWithLang = (bundle, key, lang, ...args) =>{
+    if(!key){
+        return '';
+    }
+
+    if(!bundle){
+        return key;
+    }
+    const objectMessage = bundle[key];
+
+    if(_.isEmpty(objectMessage)){
+        return key;
+    }
+
+    const translatedMessage = objectMessage[lang];
+
+    if(_.isEmpty(translatedMessage)){
+        return key;
+    }
+    return translatedMessage
+}
 
 const bundle = (key, ...args) => {return getMessage(resourcesBundle, key, args)}
 const route = (key, ...args) => {return getMessage(routesBundle, key, args)}
+const routeLang = (key, lang, ...args) => {return getMessageWithLang(routesBundle, key, lang, args)}
 
 export {
     bundle,
-    route
+    route,
+    routeLang
 }

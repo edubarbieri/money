@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import 'style/account.scss';
-import { bundle } from 'i18n/bundle';
+import { bundle, route, routeLang } from 'i18n/bundle';
+import { dispatch } from 'services/Store';
+import { setUpdateUser, setUserLang } from 'reducers/user/userAction';
+import { getRegisteredLanges } from 'i18n/lang';
 
 const Home = () => {
     const profile = useSelector(state => state.user.data);
+    const lang = useSelector(state => state.user.lang);
     const [editedProfile, setEditedProfile] = useState(profile);
     const [errors, setErrors] = useState({
         name: ''
@@ -26,12 +30,16 @@ const Home = () => {
         if (errors.name) {
             return;
         }
-        console.log('savvw');
+        dispatch(setUpdateUser(editedProfile));
     };
 
-    const changeLanguage = value => {
-        console.log(value);
+    const setLang = (lang) => {
+        dispatch(setUserLang(lang));
+        setTimeout(() => {
+            window.location.href = routeLang('my.account', lang);
+        }, 100)
     };
+
 
     return (
         <div className="my-account">
@@ -54,7 +62,7 @@ const Home = () => {
                 </div>
                 <div className="col-md-10 col-sm-12">
                     <div className="panel panel-primary user-edit-data">
-                        <div className="panel-heading ">{bundle('user.data')}</div>
+                        <div className="panel-heading font-weight-bold mb-2 text-primary">{bundle('user.data')}</div>
                         <div className="panel-body">
                             <form>
                                 <div className="row">
@@ -89,18 +97,18 @@ const Home = () => {
                                         </div>
                                     </div>
                                     <div className="col-md-12">
-                                        <div>
+                                        <div className="form-group">
                                             <label className="control-label" htmlFor="inptLanguage">
                                                 {bundle('preffered.language')}
                                             </label>
                                             <select
                                                 className="form-control"
-                                                onChange={event => changeLanguage(event.target.value)}
-                                                value={'pt-br'}>
-                                                {['pt-br'].map(value => {
+                                                onChange={event => setLang(event.target.value)}
+                                                value={lang}>
+                                                {getRegisteredLanges().map(value => {
                                                     return (
-                                                        <option key={value} value={value}>
-                                                            {bundle(value)}
+                                                        <option key={value.lang} value={value.lang}>
+                                                            {value.name}
                                                         </option>
                                                     );
                                                 })}
@@ -108,15 +116,19 @@ const Home = () => {
                                         </div>
                                     </div>
                                     <div className="col-md-12">
-                                        <label className="control-label">{bundle('avatar')}</label>
-                                        <br />
-                                        {bundle('manage.avatar')}&nbsp;
-                                        <a href="https://gravatar.com" target="_blank" rel="noopener noreferrer">
-                                            <strong>Gravatar</strong>
-                                        </a>
+                                        <div className="form-group">
+                                            <label className="control-label">{bundle('avatar')}</label><br/>
+                                            {bundle('manage.avatar')}&nbsp;
+                                            <a href="https://gravatar.com" target="_blank" rel="noopener noreferrer">
+                                                <strong>Gravatar</strong>
+                                            </a>
+                                        </div>
                                     </div>
                                     <div className="col-md-12 d-flex justify-content-end">
-                                        <button type="button" className="flext-right btn btn-outline-primary btn-sm" onClick={doSave}>
+                                        <button
+                                            type="button"
+                                            className="flext-right btn btn-outline-primary btn-sm"
+                                            onClick={doSave}>
                                             {bundle('save')}
                                         </button>
                                     </div>
