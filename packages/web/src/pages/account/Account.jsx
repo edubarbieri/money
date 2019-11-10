@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import 'style/account.scss';
 import { bundle } from 'i18n/bundle';
 
 const Home = () => {
-    const dispatch = useDispatch();
     const profile = useSelector(state => state.user.data);
     const [editedProfile, setEditedProfile] = useState(profile);
     const [errors, setErrors] = useState({

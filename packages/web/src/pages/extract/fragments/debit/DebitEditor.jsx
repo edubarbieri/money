@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
-import { setEditBill, setSaveBill } from 'reducers/bills/billsAction';
 import Modal from 'components/global/fragments/Modal';
 import SelectSearch from 'react-select-search';
 import { setSaveDebit, setEditDebit } from 'reducers/debit/debitAction';
@@ -45,7 +44,7 @@ const DebitEditor = () => {
         debit && (
             <Modal
                 title={debit.id ? bundle('edit.debit') : bundle('add.debit')}
-                setShow={() => dispatch(setEditBill(null))}>
+                setShow={() => dispatch(setEditDebit(null))}>
                 <form className="clear-focus">
                     <div className="form-row">
                         <div className={!debit.description ? 'col-12 form-group has-error' : 'col-12 form-group'}>

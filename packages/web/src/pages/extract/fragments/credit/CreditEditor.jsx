@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
-import { setEditBill, setSaveBill } from 'reducers/bills/billsAction';
 import Modal from 'components/global/fragments/Modal';
 import SelectSearch from 'react-select-search';
 import { setSaveCredit, setEditCredit } from 'reducers/credit/creditAction';
@@ -45,7 +44,7 @@ const CreditEditor = () => {
         credit && (
             <Modal
                 title={credit.id ? bundle('edit.credit') : bundle('add.credit')}
-                setShow={() => dispatch(setEditBill(null))}>
+                setShow={() => dispatch(setEditCredit(null))}>
                 <form className="clear-focus">
                     <div className="form-row">
                         <div className={!credit.description ? 'col-12 form-group has-error' : 'col-12 form-group'}>
