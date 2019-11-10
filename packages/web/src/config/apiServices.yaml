@@ -86,7 +86,7 @@ bills.generateMonthRecurrentBills:
   pushWallet: true
 
 ########## DEBIT ############
-debit.billAmountMonthResume:
+debit.debitAmountMonthResume:
   url: "/debit/amountMonthResume"
   method: "GET"
   pushToken: true
@@ -117,7 +117,7 @@ debit.remove:
   pushToken: true
   pushWallet: true
 ########## CREDIT ############
-credit.billAmountMonthResume:
+credit.creditAmountMonthResume:
   url: "/credit/amountMonthResume"
   method: "GET"
   pushToken: true
