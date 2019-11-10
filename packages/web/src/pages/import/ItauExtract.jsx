@@ -9,16 +9,16 @@ import { bundle } from 'i18n/bundle';
 import { formatCurrency } from 'services/Util';
 import { setError } from 'reducers/global/globalAction';
 import { setItauPreview, setChangeItauPreview, setImportItau, setClearItauImport, setClearItauPreview } from 'reducers/import/importAction';
-import { fetchAllCategories } from 'reducers/category/categoryAction';
+import { fetchCategoriesWithPath } from 'reducers/category/categoryAction';
 
 const ItauExtract = () => {
     const dispatch = useDispatch();
-    const categories = useSelector(state => state.category.all);
+    const categories = useSelector(state => state.category.withPath);
     const itauPreview = useSelector(state => state.importation.itauPreview);
     const importItau = useSelector(state => state.importation.importItau);
 
     useEffect(() => {
-        dispatch(fetchAllCategories());
+        dispatch(fetchCategoriesWithPath());
     }, [dispatch]);
 
     const onDrop = useCallback(acceptedFiles => {

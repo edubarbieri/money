@@ -9,7 +9,7 @@ const CreditEditor = () => {
     const dispatch = useDispatch();
     const editCredit = useSelector(state => state.credit.editCredit);
     const [initialized, setInitialized] = useState(false);
-    const categories = useSelector(state => state.category.all);
+    const categories = useSelector(state => state.category.withPath);
     const wallet = useSelector(state => state.wallet.wallet);
 
     const [credit, setCredit] = useState({

@@ -9,7 +9,7 @@ const DebitEditor = () => {
     const dispatch = useDispatch();
     const editDebit = useSelector(state => state.debit.editDebit);
     const [initialized, setInitialized] = useState(false);
-    const categories = useSelector(state => state.category.all);
+    const categories = useSelector(state => state.category.withPath);
     const wallet = useSelector(state => state.wallet.wallet);
 
     const [debit, setDebit] = useState({

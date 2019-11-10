@@ -8,7 +8,7 @@ import { setEditBill, setRemoveBillConfirmation, setRemoveBill } from 'reducers/
 import Modal from 'components/global/fragments/Modal';
 import BillsEditor from './fragments/BillsEditor';
 import { isMobile } from 'services/Util';
-import { fetchAllCategories } from 'reducers/category/categoryAction';
+import { fetchCategoriesWithPath } from 'reducers/category/categoryAction';
 import BillsPayEditor from './fragments/BillsPayEditor';
 import ErrorAlert from 'components/global/ErrorAlert';
 import BillsList from './fragments/BillsList';
@@ -20,7 +20,7 @@ const Bills = () => {
     
     useEffect(() => {
         dispatch(setLoading(false));
-        dispatch(fetchAllCategories());
+        dispatch(fetchCategoriesWithPath());
     }, [dispatch]);
 
     return (

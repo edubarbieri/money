@@ -9,7 +9,7 @@ const BillsEditor = () => {
     const dispatch = useDispatch();
     const editBill = useSelector(state => state.bills.editBill);
     const [initialized, setInitialized] = useState(false);
-    const categories = useSelector(state => state.category.all);
+    const categories = useSelector(state => state.category.withPath);
     const wallet = useSelector(state => state.wallet.wallet);
 
     const [bill, setBill] = useState({

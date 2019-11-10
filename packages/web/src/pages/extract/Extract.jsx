@@ -8,7 +8,7 @@ import { setEditDebit, setRemoveDebitConfirmation, setRemoveDebit, setDebitFilte
 import Modal from 'components/global/fragments/Modal';
 import CreditEditor from './fragments/credit/CreditEditor';
 import { isMobile } from 'services/Util';
-import { fetchAllCategories } from 'reducers/category/categoryAction';
+import { fetchCategoriesWithPath } from 'reducers/category/categoryAction';
 import ErrorAlert from 'components/global/ErrorAlert';
 import CreditList from './fragments/credit/CreditList';
 import CreditTable from './fragments/credit/CreditTable';
@@ -37,7 +37,7 @@ const Credit = () => {
 
     useEffect(() => {
         dispatch(setLoading(false));
-        dispatch(fetchAllCategories());
+        dispatch(fetchCategoriesWithPath());
     }, [dispatch]);
 
     useEffect(() => {

@@ -4,7 +4,7 @@ import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 import 'style/categoryTree.scss';
 import { bundle } from 'i18n/bundle';
-import { fetchAllCategories, setParentCategory, setRemoveCategory, setChangeCategories } from 'reducers/category/categoryAction';
+import { fetchCategoriesWithPath, setParentCategory, setRemoveCategory, setChangeCategories, fetchAllCategories } from 'reducers/category/categoryAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faPlusSquare, faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
@@ -20,6 +20,7 @@ const CategoryMaintenance = () => {
 
     useEffect(() => {
         dispatch(fetchAllCategories());
+        dispatch(fetchCategoriesWithPath());
     }, [dispatch, refresh]);
 
     const handleEditRow = categoryHint => {

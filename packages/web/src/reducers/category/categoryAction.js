@@ -14,6 +14,13 @@ export const fetchAllCategories = () => {
 	};
 }
 
+export const fetchCategoriesWithPath = () => {
+	return  {
+		type: 'SET_ALL_CATEGORIES_WITH_PATH',
+		payload: call('category.getWithPath')
+	};
+}
+
 export const saveCategory = (data) => {
 	return dispatch => {
 		const service = data.id ? 'category.update' : 'category.create';

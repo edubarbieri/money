@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-	all: []
+	all: [],
+	withPath: []
 };
 
 
@@ -21,6 +22,10 @@ export default (state = INITIAL_STATE, action) => {
 			let categories = action.payload.data  || [];
 			addTreeOptionsToCategories(categories);
 			return {...state, all: categories};
+		case 'SET_ALL_CATEGORIES_WITH_PATH':
+			let categoriesWithPath = action.payload.data  || [];
+			addTreeOptionsToCategories(categoriesWithPath);
+			return {...state, withPath: categoriesWithPath};
 		case 'SET_CHANGE_CATEGORIES':
 			return {...state, all: action.payload};
 		default:
