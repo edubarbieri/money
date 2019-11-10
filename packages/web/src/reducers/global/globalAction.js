@@ -55,6 +55,12 @@ export const setError = (type, data) => {
         case 'bill':
             messageType = 'SET_BILL_ERROR';
             break;
+        case 'credit':
+            messageType = 'SET_CREDIT_ERROR';
+            break;
+        case 'debit':
+            messageType = 'SET_DEBIT_ERROR';
+            break;
         default:
             break;
     }

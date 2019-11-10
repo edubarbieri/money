@@ -85,7 +85,7 @@ const ItauExtract = () => {
                     <td className={line.isExpense ? 'text-success font-weight-bold' : 'text-danger font-weight-bold'}>
                         {line.isExpense ? bundle('debit') : bundle('credit')}
                     </td>
-                    <td className="t-a-l">
+                    <td className="t-a-l m-w-150">
                         <SelectSearch
                             value={line.categoryId}
                             options={categories}

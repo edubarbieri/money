@@ -92,6 +92,30 @@ debit.billAmountMonthResume:
   pushToken: true
   pushWallet: true
 
+
+debit.get:
+  url: "/debit"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+debit.add:
+  url: "/debit"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+debit.update:
+  url: "/debit/{0}"
+  method: "PUT"
+  pushToken: true
+  pushWallet: true
+
+debit.remove:
+  url: "/debit/{0}"
+  method: "DELETE"
+  pushToken: true
+  pushWallet: true
 ########## CREDIT ############
 credit.billAmountMonthResume:
   url: "/credit/amountMonthResume"
@@ -99,6 +123,29 @@ credit.billAmountMonthResume:
   pushToken: true
   pushWallet: true
 
+credit.get:
+  url: "/credit"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+credit.add:
+  url: "/credit"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+credit.update:
+  url: "/credit/{0}"
+  method: "PUT"
+  pushToken: true
+  pushWallet: true
+
+credit.remove:
+  url: "/credit/{0}"
+  method: "DELETE"
+  pushToken: true
+  pushWallet: true
 ########## CATEGORY ############
 category.getAll:
   url: "/category"

@@ -8,6 +8,7 @@
 @import 'table.scss';
 @import 'forms.scss';
 @import 'content.scss';
+@import 'hack.scss';
 
 body {
     background-color: $white;
@@ -63,6 +64,10 @@ a{
 
 .page-title{
     margin-bottom: 15px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $gray;
 }
 
 .hidden{
@@ -80,6 +85,8 @@ a{
     .mobile-two-buttons{
         padding-left: 0;
         padding-right: 0;
+        display: flex;
+        width: 100%;
         .btn{
             width: 50%;
         }

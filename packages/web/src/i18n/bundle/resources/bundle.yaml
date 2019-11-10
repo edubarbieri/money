@@ -10,9 +10,12 @@ active:
 add.bill:
     en-US: Add Bill
     pt-BR: Adicionar Conta
-add.extract:
-    en-US: Add Credit/Debit
-    pt-BR: Adicionar Crédito/Débito
+add.credit:
+    en-US: Add Credit
+    pt-BR: Adicionar Créditos
+add.debit:
+    en-US: Add Debit
+    pt-BR: Adicionar Débitos
 add.receipt:
     en-US: Add new receipt
     pt-BR: Adicionar nova receita
@@ -142,6 +145,12 @@ edit:
 edit.bill:
     en-US: Edit Bill
     pt-BR: Edição de Conta
+edit.credit:
+    en-US: Edit Credit
+    pt-BR: Edição de Crédito
+edit.debit:
+    en-US: Edit Debit
+    pt-BR: Edição de Débito
 edit.extract:
     en-US: Edit Credit/Debit
     pt-BR: Edição de Crédito/Débito
@@ -475,6 +484,12 @@ total.bill:
 total.payed:
     en-US: Total Payed
     pt-BR: Total Pago
+total.speding:
+    en-US: Total Speding
+    pt-BR: Total Gasto
+total.received:
+    en-US: Total Received
+    pt-BR: Total Recebido
 type:
     en-US: Type
     pt-BR: Tipo

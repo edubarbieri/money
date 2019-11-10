@@ -11,6 +11,8 @@ const INITIAL_STATE = {
 		userWallet: [],
 		importItau: [],
 		bill: [],
+		credit: [],
+		debit: [],
 	}
 };
 
@@ -37,6 +39,10 @@ export default (state = INITIAL_STATE, action) => {
 			return {...state, error: {...state.error, importItau: action.payload}};
 		case 'SET_BILL_ERROR':
 			return {...state, error: {...state.error, bill: action.payload}};
+		case 'SET_CREDIT_ERROR':
+			return {...state, error: {...state.error, credit: action.payload}};
+		case 'SET_DEBIT_ERROR':
+			return {...state, error: {...state.error, debit: action.payload}};
 		case 'SET_REFRESH':
 			return {...state, refresh: new Date().getTime()};
 		default:
