@@ -1,11 +1,32 @@
 import { call } from "services/Api";
 import { setError } from "reducers/global/globalAction";
+import { setRefreshDebits } from "reducers/debit/debitAction";
 
 export const fetchCreditMonthResume = () => {
 	return  {
 		type: 'SET_CREDIT_MONTH_RESUME',
 		payload: call('credit.creditAmountMonthResume')
 	};
+}
+
+
+export const setGenerateEntryRecurrency = (data) => {
+	return dispatch => {
+        call('entry.generateMonthRecurrentEntries', data).then(res => {
+			if(res.data.errors){
+                dispatch(setError('credit', res.data.errors))
+                return;
+            }
+			dispatch(setRefreshCredits());
+			dispatch(setRefreshDebits());
+		}).catch(err => {
+            const result = err.response.data;
+            if(result && result.errors){
+                dispatch(setError('credit', result.errors))
+                return;
+            }
+        })
+    };
 }
 
 export const setRefreshCredits = () => {

@@ -85,6 +85,13 @@ bills.generateMonthRecurrentBills:
   pushToken: true
   pushWallet: true
 
+########## ENTRY ############
+entry.generateMonthRecurrentEntries:
+  url: "/entry/generateMonthRecurrentEntries"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
 ########## DEBIT ############
 debit.debitAmountMonthResume:
   url: "/debit/amountMonthResume"

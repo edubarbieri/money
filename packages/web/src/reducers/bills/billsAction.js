@@ -8,6 +8,24 @@ export const fetchBillsMonthResume = () => {
 	};
 }
 
+export const setGenerateBillRecurrency = (data) => {
+	return dispatch => {
+        call('bills.generateMonthRecurrentBills', data).then(res => {
+			if(res.data.errors){
+                dispatch(setError('bill', res.data.errors))
+                return;
+            }
+			dispatch(setRefreshBills());
+		}).catch(err => {
+            const result = err.response.data;
+            if(result && result.errors){
+                dispatch(setError('bill', result.errors))
+                return;
+            }
+        })
+    };
+}
+
 export const setRefreshBills = () => {
 	return  {
 		type: 'SET_BILL_REFRESH',
