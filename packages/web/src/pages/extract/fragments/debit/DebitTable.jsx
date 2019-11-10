@@ -7,19 +7,22 @@ import Pagination from 'components/global/fragments/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { fetchDebits, setEditDebit, setRemoveDebitConfirmation } from 'reducers/debit/debitAction';
+import { fetchDebits, setEditDebit, setRemoveDebitConfirmation, setDebitFilter } from 'reducers/debit/debitAction';
 
 const DebitTable = ({filterData}) => {
     const dispatch = useDispatch();
     const debits = useSelector(state => state.debit.all);
     const refresh = useSelector(state => state.debit.refresh);
     const wallet = useSelector(state => state.wallet.wallet);
+    const filter = useSelector(state => state.debit.filter);
     const [sorter, setSorter] = useState({});
-    const [filter, setFilter] = useState(filterData);
 
     useEffect(() => {
-        dispatch(fetchDebits(filter ));
-    }, [dispatch, filter , refresh, wallet]);
+        if(!filter){
+            return;
+        }
+        dispatch(fetchDebits(filter));
+    }, [dispatch, filter, refresh, wallet]);
 
     const formatDate = date => {
         if (!date) {
@@ -43,12 +46,12 @@ const DebitTable = ({filterData}) => {
         if (currentSorter === 'ASC') {
             auxJson[property] = 'DESC';
             setSorter(auxJson);
-            setFilter({ ...filterData , order: property + '_DESC' });
+            dispatch(setDebitFilter({ ...filterData , order: property + '_DESC' }));
             return;
         }
         auxJson[property] = 'ASC';
         setSorter(auxJson);
-        setFilter({ ...filterData , order: property + '_ASC' });
+        dispatch(setDebitFilter({ ...filterData , order: property + '_ASC' }));
     };
 
     const getRecurrency = (debit) => {
@@ -138,7 +141,7 @@ const DebitTable = ({filterData}) => {
                         <Pagination
                             className="danger"
                             page={filterData.page}
-                            setPage={page => setFilter({ ...filterData , page: page })}
+                            setPage={page => dispatch(setDebitFilter({ ...filter, page: page }))}
                             totalPages={debits.totalPages}
                         />
                     </div>

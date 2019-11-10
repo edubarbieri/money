@@ -7,17 +7,20 @@ import Pagination from 'components/global/fragments/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { fetchCredits, setEditCredit, setRemoveCreditConfirmation } from 'reducers/credit/creditAction';
+import { fetchCredits, setEditCredit, setRemoveCreditConfirmation, setCreditsFilter } from 'reducers/credit/creditAction';
 
 const CreditTable = ({filterData}) => {
     const dispatch = useDispatch();
     const credits = useSelector(state => state.credit.all);
     const refresh = useSelector(state => state.credit.refresh);
+    const filter = useSelector(state => state.credit.filter);
     const wallet = useSelector(state => state.wallet.wallet);
     const [sorter, setSorter] = useState({});
-    const [filter, setFilter] = useState(filterData);
 
     useEffect(() => {
+        if(!filter){
+            return;
+        }
         dispatch(fetchCredits(filter));
     }, [dispatch, filter, refresh, wallet]);
 
@@ -43,12 +46,12 @@ const CreditTable = ({filterData}) => {
         if (currentSorter === 'ASC') {
             auxJson[property] = 'DESC';
             setSorter(auxJson);
-            setFilter({ ...filter, order: property + '_DESC' });
+            dispatch(setCreditsFilter({ ...filter, order: property + '_DESC' }));
             return;
         }
         auxJson[property] = 'ASC';
         setSorter(auxJson);
-        setFilter({ ...filter, order: property + '_ASC' });
+        dispatch(setCreditsFilter({ ...filter, order: property + '_ASC' }));
     };
 
     const getRecurrency = (credit) => {
@@ -138,7 +141,7 @@ const CreditTable = ({filterData}) => {
                         <Pagination
                             className="danger"
                             page={filter.page}
-                            setPage={page => setFilter({ ...filter, page: page })}
+                            setPage={page => dispatch(setCreditsFilter({ ...filter, page: page }))}
                             totalPages={credits.totalPages}
                         />
                     </div>

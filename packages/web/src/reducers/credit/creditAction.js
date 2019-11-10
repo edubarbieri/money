@@ -15,6 +15,13 @@ export const setRefreshCredits = () => {
 	};
 }
 
+export const setCreditsFilter = (data) => {
+	return  {
+		type: 'SET_CREDIT_FILTER',
+		payload: data
+	};
+}
+
 export const fetchCredits = (data) => {
 	return  {
 		type: 'SET_CREDITS',

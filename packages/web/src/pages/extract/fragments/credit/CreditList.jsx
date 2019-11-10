@@ -3,20 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
 import { formatCurrency } from 'services/Util';
 import Pagination from 'components/global/fragments/Pagination';
-import { fetchCredits } from 'reducers/credit/creditAction';
+import { fetchCredits, setCreditsFilter } from 'reducers/credit/creditAction';
 import CreditListItem from './CreditListItem';
 
 const CreditList = ({filterData}) => {
     const dispatch = useDispatch();
     const credits = useSelector(state => state.credit.all);
     const refresh = useSelector(state => state.credit.refresh);
+    const filter = useSelector(state => state.credit.filter);
     const wallet = useSelector(state => state.wallet.wallet);
-    const [filter, setFilter] = useState(filterData);
 
     useEffect(() => {
+        if(!filter){
+            return;
+        }
         dispatch(fetchCredits(filter));
     }, [dispatch, filter, refresh, wallet]);
-
 
     const sum = key => {
         let total = 0;
@@ -52,7 +54,7 @@ const CreditList = ({filterData}) => {
                         <Pagination
                             className="danger"
                             page={filter.page}
-                            setPage={page => setFilter({ ...filter, page: page })}
+                            setPage={page => dispatch(setCreditsFilter({ ...filter, page: page }))}
                             totalPages={credits.totalPages}
                         />
                     </div>

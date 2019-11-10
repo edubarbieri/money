@@ -16,6 +16,14 @@ export const setRefreshDebits = () => {
 	};
 }
 
+
+export const setDebitFilter = (data) => {
+	return  {
+		type: 'SET_DEBIT_FILTER',
+		payload: data
+	};
+}
+
 export const fetchDebits = (data) => {
 	return  {
 		type: 'SET_DEBITS',

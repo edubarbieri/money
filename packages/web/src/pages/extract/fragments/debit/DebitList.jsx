@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
 import { formatCurrency } from 'services/Util';
 import Pagination from 'components/global/fragments/Pagination';
-import { fetchDebits } from 'reducers/debit/debitAction';
+import { fetchDebits, setDebitFilter } from 'reducers/debit/debitAction';
 import DebitListItem from './DebitListItem';
 
 const DebitList = ({filterData}) => {
@@ -11,9 +11,12 @@ const DebitList = ({filterData}) => {
     const debits = useSelector(state => state.debit.all);
     const refresh = useSelector(state => state.debit.refresh);
     const wallet = useSelector(state => state.wallet.wallet);
-    const [filter, setFilter] = useState(filterData);
+    const filter = useSelector(state => state.debit.filter);
 
     useEffect(() => {
+        if(!filter){
+            return;
+        }
         dispatch(fetchDebits(filter));
     }, [dispatch, filter, refresh, wallet]);
 
@@ -53,7 +56,7 @@ const DebitList = ({filterData}) => {
                         <Pagination
                             className="danger"
                             page={filter.page}
-                            setPage={page => setFilter({ ...filter, page: page })}
+                            setPage={page => dispatch(setDebitFilter({ ...filter, page: page }))}
                             totalPages={debits.totalPages}
                         />
                     </div>

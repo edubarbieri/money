@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from 'reducers/global/globalAction';
 import { bundle } from 'i18n/bundle';
 import ExtractRecurrency from './fragments/ExtractRecurrency';
-import { setEditCredit, setRemoveCreditConfirmation, setRemoveCredit } from 'reducers/credit/creditAction';
-import { setEditDebit, setRemoveDebitConfirmation, setRemoveDebit } from 'reducers/debit/debitAction';
+import { setEditCredit, setRemoveCreditConfirmation, setRemoveCredit, setCreditsFilter } from 'reducers/credit/creditAction';
+import { setEditDebit, setRemoveDebitConfirmation, setRemoveDebit, setDebitFilter } from 'reducers/debit/debitAction';
 import Modal from 'components/global/fragments/Modal';
 import CreditEditor from './fragments/credit/CreditEditor';
 import { isMobile } from 'services/Util';
@@ -36,9 +36,16 @@ const Credit = () => {
     });
 
     useEffect(() => {
+        dispatch(setCreditsFilter(filter));
+        dispatch(setDebitFilter(filter));
         dispatch(setLoading(false));
         dispatch(fetchAllCategories());
     }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(setCreditsFilter(filter));
+        dispatch(setDebitFilter(filter));
+    }, [filter, dispatch]);
 
     return (
         <div className="container-fluid">
@@ -75,9 +82,9 @@ const Credit = () => {
                                 <h5 className="text-primary m-1 font-weight-bold">{bundle('credits')}</h5>
                                 {isMobile(resize) ? (
                                     <CreditList filterData={filter} />
-                                ) : (
+                                ) : 
                                     <CreditTable filterData={filter} />
-                                )}
+                                }
                             </div>
                         </div>
                     </div>
