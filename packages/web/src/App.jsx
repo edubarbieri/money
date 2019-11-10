@@ -9,6 +9,7 @@ import Loader from 'components/global/Loader';
 import {BrowserRouter} from 'react-router-dom';
 import _ from 'lodash';
 import { setResize } from 'reducers/global/globalAction';
+import WalletMessage from 'components/wallet/WalletMessage';
 
 function App() {
     const transient = useSelector(state => state.auth.transient);
@@ -33,6 +34,7 @@ function App() {
         ) : (
             <BrowserRouter>
                 <Loader />
+                <WalletMessage />
                 <div className="container-fluid">
                     <div className="row flex-xl-nowrap">
                         <Sidebar />

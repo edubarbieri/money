@@ -463,6 +463,9 @@ required.field:
 save:
     en-US: Save
     pt-BR: Salvar
+doSelect:
+    en-US: Select
+    pt-BR: Selecionar
 select:
     en-US: Select
     pt-BR: Selecione

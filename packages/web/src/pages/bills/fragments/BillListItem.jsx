@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileInvoiceDollar, faTrashAlt, faEdit, faDollarSign, faMoneyCheckAlt, faCoins } from '@fortawesome/free-solid-svg-icons';
+import { faFileInvoiceDollar, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { bundle } from 'i18n/bundle';
 import { formatCurrency } from 'services/Util';
 import moment from 'moment';
