@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileInvoiceDollar, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faFileInvoiceDollar, faTrashAlt, faEdit, faDollarSign, faMoneyCheckAlt, faCoins } from '@fortawesome/free-solid-svg-icons';
 import { bundle } from 'i18n/bundle';
 import { formatCurrency } from 'services/Util';
 import moment from 'moment';
@@ -50,7 +50,9 @@ const BillListItem = ({ bill }) => {
     return (
         <div className="card collapse" >
             <div className="card-title collapse-toogle p-1" onClick={() => setExpand(!expand)}>
-                <span  className={bill.isPayd && 'disabled'}>{bill.description}</span>
+                <span  className={bill.isPayd && 'disabled'}>
+                    {bill.description}
+                </span>
                 <span className="text-danger float-right">{formatCurrency(Number(bill.amount).toFixed(2))}</span>
             </div>
             <div className={expand ? 'collapse-container show pt-2' : 'collapse-container pt-2'}>

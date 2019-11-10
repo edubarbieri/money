@@ -53,7 +53,7 @@ const ExtractGraph = () => {
         <div className="card">
             <div className="card-body">
                 <h5 className="card-title text-center text-primary">{bundle('extract.last.months')}</h5>
-                <div className="remove-padding">
+                <div className="remove-padding fix-graph">
                     <ReactApexChart options={options} series={series} type="line" width="100%" height="300px" />
                 </div>
             </div>
