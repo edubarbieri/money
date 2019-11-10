@@ -73,6 +73,11 @@
             }
         }
     }
+    .disabled{
+        td{
+            color: $disabled-gray;
+        }
+    }
 }
 
 .list{
@@ -100,5 +105,8 @@
                 }
             }
         }
+    }
+    .disabled{
+        color: $disabled-gray;
     }
 }

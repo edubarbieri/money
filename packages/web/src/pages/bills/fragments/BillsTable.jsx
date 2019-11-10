@@ -136,7 +136,7 @@ const BillsTable = () => {
                         <tbody>
                             {bills.data &&
                                 bills.data.map(bill => (
-                                    <tr key={bill.id}>
+                                    <tr key={bill.id} className={bill.isPayd && 'disabled'}>
                                         <td>{bill.description}</td>
                                         <td>{formatCurrency(Number(bill.amount).toFixed(2))}</td>
                                         <td>{formatDate(bill.dueDate)}</td>

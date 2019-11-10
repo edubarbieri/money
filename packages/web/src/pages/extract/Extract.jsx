@@ -36,8 +36,6 @@ const Credit = () => {
     });
 
     useEffect(() => {
-        dispatch(setCreditsFilter(filter));
-        dispatch(setDebitFilter(filter));
         dispatch(setLoading(false));
         dispatch(fetchAllCategories());
     }, [dispatch]);

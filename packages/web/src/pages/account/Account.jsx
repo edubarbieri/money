@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import 'style/account.scss';
-import { bundle, route, routeLang } from 'i18n/bundle';
+import { bundle, routeLang } from 'i18n/bundle';
 import { dispatch } from 'services/Store';
 import { setUpdateUser, setUserLang } from 'reducers/user/userAction';
 import { getRegisteredLanges } from 'i18n/lang';
