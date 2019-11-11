@@ -4,16 +4,20 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 // @ts-ignore
 import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from "react-redux";
-import { Store, Persistor } from "reducers/index";
+import { Provider } from 'react-redux';
+import { Store, Persistor } from 'reducers/index';
 import 'style/global.scss';
+import ErrorBoundary from 'components/global/ErrorBoundary';
 
 ReactDOM.render(
     <Provider store={Store}>
         <PersistGate persistor={Persistor}>
-            <App />
+            <ErrorBoundary>
+                <App />
+            </ErrorBoundary>
         </PersistGate>
-    </Provider>
-, document.getElementById('root'));
+    </Provider>,
+    document.getElementById('root')
+);
 
 serviceWorker.register();

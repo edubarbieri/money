@@ -6,10 +6,11 @@ import Auth from 'pages/auth/Auth';
 import { Rehydratated, Store } from './reducers';
 import { callValidateToken } from 'reducers/auth/authAction';
 import Loader from 'components/global/Loader';
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import _ from 'lodash';
 import { setResize } from 'reducers/global/globalAction';
 import WalletMessage from 'components/wallet/WalletMessage';
+import ErrorBoundary from 'components/global/ErrorBoundary';
 
 function App() {
     const transient = useSelector(state => state.auth.transient);
@@ -17,13 +18,15 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const debounceDispatch = _.debounce(() =>{dispatch(setResize())}, 66);
+        const debounceDispatch = _.debounce(() => {
+            dispatch(setResize());
+        }, 66);
         window.addEventListener('resize', debounceDispatch);
     }, [dispatch]);
 
     useEffect(() => {
         Rehydratated.then(() => {
-            const state = Store.getState()
+            const state = Store.getState();
             dispatch(callValidateToken(state.auth.token));
         });
     }, [dispatch]);
@@ -34,11 +37,13 @@ function App() {
         ) : (
             <BrowserRouter>
                 <Loader />
-                <WalletMessage />
                 <div className="container-fluid">
                     <div className="row flex-xl-nowrap">
                         <Sidebar />
-                        <Container />
+                        <ErrorBoundary>
+                            <WalletMessage />
+                            <Container />
+                        </ErrorBoundary>
                     </div>
                 </div>
             </BrowserRouter>
