@@ -36,7 +36,7 @@ const Home = () => {
     const setLang = (lang) => {
         dispatch(setUserLang(lang));
         setTimeout(() => {
-            window.location.href = routeLang('my.account', lang);
+            window.location = routeLang('my.account', lang);
         }, 100)
     };
 

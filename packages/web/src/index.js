@@ -20,4 +20,4 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-serviceWorker.register();
+serviceWorker.register({onUpdate : (data) => console.log('update sw: ', data)});
