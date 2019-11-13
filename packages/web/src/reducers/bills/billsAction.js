@@ -1,5 +1,7 @@
 import { call } from "services/Api";
-import { setError } from "reducers/global/globalAction";
+import { setError, setLoading } from "reducers/global/globalAction";
+import { route } from "i18n/bundle";
+import moment from "moment";
 
 export const fetchBillsMonthResume = () => {
 	return  {
@@ -73,8 +75,13 @@ export const setSaveBill = (data) => {
 			if(res.data.errors){
                 dispatch(setError('bill', res.data.errors))
                 return;
-            }
+			}
 			dispatch(setEditBill(null));
+			if(data.redirect){
+                dispatch(setLoading(true));
+				window.location = route('opned.bills');
+				return;
+			}
 			dispatch(setPayBill(null));
 			dispatch(setRefreshBills());
 		}).catch(err => {
@@ -91,6 +98,9 @@ export const setSaveBill = (data) => {
 }
 
 export const setEditBill = (data) => {
+	if(data){
+		data.dueDate =  data.dueDate || moment().format('YYYY-MM-DD');
+	}
 	return  {
 		type: 'SET_EDIT_BILL',
 		payload: data
@@ -98,6 +108,9 @@ export const setEditBill = (data) => {
 }
 
 export const setPayBill = (data) => {
+	if(data){
+		data.paymentDate =  data.paymentDate || moment().format('YYYY-MM-DD');
+	}
 	return  {
 		type: 'SET_PAY_BILL',
 		payload: data

@@ -49,6 +49,9 @@ bad.request:
 bill.list:
     en-US: Bills List
     pt-BR: Listagem de Contas
+bill:
+    en-US: Bill
+    pt-BR: Conta
 bills:
     en-US: Bills
     pt-BR: Contas
@@ -175,6 +178,9 @@ extract:
 extract.last.months:
     en-US: Credit and Debits in last months
     pt-BR: Balanço de créditos/débitos dos últimos meses
+fast.add:
+    en-US: Fast adition
+    pt-BR: Adição Rápida
 filter:
     en-US: Filter
     pt-BR: Filtrar

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setLoading } from 'reducers/global/globalAction';
 import BillsGraph from 'components/graph/BillsGraph';
 import ExtractGraph from 'components/graph/ExtractGraph';
-import { bundle } from 'i18n/bundle';
+import FastOptions from 'components/global/fragments/FastOptions';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -14,9 +14,7 @@ const Home = () => {
 
     return (
         <div className="container-fluid">
-            <div className="row">
-                <h1 className="page-title">{bundle('dashboard')}</h1>
-            </div>
+            <FastOptions />
             <div className="row">
                 <div className="col-12"></div>
                 <div className="col-12 col-md-6">

@@ -27,11 +27,14 @@ const ExtractGraph = () => {
     }, [dispacth, refresh]);
 
     useEffect(() => {
-        if(!creditMonthResume.length || !debitMonthResume.length){
+        if(!creditMonthResume.length && !debitMonthResume.length){
             return;
         }
         let auxMonth = [];
         let months = _.map(creditMonthResume, 'month');
+        if(_.isEmpty(months)){
+            months = _.map(debitMonthResume, 'month');
+        }
         for (let index = 0; index < months.length; index++) {
             const element = months[index];
             auxMonth.push(moment.months(element))

@@ -1,6 +1,8 @@
 import { call } from "services/Api";
-import { setError } from "reducers/global/globalAction";
+import { setError, setLoading } from "reducers/global/globalAction";
 import { setRefreshDebits } from "reducers/debit/debitAction";
+import { route } from "i18n/bundle";
+import moment from "moment";
 
 export const fetchCreditMonthResume = () => {
 	return  {
@@ -83,8 +85,13 @@ export const setSaveCredit = (data) => {
 			if(res.data.errors){
                 dispatch(setError('credit', res.data.errors))
                 return;
-            }
+			}
 			dispatch(setEditCredit(null));
+			if(data.redirect){
+                dispatch(setLoading(true));
+				window.location = route('extract');
+				return;
+			}
 			dispatch(setRefreshCredits());
 		}).catch(err => {
 			if(!err.response){
@@ -100,6 +107,9 @@ export const setSaveCredit = (data) => {
 }
 
 export const setEditCredit = (data) => {
+	if(data){
+		data.entryDate =  data.entryDate || moment().format('YYYY-MM-DD');
+	}
 	return  {
 		type: 'SET_EDIT_CREDIT',
 		payload: data

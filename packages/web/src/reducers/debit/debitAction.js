@@ -1,5 +1,7 @@
 import { call } from "services/Api";
-import { setError } from "reducers/global/globalAction";
+import { setError, setLoading } from "reducers/global/globalAction";
+import { route } from "i18n/bundle";
+import moment from "moment";
 
 export const fetchDebitMonthResume = () => {
 	return  {
@@ -64,8 +66,13 @@ export const setSaveDebit = (data) => {
 			if(res.data.errors){
                 dispatch(setError('debit', res.data.errors))
                 return;
-            }
+			}
 			dispatch(setEditDebit(null));
+			if(data.redirect){
+                dispatch(setLoading(true));
+				window.location = route('extract');
+				return;
+			}
 			dispatch(setRefreshDebits());
 		}).catch(err => {
 			if(!err.response){
@@ -81,6 +88,9 @@ export const setSaveDebit = (data) => {
 }
 
 export const setEditDebit = (data) => {
+	if(data){
+		data.entryDate =  data.entryDate || moment().format('YYYY-MM-DD');
+	}
 	return  {
 		type: 'SET_EDIT_DEBIT',
 		payload: data
