@@ -18,7 +18,8 @@ module.exports = function override(config, env) {
 	
     if (env === 'production') {
         config = rewireWorkboxGenerate({
-			cacheId: 'money'
+            cacheId: 'money',
+			skipWaiting: true
 		})(config, env);
     }
     return config;
