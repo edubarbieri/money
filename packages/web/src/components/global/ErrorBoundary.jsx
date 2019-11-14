@@ -1,13 +1,17 @@
 import React from 'react';
 import { bundle } from 'i18n/bundle';
 import 'style/error.scss';
+import { isMobile } from 'services/Util';
+import HeaderBasic from './HeaderBasic';
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { hasError: false };
+        this.state = { 
+            hasError: false
+        };
     }
-
+    
     static getDerivedStateFromError(error) {
         return { hasError: true };
     }
@@ -17,9 +21,10 @@ class ErrorBoundary extends React.Component {
     }
 
     render() {
-        if (this.state.hasError) {
+        if (!this.state.hasError) {
             return <div className="error-page">
-                <h1>{bundle('error.page.title')}</h1>
+                {isMobile(this.state.resize) && <HeaderBasic />}
+                <img src="/img/ops.png" alt="error page"/>
                 <h5>{bundle('error.page.message1')}</h5>
                 <h5>{bundle('error.page.message2')}</h5>
             </div>;

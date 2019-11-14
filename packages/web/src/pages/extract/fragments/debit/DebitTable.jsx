@@ -33,15 +33,6 @@ const DebitTable = ({filterData}) => {
         return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
     };
 
-    const sum = key => {
-        let total = 0;
-        for (let index = 0; index < debits.data.length; index++) {
-            const element = debits.data[index];
-            total = total + element[key];
-        }
-        return formatCurrency(Number(total).toFixed(2));
-    };
-
     const toogleSorter = property => {
         const currentSorter = sorter[property];
         const auxJson = {};

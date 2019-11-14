@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import 'style/wallet.scss';
 import Modal from 'components/global/fragments/Modal';
 import WalletSelector from './WalletSelector';
-import { bundle, route } from 'i18n/bundle';
-import { Link } from 'react-router-dom';
+import { bundle } from 'i18n/bundle';
 
 const WalletMessage = () => {
     const wallet = useSelector(state => state.wallet.wallet);

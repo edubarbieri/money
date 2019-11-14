@@ -31,17 +31,6 @@ const BillsList = () => {
         dispatch(fetchTotalBills(filter));
     }, [dispatch, filter, refresh, wallet]);
 
-
-    const sum = key => {
-        let total = 0;
-        for (let index = 0; index < bills.data.length; index++) {
-            const element = bills.data[index];
-            total = total + element[key];
-        }
-        return formatCurrency(Number(total).toFixed(2));
-    };
-
-    
     return (
         <div className="mt-3">
             <div className="row">

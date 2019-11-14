@@ -7,7 +7,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { Store, Persistor } from 'reducers/index';
 import 'style/global.scss';
-import ErrorBoundary from 'components/global/ErrorBoundary';
 import { setUpdateVersion } from 'reducers/global/globalAction';
 
 ReactDOM.render(

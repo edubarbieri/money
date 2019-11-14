@@ -7,16 +7,26 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    @include mobile{
-        height: 100vh;
-    }
-    h1{
-        color: $primary;
-        font-size: 6rem;
-        margin-bottom: 10px;
+    img{
+        width: 500px;
     }
     h5{
+        width: 90%;
         color: $gray;
         font-size: 1.5rem;
+    }
+    @include mobile{
+        height: 100vh;
+        img{
+            width: 90%;
+        }
+        h5{
+            font-size: 1rem;
+        }
+        .navbar{
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
     }
 }
