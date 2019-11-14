@@ -8,6 +8,9 @@ import { Provider } from 'react-redux';
 import { Store, Persistor } from 'reducers/index';
 import 'style/global.scss';
 import ErrorBoundary from 'components/global/ErrorBoundary';
+import { setUpdateVersion } from 'reducers/global/globalAction';
+
+const dispatch = Store.dispatch();
 
 ReactDOM.render(
     <Provider store={Store}>
@@ -20,4 +23,9 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-serviceWorker.register({onUpdate : (data) => window.alert('update sw: ' + data)});
+const updateAppVersion = (data) => {
+    console.log(data);
+    dispatch(setUpdateVersion())
+}
+
+serviceWorker.register({onUpdate: updateAppVersion});

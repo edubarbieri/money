@@ -16,7 +16,9 @@ import credit from 'reducers/credit/creditReducer';
 import debit from 'reducers/debit/debitReducer';
 import category from 'reducers/category/categoryReducer';
 import importation from 'reducers/import/importReducer';
+import { getUrlParameter } from 'services/Util';
 
+const debug = getUrlParameter('debug');
 
 const persistWallet = {
 	key: config.appKey + ':wallet',
@@ -47,7 +49,7 @@ const conbinedReducers = combineReducers({
 	user: persistReducer(persistUser, user)
 });
 
-const devTools = (process.env.NODE_ENV === 'development')
+const devTools = (process.env.NODE_ENV === 'development' || 'true' === debug)
 	? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 	: {};
 

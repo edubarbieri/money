@@ -17,12 +17,10 @@ module.exports = function override(config, env) {
 	})(config, env);
 	
     if (env === 'production') {
-		console.log('Production build - Adding Workbox for PWAs teste');
-		const configSW = {
+        config = rewireWorkboxGenerate({
 			cacheId: 'money',
 			skipWaiting: true
-		}
-        config = rewireWorkboxGenerate(configSW)(config, env);
+		})(config, env);
     }
     return config;
 };

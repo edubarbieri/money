@@ -14,7 +14,7 @@ export function register(config) {
         window.addEventListener('load', () => {
             const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
-      if (isLocalhost) {
+            if (isLocalhost) {
                 checkValidServiceWorker(swUrl, config);
                 navigator.serviceWorker.ready.then(() => {
                     console.log(
@@ -50,7 +50,7 @@ function registerValidSW(swUrl, config) {
                                 config.onUpdate(registration);
                             }
                         } else {
-              			console.log('Content is cached for offline use.');
+                            console.log('Content is cached for offline use.');
 
                             if (config && config.onSuccess) {
                                 config.onSuccess(registration);

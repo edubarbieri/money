@@ -5,6 +5,7 @@ const INITIAL_STATE = {
 	currentPage: '',
 	toogle: '',
 	refresh: '',
+	updateVersion: '',
 	error: {
 		auth: [],
 		generic: [],
@@ -20,6 +21,8 @@ export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case 'SET_LOADING':
 			return {...state, loading: action.payload};
+		case 'SET_UPDATE_VERSION':
+			return {...state, updateVersion: new Date().getTime()};
 		case 'SET_INITIALIZED':
 			return {...state, initialized: true};
 		case 'SET_RESIZE':

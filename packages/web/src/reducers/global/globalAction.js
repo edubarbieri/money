@@ -40,6 +40,13 @@ export const setRefresh = () => {
     };
 };
 
+export const setUpdateVersion = () => {
+    return {
+        type: 'SET_UPDATE_VERSION',
+        payload: null
+    };
+};
+
 export const setError = (type, data) => {
     let messageType = 'SET_GENERIC_ERROR';
     switch (type) {
