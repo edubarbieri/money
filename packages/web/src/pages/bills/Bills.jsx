@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from 'reducers/global/globalAction';
 import { bundle } from 'i18n/bundle';
@@ -17,6 +17,12 @@ const Bills = () => {
     const dispatch = useDispatch();
     const removeBill = useSelector(state => state.bills.removeBill);
     const resize = useSelector(state => state.global.resize);
+    const wallet = useSelector(state => state.wallet.wallet);
+    const [showEditors, setShowEditors] = useState(!!wallet);
+
+    useEffect(() => {
+        setShowEditors(!!wallet.id);
+    }, [wallet]);
     
     useEffect(() => {
         dispatch(setLoading(false));
@@ -28,7 +34,7 @@ const Bills = () => {
             <div className="row">
                 <h1 className="page-title">{bundle('opened.bills')}</h1>
             </div>
-            <div className="row">
+            {showEditors && <div className="row">
                 <button
                     type="button"
                     className="btn btn-danger btn-sm mobile-100"
@@ -36,7 +42,7 @@ const Bills = () => {
                     {bundle('add.bill')}
                 </button>
                 <BillsRecurrency />
-            </div>
+            </div>}
             <div className="row">
                 <div className="col-12 p-0">
                     <ErrorAlert errorKey="bill" />

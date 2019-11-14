@@ -25,6 +25,13 @@ const Credit = () => {
     const removeCredit = useSelector(state => state.credit.removeCredit);
     const removeDebit = useSelector(state => state.debit.removeDebit);
     const resize = useSelector(state => state.global.resize);
+    const wallet = useSelector(state => state.wallet.wallet);
+    const [showEditors, setShowEditors] = useState(!!wallet);
+
+    useEffect(() => {
+        setShowEditors(!!wallet.id);
+    }, [wallet]);
+
     const [filter, setFilter] = useState({
         withCategory: true,
         withUser: true,
@@ -50,7 +57,7 @@ const Credit = () => {
             <div className="row">
                 <h1 className="page-title">{bundle('opened.bills')}</h1>
             </div>
-            <div className="row">
+            {showEditors && <div className="row">
                 <div className=" mobile-two-buttons">
                     <button
                         type="button"
@@ -66,7 +73,7 @@ const Credit = () => {
                     </button>
                 </div>
                 <ExtractRecurrency />
-            </div>
+            </div>}
             <div className="row">
                 <div className="col-12 p-0">
                     <div className="row">

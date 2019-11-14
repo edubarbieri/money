@@ -13,9 +13,7 @@ import { setUpdateVersion } from 'reducers/global/globalAction';
 ReactDOM.render(
     <Provider store={Store}>
         <PersistGate persistor={Persistor}>
-            <ErrorBoundary>
                 <App />
-            </ErrorBoundary>
         </PersistGate>
     </Provider>,
     document.getElementById('root')

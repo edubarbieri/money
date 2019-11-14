@@ -1,4 +1,6 @@
 import React from 'react';
+import { bundle } from 'i18n/bundle';
+import 'style/error.scss';
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -16,7 +18,11 @@ class ErrorBoundary extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return <h1>Something went wrong.</h1>;
+            return <div className="error-page">
+                <h1>{bundle('error.page.title')}</h1>
+                <h5>{bundle('error.page.message1')}</h5>
+                <h5>{bundle('error.page.message2')}</h5>
+            </div>;
         }
         return this.props.children;
     }

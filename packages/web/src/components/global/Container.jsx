@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Header from './Header';
 import { route } from 'i18n/bundle';
 import Home from 'pages/home/Home';
 import CategoryMaintenace from 'pages/maintenance/category/CategoryMaintenace';
@@ -9,6 +8,7 @@ import ItauExtract from 'pages/import/ItauExtract';
 import Bills from 'pages/bills/Bills';
 import Extract from 'pages/extract/Extract';
 import Account from 'pages/account/Account';
+import Header from './Header';
 
 const Container = () => {
     return <div className="col-12 col-md-9 col-xl-10">

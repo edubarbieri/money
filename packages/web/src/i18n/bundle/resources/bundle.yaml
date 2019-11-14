@@ -169,6 +169,15 @@ en-US:
 error:
     en-US: Error
     pt-BR: Erro
+error.page.title:
+    en-US: Ops!
+    pt-BR: Ops!
+error.page.message1:
+    en-US: Something went wrong, please,
+    pt-BR: Alguma coisa deu errado, por favor,
+error.page.message2:
+    en-US: refresh page and trya again.
+    pt-BR: atualize a pagina e tente novamente.
 expand.info:
     en-US: Expand info
     pt-BR: Expandir informações
