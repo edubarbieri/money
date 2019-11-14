@@ -21,7 +21,7 @@ class ErrorBoundary extends React.Component {
     }
 
     render() {
-        if (!this.state.hasError) {
+        if (this.state.hasError) {
             return <div className="error-page">
                 {isMobile(this.state.resize) && <HeaderBasic />}
                 <img src="/img/ops.png" alt="error page"/>
