@@ -60,7 +60,7 @@
     }
 }
 
-.collapse{
+.collapse {
     .collapse-toogle {
         cursor: pointer;
         border: none;
@@ -100,29 +100,29 @@
     }
 }
 
-@include mobile{
-    .mobile-dateselector{
+@include mobile {
+    .mobile-dateselector {
         justify-content: center;
         width: 100%;
-        .horizontal-form-group{
+        .horizontal-form-group {
             flex: 0;
             align-items: center;
         }
     }
 }
 
-.fast-add{
+.fast-add {
     width: 350px;
-    h5{
+    h5 {
         font-weight: 600;
     }
-    @include desktop{
+    @include desktop {
         margin-left: 15px;
     }
-    .actions-list{
+    .actions-list {
         display: flex;
         justify-content: space-between;
-        .action{
+        .action {
             flex-basis: 30%;
             text-align: center;
             font-weight: 600;
@@ -133,10 +133,10 @@
             cursor: pointer;
             border: 1px solid;
             border-radius: 4px;
-            &:hover{
+            &:hover {
                 box-shadow: $shadow-sm;
             }
-            .plus{
+            .plus {
                 width: 25px;
                 height: 25px;
                 border-radius: 50%;
@@ -145,27 +145,61 @@
                 justify-content: center;
                 display: flex;
                 font-size: 0.7rem;
-                path{
+                path {
                     color: $gray;
                 }
             }
-            &.primary{
+            &.primary {
                 color: $primary;
-                .plus{
+                .plus {
                     border-color: $primary;
                 }
-                path{
+                path {
                     color: $primary;
                 }
             }
-            &.danger{
+            &.danger {
                 color: $danger;
-                .plus{
+                .plus {
                     border-color: $danger;
                 }
-                path{
+                path {
                     color: $danger;
                 }
+            }
+        }
+    }
+}
+
+.bottom-alert {
+    padding: 15px;
+    position: fixed;
+    background-color: $white;
+    border: 1px solid $primary;
+    border-radius: 5px ;
+    bottom: 15px;
+    right: 15px;
+    z-index: 100;
+    box-shadow: $shadow-sm;
+    @include mobile{
+        left: 15px;
+    }
+    .message {
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        align-items: center;
+        p{
+            display: flex;
+            color: $primary;
+            font-weight: 600;
+            margin: 0;
+        }
+        .hide {
+            cursor: pointer;
+            margin-left: 15px;
+            path {
+                color: $primary;
             }
         }
     }

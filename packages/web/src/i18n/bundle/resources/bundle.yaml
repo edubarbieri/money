@@ -355,6 +355,9 @@ new.extract:
 new.receipt:
     en-US: New receipt
     pt-BR: Nova Receita
+new.version:
+    en-US: New version was found, click here to update
+    pt-BR: Nova versão disponível, clique aqui para atualizar
 no:
     en-US: 'No'
     pt-BR: Não

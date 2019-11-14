@@ -11,6 +11,7 @@ import _ from 'lodash';
 import { setResize } from 'reducers/global/globalAction';
 import WalletMessage from 'components/wallet/WalletMessage';
 import ErrorBoundary from 'components/global/ErrorBoundary';
+import UpdateVersionMessage from 'components/global/fragments/UpdateVersionMessage';
 
 function App() {
     const transient = useSelector(state => state.auth.transient);
@@ -40,6 +41,7 @@ function App() {
                 <div className="container-fluid">
                     <div className="row flex-xl-nowrap">
                         <Sidebar />
+                        <UpdateVersionMessage />
                         <ErrorBoundary>
                             <WalletMessage />
                             <Container />
