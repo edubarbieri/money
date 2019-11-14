@@ -5,6 +5,7 @@ const INITIAL_STATE = {
 	removeBill: null,
 	editBill: null,
 	payBill: null,
+	totalMonth: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -13,6 +14,8 @@ export default (state = INITIAL_STATE, action) => {
 			return {...state, monthResume: action.payload.data || []};
 		case 'SET_BILLS':
 			return {...state, all: action.payload.data || []};
+		case 'SET_TOTAL_BILLS':
+			return {...state, totalMonth: action.payload.data || {}};
 		case 'SET_REMOVE_BILL_CONFIRMATION':
 			return {...state, removeBill: action.payload};
 		case 'SET_EDIT_BILL':

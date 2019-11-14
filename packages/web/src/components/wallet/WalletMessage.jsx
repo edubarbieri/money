@@ -18,14 +18,7 @@ const WalletMessage = () => {
         show && (
             <Modal title={bundle('warning')} setShow={() => setShow(false)}>
                 <div className="wallet-message">
-                    {bundle('wallet.not.found.message1')}
-                    <Link to={route('wallet.manager')} onClick={() => setShow(false)} className="font-weight-bold">
-                        {bundle('wallet.not.found.create')}
-                    </Link>
-                    {bundle('wallet.not.found.message2')}
-                    <div className="content mt-2">
-                        <WalletSelector />
-                    </div>
+                    <WalletSelector />
                 </div>
             </Modal>
         )

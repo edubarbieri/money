@@ -42,6 +42,13 @@ export const fetchBills = (data) => {
 	};
 }
 
+export const fetchTotalBills = (data) => {
+	return  {
+		type: 'SET_TOTAL_BILLS',
+		payload: call('bills.totalMonth', data)
+	};
+}
+
 export const setRemoveBillConfirmation = (data) => {
 	return  {
 		type: 'SET_REMOVE_BILL_CONFIRMATION',

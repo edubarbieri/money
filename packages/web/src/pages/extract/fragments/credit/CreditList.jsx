@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
 import { formatCurrency } from 'services/Util';
 import Pagination from 'components/global/fragments/Pagination';
-import { fetchCredits, setCreditsFilter } from 'reducers/credit/creditAction';
+import { fetchCredits, setCreditsFilter, fetchTotalCredits } from 'reducers/credit/creditAction';
 import CreditListItem from './CreditListItem';
 
 const CreditList = ({filterData}) => {
@@ -12,12 +12,14 @@ const CreditList = ({filterData}) => {
     const refresh = useSelector(state => state.credit.refresh);
     const filter = useSelector(state => state.credit.filter);
     const wallet = useSelector(state => state.wallet.wallet);
+    const totalMonth = useSelector(state => state.credit.totalMonth);
 
     useEffect(() => {
-        if(!filter){
+        if(!filter || !filter.month){
             return;
         }
         dispatch(fetchCredits(filter));
+        dispatch(fetchTotalCredits(filter));
     }, [dispatch, filter, refresh, wallet]);
 
     const sum = key => {
@@ -43,7 +45,7 @@ const CreditList = ({filterData}) => {
                     <div className="col-12">
                         <div className="content mb-0 boxshadowless text-right">
                             <span className="font-weight-bold text-primary">{bundle('total.received')}:</span>
-                            <span className="ml-1 font-weight-bold">{sum('amount')}</span>
+                            <span className="ml-1 font-weight-bold">{formatCurrency(Number(totalMonth.amount).toFixed(2))}</span>
                         </div>
                     </div>
                 </div>

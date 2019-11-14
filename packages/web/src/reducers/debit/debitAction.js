@@ -40,6 +40,13 @@ export const setRemoveDebitConfirmation = (data) => {
 	};
 }
 
+export const fetchTotalDebits = (data) => {
+	return  {
+		type: 'SET_TOTAL_DEBITS',
+		payload: call('debit.totalMonth', data)
+	};
+}
+
 export const setRemoveDebit = (data) => {
 	return dispatch => {
         call('debit.remove', {}, [data.id]).then(res => {

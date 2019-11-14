@@ -11,6 +11,12 @@ export const fetchCreditMonthResume = () => {
 	};
 }
 
+export const fetchTotalCredits = (data) => {
+	return  {
+		type: 'SET_TOTAL_CREDITS',
+		payload: call('credit.totalMonth', data)
+	};
+}
 
 export const setGenerateEntryRecurrency = (data) => {
 	return dispatch => {

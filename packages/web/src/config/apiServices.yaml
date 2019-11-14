@@ -85,6 +85,12 @@ bills.generateMonthRecurrentBills:
   pushToken: true
   pushWallet: true
 
+bills.totalMonth:
+  url: "/bill/totalMonth"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
 ########## ENTRY ############
 entry.generateMonthRecurrentEntries:
   url: "/entry/generateMonthRecurrentEntries"
@@ -123,6 +129,13 @@ debit.remove:
   method: "DELETE"
   pushToken: true
   pushWallet: true
+
+  
+credit.totalMonth:
+  url: "/credit/totalMonth"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
 ########## CREDIT ############
 credit.creditAmountMonthResume:
   url: "/credit/amountMonthResume"
@@ -151,6 +164,12 @@ credit.update:
 credit.remove:
   url: "/credit/{0}"
   method: "DELETE"
+  pushToken: true
+  pushWallet: true
+
+debit.totalMonth:
+  url: "/debit/totalMonth"
+  method: "GET"
   pushToken: true
   pushWallet: true
 ########## CATEGORY ############

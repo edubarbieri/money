@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
 import moment from 'moment';
-import { fetchBills, setRemoveBillConfirmation, setEditBill, setPayBill } from 'reducers/bills/billsAction';
+import { fetchBills, setRemoveBillConfirmation, setEditBill, setPayBill, fetchTotalBills } from 'reducers/bills/billsAction';
 import { formatCurrency } from 'services/Util';
 import Pagination from 'components/global/fragments/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,6 +15,7 @@ const BillsTable = () => {
     const year = moment().get('year');
     const month = moment().month();
     const bills = useSelector(state => state.bills.all);
+    const totalMonth = useSelector(state => state.bills.totalMonth);
     const refresh = useSelector(state => state.bills.refresh);
     const wallet = useSelector(state => state.wallet.wallet);
     const [filter, setFilter] = useState({
@@ -31,6 +32,7 @@ const BillsTable = () => {
 
     useEffect(() => {
         dispatch(fetchBills(filter));
+        dispatch(fetchTotalBills(filter));
     }, [dispatch, filter, refresh, wallet]);
 
     const formatDate = date => {
@@ -163,9 +165,9 @@ const BillsTable = () => {
                     <div className="col-12">
                         <div className="content boxshadowless text-right">
                             <span className="font-weight-bold text-danger">{bundle('total.payed')}:</span>
-                            <span className="ml-1 font-weight-bold">{sum('amountPaid')}</span>
+                            <span className="ml-1 font-weight-bold">{formatCurrency(Number(totalMonth.amount).toFixed(2))}</span>
                             <span className="ml-3 font-weight-bold text-danger">{bundle('total.bill')}:</span>
-                            <span className="ml-1 font-weight-bold">{sum('amount')}</span>
+                            <span className="ml-1 font-weight-bold">{formatCurrency(Number(totalMonth.amountPayed).toFixed(2))}</span>
                         </div>
                     </div>
                 </div>

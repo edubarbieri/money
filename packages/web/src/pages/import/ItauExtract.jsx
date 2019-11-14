@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import 'style/dropzone.scss';
@@ -16,6 +16,12 @@ const ItauExtract = () => {
     const categories = useSelector(state => state.category.withPath);
     const itauPreview = useSelector(state => state.importation.itauPreview);
     const importItau = useSelector(state => state.importation.importItau);
+    const wallet = useSelector(state => state.wallet.wallet);
+    const [showEditors, setShowEditors] = useState(!!wallet);
+
+    useEffect(() => {
+        setShowEditors(!!wallet.id);
+    }, [wallet]);
 
     useEffect(() => {
         dispatch(fetchCategoriesWithPath());
@@ -115,7 +121,7 @@ const ItauExtract = () => {
     return (
         <div className="container-fluid">
             <h1 className="page-title">{bundle('import.itau.extract')}</h1>
-            {(!!!itauPreview.length || importItau) && <div className="row">
+            {(!!!itauPreview.length || importItau)  && showEditors && <div className="row">
                 <div className="col-md-12 col-sm-12">
                     <div className="panel panel-minimal">
                         <div className="panel-body">

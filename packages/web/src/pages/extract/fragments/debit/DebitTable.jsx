@@ -7,7 +7,7 @@ import Pagination from 'components/global/fragments/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { fetchDebits, setEditDebit, setRemoveDebitConfirmation, setDebitFilter } from 'reducers/debit/debitAction';
+import { fetchDebits, setEditDebit, setRemoveDebitConfirmation, setDebitFilter, fetchTotalDebits } from 'reducers/debit/debitAction';
 
 const DebitTable = ({filterData}) => {
     const dispatch = useDispatch();
@@ -15,13 +15,15 @@ const DebitTable = ({filterData}) => {
     const refresh = useSelector(state => state.debit.refresh);
     const wallet = useSelector(state => state.wallet.wallet);
     const filter = useSelector(state => state.debit.filter);
+    const totalMonth = useSelector(state => state.debit.totalMonth);
     const [sorter, setSorter] = useState({});
 
     useEffect(() => {
-        if(!filter){
+        if(!filter || !filter.month){
             return;
         }
         dispatch(fetchDebits(filter));
+        dispatch(fetchTotalDebits(filter));
     }, [dispatch, filter, refresh, wallet]);
 
     const formatDate = date => {
@@ -130,7 +132,7 @@ const DebitTable = ({filterData}) => {
                     <div className="col-12">
                         <div className="content mb-0 boxshadowless text-right">
                             <span className="ml-3 font-weight-bold text-danger">{bundle('total.speding')}:</span>
-                            <span className="ml-1 font-weight-bold">{sum('amount')}</span>
+                            <span className="ml-1 font-weight-bold">{formatCurrency(Number(totalMonth.amount).toFixed(2))}</span>
                         </div>
                     </div>
                 </div>
