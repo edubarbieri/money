@@ -10,8 +10,6 @@ import 'style/global.scss';
 import ErrorBoundary from 'components/global/ErrorBoundary';
 import { setUpdateVersion } from 'reducers/global/globalAction';
 
-const dispatch = Store.dispatch();
-
 ReactDOM.render(
     <Provider store={Store}>
         <PersistGate persistor={Persistor}>
@@ -25,7 +23,7 @@ ReactDOM.render(
 
 const updateAppVersion = (data) => {
     console.log(data);
-    dispatch(setUpdateVersion())
+    Store.dispatch(setUpdateVersion())
 }
 
 serviceWorker.register({onUpdate: updateAppVersion});
