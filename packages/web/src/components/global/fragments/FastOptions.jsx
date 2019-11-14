@@ -8,7 +8,7 @@ import { setEditBill } from 'reducers/bills/billsAction';
 import { setEditCredit } from 'reducers/credit/creditAction';
 import { setEditDebit } from 'reducers/debit/debitAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faFileInvoiceDollar, faHandHoldingUsd, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 const FastOptions = () => {
     const dispatch = useDispatch();
@@ -20,15 +20,15 @@ const FastOptions = () => {
                     <h5>{bundle('fast.add')}</h5>
                     <div className="mt-3 actions-list">
                         <div className="action" onClick={() => dispatch(setEditBill({redirect:true}))}>
-                            <span className="plus"><FontAwesomeIcon icon={faPlus} /></span>
+                            <span className="plus"><FontAwesomeIcon icon={faFileInvoiceDollar} /></span>
                             {bundle('bill')}
                         </div>
                         <div className="action primary" onClick={() => dispatch(setEditCredit({redirect:true}))}>
-                            <span className="plus b"><FontAwesomeIcon icon={faPlus} /></span>
+                            <span className="plus b"><FontAwesomeIcon icon={faHandHoldingUsd} /></span>
                             {bundle('credit')}
                         </div>
                         <div className="action danger" onClick={() => dispatch(setEditDebit({redirect:true}))}>
-                            <span className="plus"><FontAwesomeIcon icon={faPlus} /></span>
+                            <span className="plus"><FontAwesomeIcon icon={faDollarSign} /></span>
                             {bundle('debit')}
                         </div>
                     </div>
