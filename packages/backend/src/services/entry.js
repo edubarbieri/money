@@ -147,6 +147,12 @@ function getCredit(id, walletId) {
 function getDebit(id, walletId) {
 	return _getEntry(id, walletId, Entry.DEBIT);
 }
+function getCreditTotal(walletId, month, year) {
+	return _totalMonth(Entry.CREDIT, walletId, month, year);
+}
+function getDebitTotal(walletId, month, year) {
+	return _totalMonth(Entry.DEBIT, walletId, month, year);
+}
 function findAllDebits(options) {
 	return _findAll(options, Entry.DEBIT);
 }
@@ -251,6 +257,43 @@ async function generateMonthRecurrentEntries(walletId, month, year){
 	}
 }
 
+
+async function _totalMonth(type, walletId, month, year){
+	const query = sanitazyQuery(`
+	select * from (
+		select 
+			EXTRACT(year from entry.entry_date) as "year",
+			EXTRACT(month from entry.entry_date) as "month", 	
+			sum(entry.amount) as "amount"
+		FROM entry
+		WHERE wallet_id = :walletId
+		AND type = :type
+			AND EXTRACT(month from entry.entry_date) = :month
+			AND EXTRACT(year from entry.entry_date) = :year
+		group by EXTRACT(year from entry.entry_date), EXTRACT(month from entry.entry_date)
+  ) as b
+  order by 1, 2
+	`);
+
+	try {
+		
+		return await sequelize.query(query, {
+			replacements: {
+				walletId,
+				month, 
+				year,
+				type
+			},
+			type: sequelize.QueryTypes.SELECT
+		});
+	} catch (error) {
+		console.error('entry.totalMonth - error', error);
+		return {
+			errors: ['entry.totalMonth.genericError']
+		}
+	}
+}
+
 module.exports = {
 	createDebit: createDebit,
 	createCredit: createCredit,
@@ -266,5 +309,7 @@ module.exports = {
 	debitAmountMonthResume : debitAmountMonthResume,
 	ENTRY_ATTRIBUTES: ENTRY_ATTRIBUTES,
 	findOrCreateDebit: findOrCreateDebit,
-	generateMonthRecurrentEntries: generateMonthRecurrentEntries
+	generateMonthRecurrentEntries: generateMonthRecurrentEntries,
+	getDebitTotal: getDebitTotal,
+	getCreditTotal: getCreditTotal
 };

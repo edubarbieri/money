@@ -207,6 +207,41 @@ async function setBillAsPayd(amountPaid, paymentDate, id, walletId) {
 }
 
 
+async function totalMonth(walletId, month, year){
+	const query = sanitazyQuery(`
+	select * from (
+		select 
+			EXTRACT(year from bill.due_date) as "year",
+			EXTRACT(month from bill.due_date) as "month", 	
+			sum(bill.amount) as "amount", 	
+			sum(bill.amount_paid) as "amountPayed"
+		FROM bill
+		WHERE wallet_id = :walletId
+			AND EXTRACT(month from bill.due_date) = :month
+			AND EXTRACT(year from bill.due_date) = :year
+		group by EXTRACT(year from bill.due_date), EXTRACT(month from bill.due_date)
+  ) as b
+  order by 1, 2
+	`);
+
+	try {
+		
+		return await sequelize.query(query, {
+			replacements: {
+				walletId,
+				month, 
+				year
+			},
+			type: sequelize.QueryTypes.SELECT
+		});
+	} catch (error) {
+		console.error('bill.totalMonth - error', error);
+		return {
+			errors: ['bill.totalMonth.genericError']
+		}
+	}
+}
+
 
 module.exports = {
 	findAll: findAll,
@@ -216,5 +251,6 @@ module.exports = {
 	updateBill: updateBill,
 	getBill: getBill,
 	createBill: createBill,
-	setBillAsPayd : setBillAsPayd
+	setBillAsPayd : setBillAsPayd,
+	totalMonth: totalMonth
 };

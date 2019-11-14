@@ -25,6 +25,20 @@ route.get('/bill/billAmountMonthResume', (req, res) => {
 		.then(r => res.json(r));
 });
 
+route.get('/bill/totalMonth', (req, res) => {
+	const {year, month} = req.query;
+	if(!year || !month){
+		return res.status(400).send({ errors: ['bill.totalMonth.invalidParams'] });
+	}
+	billService.totalMonth(req.walletId, parseInt(month), parseInt(year))
+		.then(r => {
+			const response = r;
+			if(response.length){
+				res.json(response[0])
+			}
+		});
+});
+
 route.get('/bill/:id', (req, res) => {
 	Bill.findOne({
 		attributes: billService.BILL_ATTRIBUTES,

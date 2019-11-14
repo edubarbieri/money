@@ -26,6 +26,20 @@ route.get('/debit/amountMonthResume', (req, res) => {
 		.then(r => res.json(r));
 });
 
+route.get('/debit/totalMonth', (req, res) => {
+	const {year, month} = req.query;
+	if(!year || !month){
+		return res.status(400).send({ errors: ['debit.totalMonth.invalidParams'] });
+	}
+	entryService.getDebitTotal(req.walletId, parseInt(month), parseInt(year))
+		.then(r => {
+			const response = r;
+			if(response.length){
+				res.json(response[0])
+			}
+		});
+});
+
 route.get('/debit/:id', (req, res) => {
 	entryService.getDebit(req.params.id, req.walletId)
 		.then(bill => (bill) ? res.json(bill) : res.sendStatus(404))
@@ -41,6 +55,7 @@ route.post('/debit', (req, res) => {
 			formatDbError(res, e);
 		});
 });
+
 
 
 route.put('/debit/:id', async (req, res) => {
