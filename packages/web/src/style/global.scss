@@ -95,3 +95,13 @@ a{
         margin: 0 -40px 0px -60px
     }
 }
+
+
+.site-info{
+    font-size: 0.7rem;
+    text-align: center;
+    margin-top: 5px;
+    @include mobile{
+        display: none;
+    }
+}

@@ -187,9 +187,6 @@ filter:
 fixed:
     en-US: Fixed
     pt-BR: Fixa
-footer.message:
-    en-US: ' MIT Finance Control by '
-    pt-BR: ' Gerenciador Financeiro sob licença MIT criado por '
 future.projects:
     en-US: Future Projects
     pt-BR: Projetos Futuros
@@ -481,6 +478,9 @@ select:
 select.member:
     en-US: Select Member
     pt-BR: Selecione um membro
+site.info.message:
+    en-US: ' Finance Control created by '
+    pt-BR: ' Gerenciador Financeiro criado por '
 show.filter:
     en-US: Show Filters
     pt-BR: Exibir Filtros
