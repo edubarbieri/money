@@ -174,8 +174,7 @@
 .bottom-alert {
     padding: 15px;
     position: fixed;
-    background-color: $white;
-    border: 1px solid $primary;
+    background-color: $primary;
     border-radius: 5px ;
     bottom: 15px;
     right: 15px;
@@ -191,7 +190,7 @@
         align-items: center;
         p{
             display: flex;
-            color: $primary;
+            color: $white;
             font-weight: 600;
             margin: 0;
         }
@@ -199,7 +198,7 @@
             cursor: pointer;
             margin-left: 15px;
             path {
-                color: $primary;
+                color: $white;
             }
         }
     }
