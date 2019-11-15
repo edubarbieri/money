@@ -45,7 +45,7 @@ const CreditList = ({filterData}) => {
                 <div className="col-12">
                     <div>
                         <Pagination
-                            className="danger"
+                            className="primary"
                             page={filter.page}
                             setPage={page => dispatch(setCreditsFilter({ ...filter, page: page }))}
                             totalPages={credits.totalPages}

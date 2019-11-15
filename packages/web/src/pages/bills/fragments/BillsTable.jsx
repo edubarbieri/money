@@ -21,7 +21,7 @@ const BillsTable = () => {
     const [filter, setFilter] = useState({
         withCategory: true,
         withUser: true,
-        pageSize: 20,
+        pageSize: 10,
         page: 1,
         order: 'dueDate_ASC',
         year: year,
