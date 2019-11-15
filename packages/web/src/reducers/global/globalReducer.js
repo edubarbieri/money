@@ -1,8 +1,9 @@
+
 const INITIAL_STATE = {
 	loading: true,
 	resize: '',
 	initialized: false,
-	currentPage: '',
+	currentPage: '/',
 	toogle: '',
 	refresh: '',
 	updateVersion: '',
