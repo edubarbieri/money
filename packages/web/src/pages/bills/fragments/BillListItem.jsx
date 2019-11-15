@@ -43,7 +43,7 @@ const BillListItem = ({ bill }) => {
                 className={bill.paymentDate ? 'row-options disabled col-4 plus' : 'row-options col-4 plus'}
                 onClick={() => dispatch(setPayBill(bill))}>
                 <FontAwesomeIcon icon={faFileInvoiceDollar} />
-                <label>{bundle('payed')}</label>
+                <label>{bundle('pay')}</label>
             </div>
         ];
     };

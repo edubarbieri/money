@@ -89,7 +89,7 @@ const BillsTable = () => {
                 className={bill.paymentDate ? 'disabled row-options plus' : 'row-options plus'}
                 onClick={() => dispatch(setPayBill(bill))}>
                 <FontAwesomeIcon icon={faFileInvoiceDollar} />
-                <label>{bundle('payed')}</label>
+                <label>{bundle('pay')}</label>
             </div>
         ];
     };
