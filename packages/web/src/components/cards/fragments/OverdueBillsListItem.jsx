@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { bundle } from 'i18n/bundle';
 import { formatCurrency } from 'services/Util';
 import moment from 'moment';
 
 const OverdueBillsListItem = ({ bill }) => {
-    const dispatch = useDispatch();
     const [expand, setExpand] = useState(false);
 
     const formatDate = date => {

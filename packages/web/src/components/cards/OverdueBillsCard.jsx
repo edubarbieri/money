@@ -2,11 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'moment/locale/pt-br';
 import { fetchOverdueBills } from 'reducers/bills/billsAction';
-import moment from 'moment';
 import { bundle, route } from 'i18n/bundle';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { formatCurrency, isMobile } from 'services/Util';
+import {  isMobile } from 'services/Util';
 import RegisterLink from 'components/global/RegisterLink';
 import OverdueBillsListItem from './fragments/OverdueBillsListItem';
 import OverdueBillsTable from './fragments/OverdueBillsTable';
@@ -30,7 +27,7 @@ const OverdueBillsCard = () => {
                             <span className="pl-1">{bundle('overdue.bills')}</span>
                         </h5>
                         {isMobile(resize) ? (
-                            overdueBills.map(bill => <OverdueBillsListItem bill={bill} />)
+                            overdueBills.map(bill => <OverdueBillsListItem key={bill.id} bill={bill} />)
                         ) : (
                             <OverdueBillsTable overdueBills={overdueBills} />
                         )}
