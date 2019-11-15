@@ -39,7 +39,8 @@ const ExtractGraph = () => {
         }
 
         let lastIndex = 0;
-        for (let date = months[0]; date < _.last(months); date++) {
+        for (let date = _.last(months) - 6; date < _.last(months); date++) {
+            date = date || lastIndex + 1
             if (!_.find(creditMonthResume, { month: date })) {
                 creditMonthResume.splice(lastIndex, 0, { amount: 0, month: date });
             }
@@ -47,7 +48,7 @@ const ExtractGraph = () => {
                 debitMonthResume.splice(lastIndex, 0, { amount: 0, month: date });
             }
             if (!_.find(billsMonthResume, { month: date })) {
-                billsMonthResume.splice(lastIndex, 0, { amount: 0, month: date });
+                billsMonthResume.splice(lastIndex, 0, { amount: 0, month: date || lastIndex });
             }
             lastIndex++;
         }
@@ -76,7 +77,7 @@ const ExtractGraph = () => {
     }, [creditMonthResume, debitMonthResume, billsMonthResume]);
 
     return (
-        <div className="col-12 col-lg-4 p-0">
+        <div className="col-12 col-lg-4 pl-0">
             <div className="card content">
                 <div className="card-body p-0">
                     <h5 className="card-title pl-1">{bundle('extract.last.months')}</h5>
