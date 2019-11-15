@@ -25,6 +25,11 @@ route.get('/bill/billAmountMonthResume', (req, res) => {
 		.then(r => res.json(r));
 });
 
+route.get('/bill/overdueBills', (req, res) => {
+	billService.overdueBills(req.walletId)
+		.then(r => res.json(r));
+});
+
 route.get('/bill/totalMonth', (req, res) => {
 	const {year, month} = req.query;
 	if(!year || !month){

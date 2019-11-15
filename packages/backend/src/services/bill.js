@@ -242,6 +242,44 @@ async function totalMonth(walletId, month, year){
 	}
 }
 
+async function overdueBills(walletId){
+	const query = sanitazyQuery(`
+		select * from (
+			select
+				bill.id as "id",
+				bill.description as "description",
+				bill.due_date as "dueDate",
+				bill.amount as "amount",
+				CASE
+					WHEN bill.due_date < now() THEN 'overdue'
+					ELSE 'almost.overdue'
+				END 
+				AS "state"
+			from bill 
+			where EXTRACT(month from bill.due_date) = 11
+				and bill.payment_date is null
+				and bill.wallet_id = :walletId
+				and (bill.due_date < now() or bill.due_date <= current_date + INTERVAL '5 day')
+	) as b
+	order by 3,2
+	`);
+
+	try {
+		
+		return await sequelize.query(query, {
+			replacements: {
+				walletId
+			},
+			type: sequelize.QueryTypes.SELECT
+		});
+	} catch (error) {
+		console.error('bill.overdueBills - error', error);
+		return {
+			errors: ['bill.overdueBills.genericError']
+		}
+	}
+}
+
 
 module.exports = {
 	findAll: findAll,
@@ -252,5 +290,6 @@ module.exports = {
 	getBill: getBill,
 	createBill: createBill,
 	setBillAsPayd : setBillAsPayd,
-	totalMonth: totalMonth
+	totalMonth: totalMonth,
+	overdueBills: overdueBills
 };
