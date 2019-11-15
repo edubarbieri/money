@@ -10,7 +10,7 @@ import { setEditDebit } from 'reducers/debit/debitAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoiceDollar, faHandHoldingUsd, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
-const FastOptions = () => {
+const FastOptionsCard = () => {
     const dispatch = useDispatch();
     const wallet = useSelector(state => state.wallet.wallet);
     const [showEditors, setShowEditors] = useState(!!wallet);
@@ -55,4 +55,4 @@ const FastOptions = () => {
     );
 };
 
-export default FastOptions;
+export default FastOptionsCard;

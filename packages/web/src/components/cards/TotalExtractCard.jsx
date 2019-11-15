@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'moment/locale/pt-br';
-import { fetchTotalBills } from 'reducers/bills/billsAction';
 import { bundle, route } from 'i18n/bundle';
 import moment from 'moment';
 import { getLang } from 'i18n/lang';
@@ -16,6 +15,7 @@ const TotalExtractCard = () => {
     const dispatch = useDispatch();
     const debitMonth = useSelector(state => state.debit.totalMonth);
     const creditMonth = useSelector(state => state.credit.totalMonth);
+    const refresh = useSelector(state => state.global.refresh);
 
     const year = moment().get('year');
     const month = moment().month();
@@ -27,7 +27,7 @@ const TotalExtractCard = () => {
     useEffect(() => {
         dispatch(fetchTotalCredits(filter));
         dispatch(fetchTotalDebits(filter));
-    }, [dispatch]);
+    }, [dispatch, filter, refresh]);
 
     const getBalance = () => {
         const diff = debitMonth.amount - creditMonth.amount;
@@ -62,7 +62,7 @@ const TotalExtractCard = () => {
                         <span className="font-weight-bold pending-value">
                            {getBalance()}
                         </span>
-                        <RegisterLink to={route('opened.bills')} className="w-100">
+                        <RegisterLink to={route('extract')} className="w-100">
                             <button type="button" className="btn btn-sm w-100 btn-light">{bundle('view.more')}</button>
                         </RegisterLink>
                     </div>

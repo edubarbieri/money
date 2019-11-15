@@ -90,6 +90,12 @@ bills.totalMonth:
   method: "GET"
   pushToken: true
   pushWallet: true
+  
+bills.overdueBills:
+  url: "/bill/overdueBills"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
 
 ########## ENTRY ############
 entry.generateMonthRecurrentEntries:

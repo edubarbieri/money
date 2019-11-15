@@ -13,6 +13,7 @@ moment.locale(getLang().toLowerCase());
 const TotalBillsCard = () => {
     const dispatch = useDispatch();
     const monthResume = useSelector(state => state.bills.totalMonth);
+    const refresh = useSelector(state => state.global.refresh);
 
     const year = moment().get('year');
     const month = moment().month();
@@ -23,7 +24,7 @@ const TotalBillsCard = () => {
 
     useEffect(() => {
         dispatch(fetchTotalBills(filter));
-    }, [dispatch]);
+    }, [dispatch, filter, refresh]);
 
     return (
         <div className="col-12 col-lg-4 pl-0">

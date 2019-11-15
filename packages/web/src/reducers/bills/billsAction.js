@@ -42,6 +42,13 @@ export const fetchBills = (data) => {
 	};
 }
 
+export const fetchOverdueBills = (data) => {
+	return  {
+		type: 'SET_OVERDUE_BILLS',
+		payload: call('bills.overdueBills', data)
+	};
+}
+
 export const fetchTotalBills = (data) => {
 	return  {
 		type: 'SET_TOTAL_BILLS',

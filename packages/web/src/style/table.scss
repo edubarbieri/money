@@ -83,7 +83,13 @@
 .list{
     .actions-container {
         margin: 15px 5px;
+        display: flex;
+        justify-content: space-around;
         .row-options {
+            padding: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             width: auto;
             color: $gray;

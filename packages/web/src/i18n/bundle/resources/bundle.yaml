@@ -22,6 +22,9 @@ add.receipt:
 add.root.category:
     en-US: Add root category
     pt-BR: Adicionar categoria raiz
+almost.overdue:
+    en-US: Almost Overdue
+    pt-BR: Á Vencer
 amount:
     en-US: Amount
     pt-BR: Valor
@@ -145,6 +148,9 @@ docreate.user:
 drag.drop:
     en-US: "Drag 'n' drop some files here, or click to select files"
     pt-BR: 'Arraste e solte o arquivo aqui, ou click e selecione em seu computador.'
+due:
+    en-US: Due
+    pt-BR: Vencimento
 due.date:
     en-US: Due date
     pt-BR: Data de vencimento
@@ -385,6 +391,12 @@ open:
 opened.bills:
     en-US: Opened Bills
     pt-BR: Contas a pagar
+overdue:
+    en-US: Overdue
+    pt-BR: Vencida
+overdue.bills:
+    en-US: Overdue and Almost Overdue Bills
+    pt-BR: Contas vencidas ou à vencer
 owner:
     en-US: Owner
     pt-BR: Dono
@@ -505,6 +517,9 @@ show.filter:
 signup.userAlreadyRegistered:
     en-US: User already registered
     pt-BR: Usuário já registrado
+status:
+    en-US: Status
+    pt-BR: Status
 total:
     en-US: Total
     pt-BR: Total
