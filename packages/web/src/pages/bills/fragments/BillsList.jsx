@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
 import moment from 'moment';
 import { fetchBills, fetchTotalBills} from 'reducers/bills/billsAction';
-import { formatCurrency } from 'services/Util';
+import { formatCurrency, isMobile } from 'services/Util';
 import Pagination from 'components/global/fragments/Pagination';
 import BillsDateSelect from './BillsDateSelect';
 import BillListItem from './BillListItem';
@@ -16,10 +16,11 @@ const BillsList = () => {
     const refresh = useSelector(state => state.bills.refresh);
     const wallet = useSelector(state => state.wallet.wallet);
     const totalMonth = useSelector(state => state.bills.totalMonth);
+    const resize = useSelector(state => state.global.resize);
     const [filter, setFilter] = useState({
         withCategory: true,
         withUser: true,
-        pageSize: 10,
+        pageSize: isMobile(resize) ? 10 : 15,
         page: 1,
         order: 'dueDate_ASC',
         year: year,

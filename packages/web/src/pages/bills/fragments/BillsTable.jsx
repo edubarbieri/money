@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
 import moment from 'moment';
 import { fetchBills, setRemoveBillConfirmation, setEditBill, setPayBill, fetchTotalBills } from 'reducers/bills/billsAction';
-import { formatCurrency } from 'services/Util';
+import { formatCurrency, isMobile } from 'services/Util';
 import Pagination from 'components/global/fragments/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
@@ -17,11 +17,12 @@ const BillsTable = () => {
     const bills = useSelector(state => state.bills.all);
     const totalMonth = useSelector(state => state.bills.totalMonth);
     const refresh = useSelector(state => state.bills.refresh);
+    const resize = useSelector(state => state.global.resize);
     const wallet = useSelector(state => state.wallet.wallet);
     const [filter, setFilter] = useState({
         withCategory: true,
         withUser: true,
-        pageSize: 10,
+        pageSize: isMobile(resize) ? 10 : 15,
         page: 1,
         order: 'dueDate_ASC',
         year: year,

@@ -35,7 +35,7 @@ const Credit = () => {
     const [filter, setFilter] = useState({
         withCategory: true,
         withUser: true,
-        pageSize: 10,
+        pageSize: isMobile(resize) ? 10 : 15,
         page: 1,
         order: 'entryDate_ASC',
         year: year,
