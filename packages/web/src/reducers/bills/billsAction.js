@@ -1,5 +1,5 @@
 import { call } from "services/Api";
-import { setError, setLoading } from "reducers/global/globalAction";
+import { setError, setLoading, setCurrentPage } from "reducers/global/globalAction";
 import { route } from "i18n/bundle";
 import moment from "moment";
 
@@ -85,8 +85,9 @@ export const setSaveBill = (data) => {
 			}
 			dispatch(setEditBill(null));
 			if(data.redirect){
-                dispatch(setLoading(true));
-				window.location = route('opned.bills');
+				dispatch(setLoading(true));
+				dispatch(setCurrentPage(route('opened.bills')));
+				window.location = route('opened.bills');
 				return;
 			}
 			dispatch(setPayBill(null));

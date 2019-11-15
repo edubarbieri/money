@@ -40,6 +40,12 @@ back:
 back.to.login:
     en-US: Back to Login
     pt-BR: Voltar para Login
+balance:
+    en-US: Balance
+    pt-BR: Saldo
+bills.current.month:
+    en-US: Bills of month
+    pt-BR: Contas do mês
 bills.last.months:
     en-US: Bills in last months
     pt-BR: Balanço de contas dos últimos meses
@@ -400,6 +406,9 @@ payment.date:
 pending:
     en-US: Pending
     pt-BR: Pendente
+pending.payment:
+    en-US: Pending Payment
+    pt-BR: Pendente Pagamento
 possible.entries:
     en-US: 'Not found any possible association '
     pt-BR: Nenhuma associação possível localizada
@@ -529,6 +538,9 @@ value:
 value.payed:
     en-US: Payed Value
     pt-BR: Valor Pago
+view.more:
+    en-US: View More
+    pt-BR: Ver Mais
 wallet:
     en-US: Wallet
     pt-BR: Carteira

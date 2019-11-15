@@ -19,7 +19,7 @@ const Header = () => {
                 <FontAwesomeIcon icon={faBars} />
             </div>
             <Link className="navbar-brand" to={process.env.PUBLIC_URL || '/'}>
-                <img src={process.env.PUBLIC_URL + '/img/lh-large.png'} width="160" height="40" alt="" />
+                <img src={process.env.PUBLIC_URL + '/img/lh-large.png'} width="100%" height="auto" alt="" />
             </Link>
             <div className="user-header">
                 <div className="avatar" onClick={() => dispatch(setToogle('userInfo'))}>

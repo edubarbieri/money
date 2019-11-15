@@ -112,12 +112,8 @@
 }
 
 .fast-add {
-    width: 350px;
     h5 {
         font-weight: 600;
-    }
-    @include desktop {
-        margin-left: 15px;
     }
     .actions-list {
         display: flex;
@@ -200,6 +196,60 @@
             path {
                 color: $white;
             }
+        }
+    }
+}
+
+
+.card-month-resume{
+    min-width: 380px;
+    .card-body{
+        display: flex;
+        justify-content: space-between;
+    }
+    .month-info{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $lighter-gray;
+        border-radius: 5px;
+        width: 100px;
+        height: 100px;
+        color: $danger;
+        font-weight: 700;
+        font-size: 1rem;
+        margin: 0 auto;
+    }
+    .pending,
+    .resume{
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+    }
+    .pending-value{
+        font-size: 1.6rem;
+    }
+    @include extra-small{
+        min-width: auto;
+        .resume{
+            font-size: 0.7rem;
+        }
+        .pending{
+            font-size: 0.7rem;
+            .pending-value{
+                font-size: 1rem;
+            }
+        }
+        .month-info{
+            width: 60px;
+            height: 60px;
+            font-size: 0.7rem;
+            align-self: center;
+        }
+    }
+    &.extract{
+        .month-info{
+            border-color: $gray;
         }
     }
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { dispatch } from 'services/Store';
 import 'moment/locale/pt-br';
 import { bundle } from 'i18n/bundle';
 import _ from 'lodash';
@@ -14,7 +13,7 @@ import { extractConfig } from './GraphConfig';
 moment.locale(getLang().toLowerCase());
 
 const ExtractGraph = () => {
-    const dispacth = useDispatch();
+    const dispatch = useDispatch();
     const creditMonthResume = useSelector(state => state.credit.monthResume);
     const debitMonthResume = useSelector(state => state.debit.monthResume);
     const refresh = useSelector(state => state.global.refresh);
@@ -24,7 +23,7 @@ const ExtractGraph = () => {
     useEffect(() => {
         dispatch(fetchCreditMonthResume());
         dispatch(fetchDebitMonthResume());
-    }, [dispacth, refresh]);
+    }, [dispatch, refresh]);
 
     useEffect(() => {
         if(!creditMonthResume.length && !debitMonthResume.length){

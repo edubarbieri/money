@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { dispatch } from 'services/Store';
 import 'moment/locale/pt-br';
 import { fetchBillsMonthResume } from 'reducers/bills/billsAction';
 import { bundle } from 'i18n/bundle';
@@ -20,7 +19,7 @@ const BillsGraph = () => {
     const [options, setOptions] = useState({});
 
     useEffect(() => {
-        dispatch(fetchBillsMonthResume());
+        dispacth(fetchBillsMonthResume());
     }, [dispacth, refresh]);
 
     useEffect(() => {

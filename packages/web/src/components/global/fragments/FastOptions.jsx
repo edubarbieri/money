@@ -21,36 +21,36 @@ const FastOptions = () => {
 
     return (
         showEditors && (
-            <div className="row">
-                <div className="col-12 p-0">
-                    <div className="content boxshadowless fast-add">
-                        <h5>{bundle('fast.add')}</h5>
-                        <div className="mt-3 actions-list">
-                            <div className="action" onClick={() => dispatch(setEditBill({ redirect: true }))}>
-                                <span className="plus">
-                                    <FontAwesomeIcon icon={faFileInvoiceDollar} />
-                                </span>
-                                {bundle('bill')}
+                <div className="col-12 col-lg-4 pl-0">
+                    <div className="content fast-add">
+                        <div className="p-1">
+                            <h5>{bundle('fast.add')}</h5>
+                            <div className="mt-3 actions-list">
+                                <div className="action" onClick={() => dispatch(setEditBill({ redirect: true }))}>
+                                    <span className="plus">
+                                        <FontAwesomeIcon icon={faFileInvoiceDollar} />
+                                    </span>
+                                    {bundle('bill')}
+                                </div>
+                                <div className="action primary" onClick={() => dispatch(setEditCredit({ redirect: true }))}>
+                                    <span className="plus b">
+                                        <FontAwesomeIcon icon={faHandHoldingUsd} />
+                                    </span>
+                                    {bundle('credit')}
+                                </div>
+                                <div className="action danger" onClick={() => dispatch(setEditDebit({ redirect: true }))}>
+                                    <span className="plus">
+                                        <FontAwesomeIcon icon={faDollarSign} />
+                                    </span>
+                                    {bundle('debit')}
+                                </div>
                             </div>
-                            <div className="action primary" onClick={() => dispatch(setEditCredit({ redirect: true }))}>
-                                <span className="plus b">
-                                    <FontAwesomeIcon icon={faHandHoldingUsd} />
-                                </span>
-                                {bundle('credit')}
-                            </div>
-                            <div className="action danger" onClick={() => dispatch(setEditDebit({ redirect: true }))}>
-                                <span className="plus">
-                                    <FontAwesomeIcon icon={faDollarSign} />
-                                </span>
-                                {bundle('debit')}
-                            </div>
+                            <BillsEditor />
+                            <CreditEditor />
+                            <DebitEditor />
                         </div>
-                        <BillsEditor />
-                        <CreditEditor />
-                        <DebitEditor />
                     </div>
                 </div>
-            </div>
         )
     );
 };

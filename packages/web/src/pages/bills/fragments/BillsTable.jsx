@@ -155,9 +155,9 @@ const BillsTable = () => {
                 <div className="row">
                     <div className="col-12">
                         <div className="content boxshadowless text-right">
-                            <span className="font-weight-bold text-danger">{bundle('total.payed')}:</span>
+                            <span className="font-weight-bold text-danger">{bundle('total.bill')}:</span>
                             <span className="ml-1 font-weight-bold">{formatCurrency(Number(totalMonth.amount).toFixed(2))}</span>
-                            <span className="ml-3 font-weight-bold text-danger">{bundle('total.bill')}:</span>
+                            <span className="ml-3 font-weight-bold text-danger">{bundle('total.payed')}:</span>
                             <span className="ml-1 font-weight-bold">{formatCurrency(Number(totalMonth.amountPayed).toFixed(2))}</span>
                         </div>
                     </div>

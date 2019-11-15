@@ -1,5 +1,5 @@
 import { call } from "services/Api";
-import { setError, setLoading } from "reducers/global/globalAction";
+import { setError, setLoading, setCurrentPage } from "reducers/global/globalAction";
 import { setRefreshDebits } from "reducers/debit/debitAction";
 import { route } from "i18n/bundle";
 import moment from "moment";
@@ -94,7 +94,8 @@ export const setSaveCredit = (data) => {
 			}
 			dispatch(setEditCredit(null));
 			if(data.redirect){
-                dispatch(setLoading(true));
+				dispatch(setLoading(true));
+				dispatch(setCurrentPage(route('extract')));
 				window.location = route('extract');
 				return;
 			}

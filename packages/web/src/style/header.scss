@@ -11,6 +11,14 @@
             }
         }
     }
+    @include mobile{
+        .navbar-brand{
+            img{
+                max-height: 40px;
+                width: auto;
+            }
+        }
+    }
     .menu-header{
         width: 40px;
         height: 40px;
