@@ -100,16 +100,6 @@
     }
 }
 
-@include mobile {
-    .mobile-dateselector {
-        justify-content: center;
-        width: 100%;
-        .horizontal-form-group {
-            flex: 0;
-            align-items: center;
-        }
-    }
-}
 
 .fast-add {
     h5 {

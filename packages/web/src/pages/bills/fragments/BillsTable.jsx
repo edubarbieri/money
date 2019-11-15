@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { bundle } from 'i18n/bundle';
 import moment from 'moment';
-import { fetchBills, setRemoveBillConfirmation, setEditBill, setPayBill, fetchTotalBills } from 'reducers/bills/billsAction';
+import {
+    fetchBills,
+    setRemoveBillConfirmation,
+    setEditBill,
+    setPayBill,
+    fetchTotalBills
+} from 'reducers/bills/billsAction';
 import { formatCurrency, isMobile } from 'services/Util';
 import Pagination from 'components/global/fragments/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,9 +63,13 @@ const BillsTable = () => {
         setFilter({ ...filter, order: property + '_ASC' });
     };
 
-    const getRecurrency = (bill) => {
-        return (bill.recurrentTotal) ? `${bill.recurrentCount}${bundle('of')}${bill.recurrentTotal || 0}` : (bill.recurrent) ? bundle('yes') : bundle('no');
-    }
+    const getRecurrency = bill => {
+        return bill.recurrentTotal
+            ? `${bill.recurrentCount}${bundle('of')}${bill.recurrentTotal || 0}`
+            : bill.recurrent
+            ? bundle('yes')
+            : bundle('no');
+    };
 
     const actionsButtons = bill => {
         return [
@@ -131,7 +141,14 @@ const BillsTable = () => {
                             {bills.data &&
                                 bills.data.map(bill => (
                                     <tr key={bill.id} className={bill.isPayd ? 'disabled' : ''}>
-                                        <td>{bill.description}</td>
+                                        <td>
+                                            {bill.isPayd && (
+                                                <span className="badge badge-secondary mr-1 font-weight-normal text-uppercase">
+                                                    {bundle('payed')}
+                                                </span>
+                                            )}
+                                            {bill.description}
+                                        </td>
                                         <td>{formatCurrency(Number(bill.amount).toFixed(2))}</td>
                                         <td>{formatDate(bill.dueDate)}</td>
                                         <td>{formatDate(bill.paymentDate)}</td>
@@ -142,9 +159,7 @@ const BillsTable = () => {
                                         <td>{bill.user && bill.user.name}</td>
                                         <td>{getRecurrency(bill)}</td>
                                         <td>
-                                            <div className="actions-container">
-                                                {actionsButtons(bill)}
-                                            </div>
+                                            <div className="actions-container">{actionsButtons(bill)}</div>
                                         </td>
                                     </tr>
                                 ))}
@@ -157,9 +172,13 @@ const BillsTable = () => {
                     <div className="col-12">
                         <div className="content boxshadowless text-right">
                             <span className="font-weight-bold text-danger">{bundle('total.bill')}:</span>
-                            <span className="ml-1 font-weight-bold">{formatCurrency(Number(totalMonth.amount).toFixed(2))}</span>
+                            <span className="ml-1 font-weight-bold">
+                                {formatCurrency(Number(totalMonth.amount).toFixed(2))}
+                            </span>
                             <span className="ml-3 font-weight-bold text-danger">{bundle('total.payed')}:</span>
-                            <span className="ml-1 font-weight-bold">{formatCurrency(Number(totalMonth.amountPayed).toFixed(2))}</span>
+                            <span className="ml-1 font-weight-bold">
+                                {formatCurrency(Number(totalMonth.amountPayed).toFixed(2))}
+                            </span>
                         </div>
                     </div>
                 </div>

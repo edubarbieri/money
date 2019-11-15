@@ -50,7 +50,8 @@ const BillListItem = ({ bill }) => {
     return (
         <div className="card collapse" >
             <div className="card-title collapse-toogle p-1" onClick={() => setExpand(!expand)}>
-                <span  className={bill.isPayd ? 'disabled' : ''}>
+                <span>
+                    {bill.isPayd && <span className="badge badge-secondary mr-1 font-weight-normal text-uppercase">{bundle('payed')}</span>}
                     {bill.description}
                 </span>
                 <span className="text-danger float-right">{formatCurrency(Number(bill.amount).toFixed(2))}</span>

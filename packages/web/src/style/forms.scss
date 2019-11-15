@@ -74,6 +74,19 @@
         }
     }
 }
+@include mobile {
+    .mobile-dateselector {
+        justify-content: center;
+        width: 100%;
+        .horizontal-form-group {
+            flex: 1;
+            align-items: center;
+            .form-control{
+                width: 100%;
+            }
+        }
+    }
+}
 
 .styled-checkbox {
     position: absolute;
