@@ -19,7 +19,6 @@ const Container = () => {
             <Route path={route('import.itau.extract')} component={ItauExtract} />
             <Route path={route('opened.bills')} component={Bills} />
             <Route path={route('extract')} component={Extract} />
-            <Route path={route('dashboard')} component={Home} />
             <Route path={route('my.account')} component={Account} />
             <Route component={Home} />
         </Switch>
