@@ -27,7 +27,7 @@ const OverdueBillsCard = () => {
                 <div className="card content">
                     <div className="card-body p-1">
                         <h5 className="card-title">
-                            <span className="pl-1 text-danger">{bundle('overdue.bills')}</span>
+                            <span className="pl-1">{bundle('overdue.bills')}</span>
                         </h5>
                         {isMobile(resize) ? (
                             overdueBills.map(bill => <OverdueBillsListItem bill={bill} />)

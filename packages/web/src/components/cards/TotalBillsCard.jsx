@@ -38,11 +38,11 @@ const TotalBillsCard = () => {
                     </div>
                     <div className=" d-flex flex-column resume">
                         <small className="font-weight-bold text-muted">{bundle('total.bill')}:</small>
-                        <span className="font-weight-bold text-danger">
+                        <span className="font-weight-bold">
                             {formatCurrency(Number(monthResume.amount).toFixed(2))}
                         </span>
                         <small className="font-weight-bold  text-muted">{bundle('total.payed')}:</small>
-                        <span className="font-weight-bold text-danger">
+                        <span className="font-weight-bold">
                             {formatCurrency(Number(monthResume.amountPayed).toFixed(2))}
                         </span>
                     </div>

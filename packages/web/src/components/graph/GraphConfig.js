@@ -9,7 +9,7 @@ export const extractConfig = {
             show: true
         }
     },
-    colors: ['#9a0400', '#1b1b1b', '#ffc107'],
+    colors: ['#9a0400', '#3b3b3b', '#ffc107'],
     dataLabels: {enabled: false},
     grid: {
         borderColor: '#e7e7e7'
@@ -22,7 +22,8 @@ export const extractConfig = {
         labels: {
             formatter: value => {
                 if(value >= 1000){
-                    return bundle('currency') + ' ' + (value / 1000) + 'k'
+                    const diff = value / 1000;
+                    return bundle('currency') + ' ' + diff.toFixed(0) + 'k'
                 }
                 return bundle('currency')  + ' ' + parseFloat(value);
             }

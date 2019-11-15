@@ -79,7 +79,7 @@ const ExtractGraph = () => {
         <div className="col-12 col-lg-4 p-0">
             <div className="card content">
                 <div className="card-body p-0">
-                    <h5 className="card-title text-center text-primary">{bundle('extract.last.months')}</h5>
+                    <h5 className="card-title pl-1">{bundle('extract.last.months')}</h5>
                     <div className="fix-graph">
                         <ReactApexChart options={options} series={series} type="line" width="100%" height="200px" />
                     </div>
