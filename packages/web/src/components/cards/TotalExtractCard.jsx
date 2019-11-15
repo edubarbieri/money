@@ -8,6 +8,7 @@ import { formatCurrency } from 'services/Util';
 import RegisterLink from 'components/global/RegisterLink';
 import { fetchTotalDebits } from 'reducers/debit/debitAction';
 import { fetchTotalCredits } from 'reducers/credit/creditAction';
+import {toPattern} from 'vanilla-masker';
 
 moment.locale(getLang().toLowerCase());
 
@@ -19,7 +20,7 @@ const TotalExtractCard = () => {
 
     const year = moment().get('year');
     const month = moment().month();
-    const [filter] = useState({
+    const [filter, setFilter] = useState({
         year: year,
         month: month + 1
     });
@@ -28,6 +29,33 @@ const TotalExtractCard = () => {
         dispatch(fetchTotalCredits(filter));
         dispatch(fetchTotalDebits(filter));
     }, [dispatch, filter, refresh]);
+
+    const [expanded, setExpanded] = useState(false);
+    const [date, setDate] = useState(filter.month +'/'+ filter.year);
+
+    const setDateFilter = (event) => {
+        let value = event.target.value;
+        if(value.length === 2){
+            value =  toPattern(value, '99/9999');
+        }
+        setDate(value);
+    }
+
+    const changeFilterSubmit = (event) => {
+        event.preventDefault();
+        changeFilter();
+    }
+
+    const changeFilter = () => {
+        const submitDate =  toPattern(date, '99/9999');
+        if(!moment(submitDate, 'MM/YYYY').isValid()){
+            return;
+        }
+        const [month, year] = submitDate.split('/');
+        setFilter({month: Number(month), year: Number(year)});
+        setExpanded(false);
+        setDate(submitDate);
+    }
 
     const getBalance = () => {
         const diff = debitMonth.amount - creditMonth.amount;
@@ -42,9 +70,17 @@ const TotalExtractCard = () => {
             <div className="card content card-month-resume extract">
                 <div className="card-body p-1">
                     <div className="d-flex">
-                        <div className="month-info flex-column ">
+                        <div className="month-info flex-column" onClick={() => setExpanded(true)}>
                             <span className="text-primary">{bundle('extract')}</span>
-                            <span>{filter.month}/{filter.year}</span>
+                            {!expanded && <span>{filter.month}/{filter.year}</span>}
+                            {expanded && <form onSubmit={changeFilterSubmit} className="text-center">
+                                <input type="text" 
+                                    autoFocus 
+                                    className="input-wizard"
+                                    value={date}
+                                    onBlur={changeFilter} 
+                                    onChange={setDateFilter}/>
+                            </form>}
                         </div>
                     </div>
                     <div className=" d-flex flex-column resume">

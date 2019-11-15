@@ -175,3 +175,15 @@
         }
     }
 }
+
+.input-wizard{
+    border: 0;
+    width: 80%;
+    text-align: center;
+    background: transparent;
+    margin: 0 auto;
+    outline: none !important;
+    box-shadow: none !important;
+    border-bottom: 2px solid $light-gray;
+    font-weight: 600;
+}
