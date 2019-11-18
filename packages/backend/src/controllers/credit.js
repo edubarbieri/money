@@ -36,7 +36,9 @@ route.get('/credit/totalMonth', (req, res) => {
 			const response = r;
 			if(response.length){
 				res.json(response[0])
+				return;
 			}
+			res.json({})
 		});
 });
 
