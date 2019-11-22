@@ -17,6 +17,13 @@
     }
 }
 
+.content-badge {
+    padding: 5px 10px;
+    box-shadow: $shadow-sm;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
 .list-group-item {
     cursor: pointer;
     border: none;
@@ -100,7 +107,6 @@
     }
 }
 
-
 .fast-add {
     h5 {
         font-weight: 600;
@@ -161,12 +167,12 @@
     padding: 15px;
     position: fixed;
     background-color: $primary;
-    border-radius: 5px ;
+    border-radius: 5px;
     bottom: 15px;
     right: 15px;
     z-index: 1051;
     box-shadow: $shadow-sm;
-    @include mobile{
+    @include mobile {
         left: 15px;
     }
     .message {
@@ -174,7 +180,7 @@
         flex-direction: row;
         cursor: pointer;
         align-items: center;
-        p{
+        p {
             display: flex;
             color: $white;
             font-weight: 600;
@@ -190,14 +196,13 @@
     }
 }
 
-
-.card-month-resume{
+.card-month-resume {
     min-width: 380px;
-    .card-body{
+    .card-body {
         display: flex;
         justify-content: space-between;
     }
-    .month-info{
+    .month-info {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -211,35 +216,205 @@
         margin: 0 auto;
     }
     .pending,
-    .resume{
+    .resume {
         align-items: center;
         justify-content: center;
         padding: 0px;
     }
-    .pending-value{
+    .pending-value {
         font-size: 1.6rem;
     }
-    @include extra-small{
+    @include extra-small {
         min-width: auto;
-        .resume{
+        .resume {
             font-size: 0.7rem;
         }
-        .pending{
+        .pending {
             font-size: 0.7rem;
-            .pending-value{
+            .pending-value {
                 font-size: 1rem;
             }
         }
-        .month-info{
+        .month-info {
             width: 60px;
             height: 60px;
             font-size: 0.7rem;
             align-self: center;
         }
     }
-    &.extract{
-        .month-info{
+    &.extract {
+        .month-info {
             border-color: $gray;
+        }
+    }
+}
+
+.plan-item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    .plan-footer,
+    .plan-body {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+    .plan-body {
+        flex-direction: column;
+        .plan-title {
+            border-bottom: 2px solid #f8f9fa;
+            padding: 6px 6px 10px 6px;
+            margin-bottom: 15px;
+        }
+        .plan-content {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            .plan-detail {
+                width: 100%;
+                .total-resume {
+                    width: 100%;
+                    padding: 5px 15px;
+                }
+            }
+            .progress-indicator {
+                .month-resume {
+                    padding-top: 5px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: center;
+                    &.current-month {
+                        .form-group {
+                            margin: 0px;
+                            margin-top: 5px;
+                            display: flex;
+                            .input-group {
+                                border-bottom: 0px;
+                                margin: 0px;
+                                .form-control {
+                                    border-radius: 0;
+                                    height: 25px;
+                                }
+                                .input-group-text {
+                                    padding: 5px;
+                                    margin: 0px;
+                                    border-radius: 5px 0 0 5px;
+                                    height: 25px;
+                                }
+                            }
+                            .btn {
+                                border-radius: 0 5px 5px 0;
+                                min-width: 60px;
+                            }
+                        }
+                        .content-badge {
+                            border-radius: 5px 5px 0 0;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            .progress-content {
+                width: 100%;
+                display: flex;
+                height: 65px;
+                align-items: center;
+                position: relative;
+                .progress {
+                    width: 100%;
+                    height: 5px;
+                    overflow: initial;
+                    background-color: $light-gray;
+                    .progress-bar {
+                        position: relative;
+                        background-color: $primary;
+                        span {
+                            position: absolute;
+                            transform: translate(50%, -100%);
+                            right: 0;
+                            padding: 2px 7px;
+                            border-radius: 5px;
+                            box-shadow: $shadow-sm;
+                            font-weight: 600;
+                            color: $primary;
+                            background-color: $white;
+                            min-width: 100px;
+                            &::after {
+                                content: ' ';
+                                position: absolute;
+                                top: 100%;
+                                left: 50%;
+                                margin-left: -5px;
+                                border-width: 5px;
+                                border-style: solid;
+                                border-color: $primary transparent transparent transparent;
+                            }
+                        }
+                    }
+                }
+                .progress-end-label,
+                .progress-init-label {
+                    font-weight: 600;
+                    position: absolute;
+                    bottom: 8px;
+                    font-size: 0.8rem;
+                }
+                .progress-end-label {
+                    right: 0;
+                }
+            }
+            .month-resume-title {
+                text-align: center;
+                font-size: 0.8rem;
+                margin-bottom: 15px;
+                margin-top: 15px;
+                padding-top: 15px;
+                border-top: 2px solid #f8f9fa;
+            }
+        }
+        .pie-wrapper {
+            min-width: 112px;
+            min-height: 112px;
+            @include mobile {
+                min-width: 80px;
+                min-height: 80px;
+            }
+        }
+    }
+    
+    @include mobile{
+        padding: 0px;
+        .plan-body{
+            .plan-content{
+                flex-direction: column;
+            }
+        }
+        .card-footer{
+            justify-content: space-between !important;
+            .btn{
+                width: 30%;
+            }
+        }
+    }
+    @media (max-width: 1300px){
+        .current-month{
+            .form-group{
+                flex-direction: column;
+                .input-group {
+                    .form-control {
+                        border-radius: 0 5px 0 0 !important;
+                    }
+                    .input-group-text {
+                        border-radius: 5px 0 0 0 !important;
+                    }
+                }
+                .btn {
+                    border-radius: 0  0 5px 5px !important;
+                }
+            }
         }
     }
 }

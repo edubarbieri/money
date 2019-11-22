@@ -6,6 +6,7 @@ import promise from "redux-promise";
 import multi from "redux-multi";
 import thunk from "redux-thunk";
 import config from 'config/general.yaml';
+import { getUrlParameter } from 'services/Util';
 
 import auth from 'reducers/auth/authReducer';
 import user from 'reducers/user/userReducer';
@@ -16,7 +17,7 @@ import credit from 'reducers/credit/creditReducer';
 import debit from 'reducers/debit/debitReducer';
 import category from 'reducers/category/categoryReducer';
 import importation from 'reducers/import/importReducer';
-import { getUrlParameter } from 'services/Util';
+import planning from 'reducers/planning/planningReducer';
 
 const debug = getUrlParameter('debug');
 
@@ -44,6 +45,7 @@ const conbinedReducers = combineReducers({
 	credit,
 	category,
 	importation,
+	planning,
 	wallet: persistReducer(persistWallet, wallet),
 	auth: persistReducer(persistAuth, auth),
 	user: persistReducer(persistUser, user)
