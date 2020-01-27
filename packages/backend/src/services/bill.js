@@ -1,5 +1,5 @@
-const { Bill, User, Category, paginatedQuery, sanitazyQuery, sequelize } = require('../db');
-const { Op, col} = require('sequelize');
+const { Bill, paginatedQuery, sanitazyQuery, sequelize } = require('../db');
+const { Op} = require('sequelize');
 const _ = require('lodash');
 const moment = require('moment');
 const queryUtil = require('../db/queryUtil')

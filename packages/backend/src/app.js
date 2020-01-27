@@ -33,6 +33,7 @@ app.use(require('./controllers/credit'));
 app.use(require('./controllers/debit'));
 app.use(require('./controllers/import'));
 app.use(require('./controllers/entry'));
+app.use(require('./controllers/plan'));
 // app.use(require('./controllers/credit'));
 // app.use(require('./controllers/creditCard'));
 // app.use(require('./controllers/dashboard'));

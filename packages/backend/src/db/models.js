@@ -314,6 +314,61 @@ Entry.belongsTo(Wallet, {foreignKey: 'wallet_id', allowNull: false});
 Entry.belongsTo(User, {foreignKey: 'user_id'});
 Entry.belongsTo(Entry, {foreignKey: 'source_entry_id', as: 'sourceEntry'});
 
+/**
+ * @class Plan
+ */
+class Plan extends Model {}
+Plan.init({
+	id: { type: Sequelize.DataTypes.UUID, primaryKey: true, allowNull: false, field: 'id',
+		defaultValue: Sequelize.UUIDV4
+	},
+	name: { type: Sequelize.STRING, allowNull: false, field: 'name'},
+	goal: { type: Sequelize.STRING, field: 'goal'},
+	startDate: { type: Sequelize.DATEONLY, allowNull: false, field: 'start_date'},
+	endDate: { type: Sequelize.DATEONLY, allowNull: false, field: 'end_date'},
+	type: { type: Sequelize.STRING, allowNull: false, field: 'type'},
+	goalAmount: { type: Sequelize.DECIMAL(10, 2), allowNull: false, field: 'goal_amount',
+		validate: { min: 0 },
+		get() {
+			// Workaround until sequelize issue #8019 is fixed
+			const value = this.getDataValue('goalAmount');
+			return value === null ? null : parseFloat(value);
+		}
+	},
+	walletId: { type: Sequelize.DataTypes.UUID, allowNull: false, field: 'wallet_id'},
+	userId: { type: Sequelize.DataTypes.UUID, allowNull: true, field: 'user_id'}
+}, {
+	sequelize,
+	modelName: 'plan',
+	tableName: 'plan',
+});
+
+/**
+ * @class PlanItem
+ */
+class PlanItem extends Model {}
+PlanItem.init({
+	id: { type: Sequelize.DataTypes.UUID, primaryKey: true, allowNull: false, field: 'id',
+		defaultValue: Sequelize.UUIDV4
+	},
+	itemDate: { type: Sequelize.DATEONLY, allowNull: false, field: 'item_date'},
+	amount: { type: Sequelize.DECIMAL(10, 2), allowNull: false, field: 'amount',
+		validate: { min: 0 },
+		get() {
+			// Workaround until sequelize issue #8019 is fixed
+			const value = this.getDataValue('amount');
+			return value === null ? null : parseFloat(value);
+		}
+	},
+	type: { type: Sequelize.ENUM('CREDIT', 'DEBIT'), allowNull: false, field: 'type'}
+}, {
+	sequelize,
+	modelName: 'plan_item',
+	tableName: 'plan_item'
+});
+
+Plan.hasMany(PlanItem, {as: 'planItems'});
+PlanItem.belongsTo(Plan, {foreignKey: 'plan_id', allowNull: false});
 
 module.exports = {
 	sequelize,
@@ -322,5 +377,7 @@ module.exports = {
 	Wallet,
 	UserWallet,
 	Bill,
-	Entry
+	Entry,
+	Plan,
+	PlanItem
 }

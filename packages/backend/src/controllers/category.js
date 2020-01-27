@@ -51,11 +51,12 @@ route.post('/category', (req, res) => {
 	Category.create({
 		...category,
 		walletId: req.walletId
-	}).then(cat => res.json(cat))
-	.catch(e => {
-		console.error('create category error', e);
-		formatDbError(res, e)
-	});
+	})
+		.then(cat => res.json(cat))
+		.catch(e => {
+			console.error('create category error', e);
+			formatDbError(res, e);
+		});
 });
 
 route.post('/category/:id/parent', async (req, res) => {
@@ -66,9 +67,7 @@ route.post('/category/:id/parent', async (req, res) => {
 			where: { id: req.params.id, walletId : req.walletId}
 		});
 		if (affectedRows[0] === 0) {
-				return res
-					.status(400)
-					.send({ errors: ['category.update.noUpdateItem'] });
+			return res.status(400).send({ errors: ['category.update.noUpdateItem'] });
 		}
 		res.json(await Category.findByPk(req.params.id));
 	} catch (e) {
@@ -76,27 +75,6 @@ route.post('/category/:id/parent', async (req, res) => {
 		formatDbError(res, e)
 	}
 });
-
-
-route.put('/category/:id', async (req, res) => {
-	try {
-		const category = { ...req.body, walletId: req.walletId };
-		const affectedRows = await Category.update(category, {
-			where: { id: req.params.id, walletId : req.walletId }
-		});
-		if (affectedRows[0] === 0) {
-			return res
-				.status(400)
-				.send({ errors: ['category.update.noUpdateItem'] });
-		}
-		res.json(await Category.findByPk(req.params.id));
-
-	} catch (e) {
-		console.log('Update category error', e);
-		formatDbError(res, e)
-	}
-});
-
 
 route.delete('/category/:id', (req, res) => {
 	Category.destroy({
