@@ -9,6 +9,7 @@ import Bills from 'pages/bills/Bills';
 import Extract from 'pages/extract/Extract';
 import Account from 'pages/account/Account';
 import Header from './Header';
+import Planning from 'pages/planning/Planning';
 
 const Container = () => {
     return <div className="col-12 col-md-9 col-xl-10">
@@ -20,6 +21,7 @@ const Container = () => {
             <Route path={route('opened.bills')} component={Bills} />
             <Route path={route('extract')} component={Extract} />
             <Route path={route('my.account')} component={Account} />
+            <Route path={route('planning')} component={Planning} />
             <Route component={Home} />
         </Switch>
     </div>

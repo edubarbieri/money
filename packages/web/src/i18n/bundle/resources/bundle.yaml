@@ -7,6 +7,9 @@ account.settings:
 active:
     en-US: Active
     pt-BR: Ativo
+add:
+    en-US: Add
+    pt-BR: Adicionar
 add.bill:
     en-US: Add Bill
     pt-BR: Adicionar Conta
@@ -16,6 +19,9 @@ add.credit:
 add.debit:
     en-US: Add Debit
     pt-BR: Adicionar Débitos
+add.plan:
+    en-US: Add Plan
+    pt-BR: Adicionar Plano
 add.receipt:
     en-US: Add new receipt
     pt-BR: Adicionar nova receita
@@ -31,6 +37,12 @@ amount:
 and:
     en-US: and
     pt-BR: e
+apply:
+    en-US: Apply
+    pt-BR: Aplicar
+archive:
+    en-US: Archive
+    pt-BR: Arquivar
 association:
     en-US: 'Association: '
     pt-BR: 'Associação:'
@@ -76,6 +88,9 @@ canceled:
 capitalize.email:
     en-US: Email
     pt-BR: Email
+car:
+    en-US: New Car
+    pt-BR: Carro Novo
 category:
     en-US: Category
     pt-BR: Categoria
@@ -88,6 +103,9 @@ category.editor:
 category.name:
     en-US: Category Name
     pt-BR: Nome da Categoria
+cirurgy:
+    en-US: Cirurgy
+    pt-BR: Cirurgia
 close:
     en-US: Close
     pt-BR: Fechar
@@ -136,15 +154,18 @@ debits:
 description:
     en-US: Description
     pt-BR: Descrição
+docreate.user:
+    en-US: Create User
+    pt-BR: Criar Usuário
 do.import:
     en-US: Import
     pt-BR: Importar
 doFilter:
     en-US: Filter
     pt-BR: Filtrar
-docreate.user:
-    en-US: Create User
-    pt-BR: Criar Usuário
+doSelect:
+    en-US: Select
+    pt-BR: Selecionar
 drag.drop:
     en-US: "Drag 'n' drop some files here, or click to select files"
     pt-BR: 'Arraste e solte o arquivo aqui, ou click e selecione em seu computador.'
@@ -172,9 +193,15 @@ edit.extract:
 edit.receipt:
     en-US: Edit Receipt
     pt-BR: Edição de Receita
+eletronic:
+    en-US: Eletronic
+    pt-BR: Eletrônico
 email:
     en-US: Email
     pt-BR: Email
+end.date:
+    en-US: End Date
+    pt-BR: Data Final
 en-US:
     en-US: English
     pt-BR: Inglês Americano
@@ -232,6 +259,9 @@ generate.recurency.info:
 generic.error:
     en-US: Error on attempt to do this operation.
     pt-BR: Houve um erro ao tentar realizar essa operação.
+goal:
+    en-US: Goal
+    pt-BR: Meta
 hide.filter:
     en-US: Hide Filters
     pt-BR: Ocultar Filtros
@@ -262,6 +292,9 @@ import.resume.debit:
 import.saveItau.error:
     en-US: Error on import data from Itaú Bank extract
     pt-BR: Erro na importação de dados do extrato do Branco Itaú
+init.date:
+    en-US: Init Date
+    pt-BR: Data Inicial
 installment:
     en-US: Installment
     pt-BR: Parcelada
@@ -361,6 +394,9 @@ moment.date.format:
 month:
     en-US: Month
     pt-BR: Mês
+monthly.tracking:
+    en-US: Monthly Tracking
+    pt-BR: Acompanhamento Mensal
 name:
     en-US: Name
     pt-BR: Nome
@@ -382,6 +418,9 @@ no:
 no.data:
     en-US: No data founded
     pt-BR: Nenhum dado localizado
+objective:
+    en-US: Objective
+    pt-BR: Objetivo
 of:
     en-US: ' of '
     pt-BR: ' de '
@@ -391,15 +430,27 @@ open:
 opened.bills:
     en-US: Opened Bills
     pt-BR: Contas a pagar
+other:
+    en-US: Other
+    pt-BR: Outro
 overdue:
     en-US: Overdue
     pt-BR: Vencida
 overdue.bills:
     en-US: Overdue and Almost Overdue Bills
     pt-BR: Contas vencidas ou à vencer
+overview:
+    en-US: Overview
+    pt-BR: Visão Geral
 owner:
     en-US: Owner
     pt-BR: Dono
+ownBusiness:
+    en-US: Own Business
+    pt-BR: Negócio Própia
+ownHome:
+    en-US: Own Home
+    pt-BR: Casa Própia
 password.confirmation:
     en-US: Password confirmation
     pt-BR: Confirmação de senha
@@ -421,6 +472,15 @@ pending:
 pending.payment:
     en-US: Pending Payment
     pt-BR: Pendente Pagamento
+phone:
+    en-US: New Phone
+    pt-BR: Novo Smartphone
+plan:
+    en-US: Plan
+    pt-BR: Plano
+planning:
+    en-US: Planning
+    pt-BR: Planejamento
 possible.entries:
     en-US: 'Not found any possible association '
     pt-BR: Nenhuma associação possível localizada
@@ -430,6 +490,9 @@ preffered.language:
 price:
     en-US: '$ {0}'
     pt-BR: 'R$ {0}'
+progress:
+    en-US: 'Progress'
+    pt-BR: 'Progresso'
 pt-BR:
     en-US: Portuguese
     pt-BR: Português Brasileiro
@@ -496,12 +559,15 @@ remove.wallet.confirmation:
 required.field:
     en-US: Required field
     pt-BR: Campo obrigatório
+rescue:
+    en-US: Rescute
+    pt-BR: Resgatar
 save:
     en-US: Save
     pt-BR: Salvar
-doSelect:
-    en-US: Select
-    pt-BR: Selecionar
+savings:
+    en-US: Savings
+    pt-BR: Poupança
 select:
     en-US: Select
     pt-BR: Selecione
@@ -520,6 +586,9 @@ signup.userAlreadyRegistered:
 status:
     en-US: Status
     pt-BR: Status
+study:
+    en-US: Study
+    pt-BR: Estudos
 total:
     en-US: Total
     pt-BR: Total
@@ -535,6 +604,9 @@ total.speding:
 total.received:
     en-US: Total Received
     pt-BR: Total Recebido
+travel:
+    en-US: Travel
+    pt-BR: Viagem
 type:
     en-US: Type
     pt-BR: Tipo

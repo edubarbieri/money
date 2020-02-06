@@ -22,6 +22,9 @@ my.account:
 opened.bills:
     en-US: /opened-bills
     pt-BR: /contas-abertas
+planning:
+    en-US: /planning
+    pt-BR: /planejamento
 receipts:
     en-US: /receipts
     pt-BR: /recebimentos

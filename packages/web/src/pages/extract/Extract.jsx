@@ -55,7 +55,7 @@ const Credit = () => {
     return (
         <div className="container-fluid">
             <div className="row">
-                <h1 className="page-title">{bundle('opened.bills')}</h1>
+                <h1 className="page-title">{bundle('extract')}</h1>
             </div>
             {showEditors && <div className="row">
                 <div className=" mobile-two-buttons">

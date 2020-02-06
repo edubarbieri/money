@@ -10,7 +10,8 @@ import {
     faFileImport,
     faCogs,
     faAngleDoubleRight,
-    faSitemap
+    faSitemap,
+    faTasks
 } from '@fortawesome/free-solid-svg-icons';
 import SidebarItem from 'components/global/fragments/SidebarItem';
 import {Link} from 'react-router-dom';
@@ -31,6 +32,7 @@ const Sidebar = () => {
                 <SidebarItem icon={faChartLine} label="dashboard" />
                 <SidebarItem icon={faFileInvoiceDollar} label="opened.bills" />
                 <SidebarItem icon={faMoneyBillWave} label="extract" />
+                <SidebarItem icon={faTasks} label="planning" />
                 <SidebarItem icon={faWallet} label="wallet.manager" />
                 <SidebarItem icon={faFileImport} label="import">
                     <SidebarItem icon={faAngleDoubleRight} label="import.itau.extract" />

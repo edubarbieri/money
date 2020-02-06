@@ -1,0 +1,231 @@
+
+@import 'variables.scss';
+/* Copyright 2013-2015 etc Chris Tabor. See https://github.com/christabor/css-progress-wizard/blob/master/LICENSE for details. */
+
+// Colors
+$pw-incomplete: $lighter-gray !default;
+$pw-complete: $medium-gray !default;
+$pw-active: $primary !default;
+$pw-hover: $primary !default;
+$pw-step-danger: $danger !default;
+$pw-step-warning: $warning !default;
+$pw-step-info: $info !default;
+
+// Sizing
+$pw-bubble-size: 18px !default;
+$pw-bubble-line-thickness: 3px !default;
+$pw-border-thickness: 1px !default;
+$pw-darken-amount: 30% !default;
+
+// Mobile
+$pw-mobile-size: 400px !default;
+
+@mixin bubble-style($color) {
+    background-color: $color;
+    color: $color;
+    &:before,
+    &:after {
+        background-color: $color;
+    }
+}
+
+.flexer {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.no-flexer {
+    display: block;
+}
+.no-flexer-element {
+    -ms-flex: 0;
+    -webkit-flex: 0;
+    -moz-flex: 0;
+    flex: 0;
+}
+.flexer-element {
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    flex: 1;
+}
+.progress-indicator {
+    @extend .flexer;
+    margin: 0;
+    padding: 0;
+    font-size: 80%;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+    > li {
+        @extend .flexer-element;
+        list-style: none;
+        text-align: center;
+        width: auto;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        text-overflow: ellipsis;
+        color: $gray;
+        font-weight: 600;
+        display: block;
+    }
+    > li .bubble {
+        border-radius: 1000px;
+        width: $pw-bubble-size;
+        height: $pw-bubble-size;
+        background-color: $pw-incomplete;
+        display: block;
+        margin: 0 auto 0.5em auto;
+        color: $gray;
+    }
+
+    > li .bubble:before,
+    > li .bubble:after {
+        display: block;
+        position: absolute;
+        top: $pw-bubble-size / 2 - $pw-border-thickness;
+        width: 100%;
+        height: $pw-bubble-line-thickness;
+        content: '';
+        background-color: $pw-incomplete;
+    }
+    > li .bubble:before {
+        left: 0;
+    }
+    > li .bubble:after {
+        right: 0;
+    }
+
+    > li .bubble svg{
+        position: absolute;
+        z-index: 2;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        margin-left: -1px;
+        margin-top: -1px;
+        background-color: $lighter-gray;
+        border-radius: 50%;
+        path{
+            color: $white;
+        }
+    }
+
+    > li:first-child .bubble:before,
+    > li:first-child .bubble:after {
+        width: 50%;
+        margin-left: 50%;
+    }
+
+    > li:last-child .bubble:before,
+    > li:last-child .bubble:after {
+        width: 50%;
+        margin-right: 50%;
+    }
+
+    .status-icon{
+        display: block;
+    }
+
+    > li.pending {
+        .pending{
+            path{
+                color: $medium-gray;
+            }
+        }
+    }
+
+    > li.completed.done {
+        .status-icon.done{
+            path{
+                color: $success;
+            }
+        }
+    }
+
+    > li.completed.failed {
+        .status-icon.failed{
+            path{
+                color: $danger;
+            }
+        }
+    }
+
+    > li.active {
+        color: $pw-active;
+        .bubble {
+            @include bubble-style($lighter-gray);
+        }
+        .status-icon.active{
+            path{
+                color: $primary;
+            }
+        }
+    }
+
+    // override states
+
+    > li.danger .bubble {
+        @include bubble-style($pw-step-danger);
+    }
+    > li.warning .bubble {
+        @include bubble-style($pw-step-warning);
+    }
+    > li.info .bubble {
+        @include bubble-style($pw-step-info);
+    }
+
+    // stacked version
+
+    &.stacked {
+        @extend .no-flexer;
+        > li {
+            text-indent: -10px;
+            text-align: center;
+            display: block;
+        }
+        > li .bubble:before,
+        > li .bubble:after {
+            left: 50%;
+            margin-left: -$pw-bubble-line-thickness / 2;
+            width: $pw-bubble-line-thickness;
+            height: 100%;
+        }
+        .stacked-text {
+            position: relative;
+            z-index: 10;
+            top: 0;
+            margin-left: 60% !important;
+            width: 45% !important;
+            display: inline-block;
+            text-align: left;
+            line-height: 1.2em;
+        }
+        > li a {
+            border: none;
+        }
+    }
+    &.stacked.nocenter {
+        > li .bubble {
+            margin-left: 0;
+            margin-right: 0
+        }
+        > li .bubble:before,
+        > li .bubble:after {
+            left: $pw-bubble-size / 2;
+        }
+        .stacked-text {
+            width: auto !important;
+            display: block;
+            margin-left: $pw-bubble-size * 2 !important;
+        }
+    }
+}
+
+@media handheld, screen and (max-width: $pw-mobile-size) {
+    .progress-indicator {
+        font-size: 60%;
+    }
+}
