@@ -1,0 +1,248 @@
+@import 'variables.scss';
+
+.category-maintenance{
+
+    @include mobile {
+        .rst__tree {
+            overflow: hidden;
+            overflow-x: scroll;
+        }
+        .rst__toolbarButton {
+            .row-options {
+                width: 25px;
+                font-size: 16px;
+            }
+        }
+    }
+    .rst__row{
+        .rst__rowContents {
+            border-radius: 7px;
+            border: none;
+            box-shadow: $shadow-sm;
+            .rst__rowTitle {
+                font-weight: 600;
+                color: $primary;
+            }
+        }
+    }
+    
+    .rst__lineHalfHorizontalRight::before,
+    .rst__lineFullVertical::after,
+    .rst__lineHalfVerticalTop::after,
+    .rst__lineHalfVerticalBottom::after,
+    .rst__lineChildren::after {
+        background-color: $primary;
+        box-shadow: none;
+        opacity: 0.2;
+    }
+    
+    .rst__rowCancelPad,
+    .rst__rowLandingPad{
+        &:before{
+            border: 0;
+            background-color: inherit;
+        }
+    }
+    
+    .rst__rowLandingPad > *,
+    .rst__rowCancelPad > * {
+        opacity: 0.5 !important;
+    }
+    
+    .rst__rowLandingPad .rst__rowToolbar,
+    .rst__rowCancelPad .rst__rowToolbar {
+        opacity: 0 !important;
+        border: 0;
+    }
+    
+    .rst__rowToolbar {
+        z-index: 2;
+    }
+    
+    .rst__placeholder{
+        display: none;
+    }
+    
+    .rst__collapseButton, 
+    .rst__expandButton{
+        border-radius: 2px;
+        display: inline;
+        &:hover:not(:active) {
+            background-size: auto;
+            height: 16px;
+            width: 16px;
+            box-shadow:0 0 0 1px $primary;
+        }
+        &:focus,
+        & {
+            box-shadow:0 0 0 1px $primary;
+        }
+    }
+    
+    
+    .rst__moveHandle,
+    .rst__loadingHandle {
+        background: none !important;
+        position: absolute;
+        box-shadow: none;
+        border: 0px;
+        border-radius: 7px 0px 0px 7px;
+        top: 5px;
+        height: 40px;
+        width: 100%;
+    }
+    
+    .rst__node {
+        height: 50px !important;
+    }
+    
+    .rst__rowWrapper {
+        padding: 5px 5px 5px 0;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    
+    .rst__rowTitle {
+        font-weight: 400;
+    }
+    
+    /**
+     * +--+--+
+     * |  |  |
+     * |  |  |
+     * |  +->|
+     * +-----+
+     */
+    .rst__rtl {
+        .rst__highlightBottomLeftCorner {
+            &::after {
+                border-right: 2px solid $light-gray;
+                right: 10px;
+                margin-top: -3px;
+                border-top: 4px solid transparent;
+                border-bottom: 4px solid transparent;
+                border-left: 4px solid $light-gray;
+            }
+            &:before {
+                border-right: 2px solid $light-gray;
+                border-bottom: 2px solid $light-gray;
+                border-left: 2px solid $light-gray;
+                box-sizing: border-box;
+                height: calc(100% + 2px);
+                width: calc(50% - 11px);
+            }
+        }
+    
+        .rst__rowWrapper {
+            padding: 10px 0 10px 10px;
+        }
+    
+        .rst__highlightTopLeftCorner {
+            &:before {
+                border-right: 2px solid $light-gray;
+            }
+            &:before {
+                border-top: 2px solid $light-gray;
+                border-left: 2px solid $light-gray;
+                height: calc(50% + 2px);
+                top: calc(50% + 2px);
+                margin-top: -2px;
+                width: calc(50% + 1px);
+            }
+        }
+    
+        .rst__highlightLineVertical {
+            &:before {
+                background-color: $light-gray;
+                width: 2px;
+                margin-left: 0px;
+                left: calc(50% - 1px);
+            }
+            &:after {
+                border-top: 4px solid $gray;
+            }
+        }
+    }
+    
+    .category-add-root {
+        cursor: pointer;
+        display: inline-block;
+        padding: 5px 10px 5px 25px;
+        position: relative;
+        margin: 0px 10px;
+        font-size: 0.9em;
+        line-height: 1.7em;
+        color: $success;
+        font-weight: 600;
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+        border-radius: 7px;
+        text-transform: capitalize;
+        svg {
+            font-size: 20px;
+            height: 20px;
+            path {
+                color: $success;
+            }
+            padding: 3px;
+            line-height: 8px;
+            text-align: center;
+            position: absolute;
+            left: 3px;
+            top: 6px;
+        }
+        &:after {
+            position: absolute;
+            content: '';
+            width: 1px;
+            left: 12px;
+            top: 32px;
+            bottom: 0;
+            height: 25px;
+            background-color: $success;
+            box-shadow: none;
+            opacity: 0.2;
+        }
+    }
+    
+    .row-options {
+        height: 24px;
+        width: 20px;
+        line-height: 24px;
+        text-align: center;
+        cursor: pointer;
+        svg{
+            path {
+                color: $light-gray;
+            }
+        }
+    
+        svg:hover {
+            path {
+                color: $primary;
+            }
+        }
+    
+        &.plus {
+            line-height: 26px;
+            &:hover,
+            svg:hover {
+                path {
+                    color: $success;
+                }
+            }
+        }
+        &.remove {
+            &:hover,
+            svg:hover {
+                path {
+                    color: $danger;
+                }
+            }
+        }
+    
+        .disabled {
+            cursor: not-allowed;
+        }
+    }
+}

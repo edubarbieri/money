@@ -1,0 +1,96 @@
+@import 'variables.scss';
+
+.navbar{
+    @include desktop{
+        .menu-header{
+            display: none;
+        }
+        .navbar-brand{
+            img{
+                display: none;
+            }
+        }
+    }
+    @include mobile{
+        .navbar-brand{
+            img{
+                max-height: 40px;
+                width: auto;
+            }
+        }
+    }
+    .menu-header{
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        line-height: 38px;
+        margin-left: -10px;
+        background-color: #fff;
+        text-align: center;
+        border-radius: 2px;
+    }
+    .user-header{
+        @include desktop {
+            position: relative;
+        }
+        .avatar{
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            img{
+                width: 100%;
+            }
+        }
+        .user-info{
+            overflow: hidden;
+            display: none;
+            position: absolute;
+            background-color: $lighter-gray;
+            border-radius: 4px;
+            width: 250px;
+            top: 45px;
+            right: 0;
+            box-shadow: $shadow;
+            @include mobile {
+                width: 100%;
+            }
+            &.show{
+                display: block;
+                border: 1px solid $light-gray;
+                @include mobile {
+                    top: 3.5rem;
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    background-color: $white;
+                }
+            }
+            .dropdown-divider{
+                margin-top: 15px;
+            }
+            .dopdown-actions{
+                padding: 0px 10px 10px 10px;
+                a{
+                    text-decoration: none !important;
+                }
+                .dropdown-item{
+                    cursor: pointer;
+                    padding: 10px;
+                    &:hover{
+                        background-color: $light-gray;
+                    }
+                    span{
+                        font-weight: 700;
+                        margin-left: 10px;
+                    }
+                }
+            }
+            .avatar{
+                margin: 30px auto 10px;
+                width: 80px;
+                height: 80px;
+            }
+        } 
+    }
+}

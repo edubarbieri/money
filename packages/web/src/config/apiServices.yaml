@@ -1,0 +1,240 @@
+########## AUTH ############
+login:
+  url: "/login"
+  method: "POST"
+
+signup:
+  url: "/signup"
+  method: "POST"
+
+validateToken:
+  url: "/validateToken"
+  method: "POST"
+
+########## WALLET ############
+wallet.getAll:
+  url: "/wallet"
+  method: "GET"
+  pushToken: true
+
+wallet.getAllWithUser:
+  url: "/wallet?withUser=true"
+  method: "GET"
+  pushToken: true
+
+wallet.create:
+  url: "/wallet"
+  method: "POST"
+  pushToken: true
+
+wallet.remove:
+  url: "/wallet/{0}"
+  method: "DELETE"
+  pushToken: true
+
+wallet.update:
+  url: "/wallet/{0}"
+  method: "PUT"
+  pushToken: true
+
+wallet.addUser:
+  url: "/wallet/{0}/addUser"
+  method: "POST"
+  pushToken: true
+
+wallet.removeUser:
+  url: "/wallet/{0}/removeUser"
+  method: "POST"
+  pushToken: true
+
+
+########## BILLS ############
+bills.billAmountMonthResume:
+  url: "/bill/billAmountMonthResume"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+bills.get:
+  url: "/bill"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+bills.add:
+  url: "/bill"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+bills.update:
+  url: "/bill/{0}"
+  method: "PUT"
+  pushToken: true
+  pushWallet: true
+
+bills.remove:
+  url: "/bill/{0}"
+  method: "DELETE"
+  pushToken: true
+  pushWallet: true
+
+bills.generateMonthRecurrentBills:
+  url: "/bill/generateMonthRecurrentBills"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+bills.totalMonth:
+  url: "/bill/totalMonth"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+  
+bills.overdueBills:
+  url: "/bill/overdueBills"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+########## ENTRY ############
+entry.generateMonthRecurrentEntries:
+  url: "/entry/generateMonthRecurrentEntries"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+########## DEBIT ############
+debit.debitAmountMonthResume:
+  url: "/debit/amountMonthResume"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+
+debit.get:
+  url: "/debit"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+debit.add:
+  url: "/debit"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+debit.update:
+  url: "/debit/{0}"
+  method: "PUT"
+  pushToken: true
+  pushWallet: true
+
+debit.remove:
+  url: "/debit/{0}"
+  method: "DELETE"
+  pushToken: true
+  pushWallet: true
+
+  
+credit.totalMonth:
+  url: "/credit/totalMonth"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+########## CREDIT ############
+credit.creditAmountMonthResume:
+  url: "/credit/amountMonthResume"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+credit.get:
+  url: "/credit"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+credit.add:
+  url: "/credit"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+credit.update:
+  url: "/credit/{0}"
+  method: "PUT"
+  pushToken: true
+  pushWallet: true
+
+credit.remove:
+  url: "/credit/{0}"
+  method: "DELETE"
+  pushToken: true
+  pushWallet: true
+
+debit.totalMonth:
+  url: "/debit/totalMonth"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+########## CATEGORY ############
+category.getAll:
+  url: "/category"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+category.create:
+  url: "/category"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+category.remove:
+  url: "/category/{0}"
+  method: "DELETE"
+  pushToken: true
+  pushWallet: true
+
+category.update:
+  url: "/category/{0}"
+  method: "PUT"
+  pushToken: true
+  pushWallet: true
+
+category.setParent:
+  url: "/category/{0}/parent"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+  
+category.getWithPath:
+  url: "/category/path"
+  method: "GET"
+  pushToken: true
+  pushWallet: true
+
+########## USER ############
+user.findByEmail:
+  url: "/user/findByEmail"
+  method: "POST"
+  pushToken: true
+
+user.update:
+  url: "/user/{0}"
+  method: "PUT"
+  pushToken: true
+
+########## IMPORT ############
+import.itau.preview:
+  url: "/import/itau/preview"
+  method: "POST"
+  pushToken: true
+  pushWallet: true
+
+import.itau.save:
+  url: "/import/itau/save"
+  method: "POST"
+  pushToken: true
+  pushWallet: true

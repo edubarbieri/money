@@ -1,0 +1,27 @@
+@import 'variables.scss';
+@import 'select.scss';
+
+.keyword-editor{
+    margin-right: 5px;
+    margin-bottom: 5px;
+    color: $primary;
+    border: 1px solid $blue;
+    border-radius: 3px;
+    padding: 3px 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+    font-size: 0.8rem;
+    svg{
+        font-size: 10px;
+        margin-left: 5px;
+        cursor: pointer;
+        path{
+            color: $medium-gray;
+        }
+        &:hover{
+            path{
+                color: $danger;
+            }
+        }
+    }
+}

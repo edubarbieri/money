@@ -1,0 +1,681 @@
+account:
+    en-US: Account
+    pt-BR: Minha Conta
+account.settings:
+    en-US: Settings
+    pt-BR: Configurações
+active:
+    en-US: Active
+    pt-BR: Ativo
+add:
+    en-US: Add
+    pt-BR: Adicionar
+add.bill:
+    en-US: Add Bill
+    pt-BR: Adicionar Conta
+add.credit:
+    en-US: Add Credit
+    pt-BR: Adicionar Créditos
+add.debit:
+    en-US: Add Debit
+    pt-BR: Adicionar Débitos
+add.plan:
+    en-US: Add Plan
+    pt-BR: Adicionar Plano
+add.receipt:
+    en-US: Add new receipt
+    pt-BR: Adicionar nova receita
+add.root.category:
+    en-US: Add root category
+    pt-BR: Adicionar categoria raiz
+almost.overdue:
+    en-US: Almost Overdue
+    pt-BR: Á Vencer
+amount:
+    en-US: Amount
+    pt-BR: Valor
+and:
+    en-US: and
+    pt-BR: e
+apply:
+    en-US: Apply
+    pt-BR: Aplicar
+archive:
+    en-US: Archive
+    pt-BR: Arquivar
+association:
+    en-US: 'Association: '
+    pt-BR: 'Associação:'
+avatar:
+    en-US: Avatar
+    pt-BR: Avatar
+back:
+    en-US: Back
+    pt-BR: Voltar
+back.to.login:
+    en-US: Back to Login
+    pt-BR: Voltar para Login
+balance:
+    en-US: Balance
+    pt-BR: Saldo
+bills.current.month:
+    en-US: Bills of month
+    pt-BR: Contas do mês
+bills.last.months:
+    en-US: Bills in last months
+    pt-BR: Balanço de contas dos últimos meses
+bad.request:
+    en-US: Error on attempt to do this operation.
+    pt-BR: Houve um erro ao tentar realizar essa operação.
+bill.list:
+    en-US: Bills List
+    pt-BR: Listagem de Contas
+bill:
+    en-US: Bill
+    pt-BR: Conta
+bills:
+    en-US: Bills
+    pt-BR: Contas
+cancel:
+    en-US: Cancel
+    pt-BR: Cancelar
+cancel.edit:
+    en-US: Cancel Edit
+    pt-BR: Cancelar edições
+canceled:
+    en-US: Canceled
+    pt-BR: Cancelar
+capitalize.email:
+    en-US: Email
+    pt-BR: Email
+car:
+    en-US: New Car
+    pt-BR: Carro Novo
+category:
+    en-US: Category
+    pt-BR: Categoria
+category.creation:
+    en-US: Category creation
+    pt-BR: Criação de categoria
+category.editor:
+    en-US: 'Category editor'
+    pt-BR: 'Edição da categoria'
+category.name:
+    en-US: Category Name
+    pt-BR: Nome da Categoria
+cirurgy:
+    en-US: Cirurgy
+    pt-BR: Cirurgia
+close:
+    en-US: Close
+    pt-BR: Fechar
+collected.data:
+    en-US: Collected Data
+    pt-BR: Dados coletados
+continue:
+    en-US: Continue
+    pt-BR: Continuar
+create:
+    en-US: Create
+    pt-BR: Criar
+create.user:
+    en-US: Create user
+    pt-BR: Criação de usuário
+credit:
+    en-US: Credit
+    pt-BR: Crédito
+credits:
+    en-US: Credits
+    pt-BR: Créditos
+currency:
+    en-US: $
+    pt-BR: R$
+dashboard:
+    en-US: Dashboard
+    pt-BR: Acompanhamento
+date:
+    en-US: Date
+    pt-BR: Data
+date.format:
+    en-US: MM/dd/yyyy
+    pt-BR: dd/MM/yyyy
+date.mask:
+    en-US: 99/99/9999
+    pt-BR: 99/99/9999
+date.range:
+    en-US: Date Range
+    pt-BR: Intervaldo de Datas
+debit:
+    en-US: Debit
+    pt-BR: Débito
+debits:
+    en-US: Debits
+    pt-BR: Débitos
+description:
+    en-US: Description
+    pt-BR: Descrição
+docreate.user:
+    en-US: Create User
+    pt-BR: Criar Usuário
+do.import:
+    en-US: Import
+    pt-BR: Importar
+doFilter:
+    en-US: Filter
+    pt-BR: Filtrar
+doSelect:
+    en-US: Select
+    pt-BR: Selecionar
+drag.drop:
+    en-US: "Drag 'n' drop some files here, or click to select files"
+    pt-BR: 'Arraste e solte o arquivo aqui, ou click e selecione em seu computador.'
+due:
+    en-US: Due
+    pt-BR: Vencimento
+due.date:
+    en-US: Due date
+    pt-BR: Data de vencimento
+edit:
+    en-US: Edit
+    pt-BR: Editar
+edit.bill:
+    en-US: Edit Bill
+    pt-BR: Edição de Conta
+edit.credit:
+    en-US: Edit Credit
+    pt-BR: Edição de Crédito
+edit.debit:
+    en-US: Edit Debit
+    pt-BR: Edição de Débito
+edit.extract:
+    en-US: Edit Credit/Debit
+    pt-BR: Edição de Crédito/Débito
+edit.receipt:
+    en-US: Edit Receipt
+    pt-BR: Edição de Receita
+eletronic:
+    en-US: Eletronic
+    pt-BR: Eletrônico
+email:
+    en-US: Email
+    pt-BR: Email
+end.date:
+    en-US: End Date
+    pt-BR: Data Final
+en-US:
+    en-US: English
+    pt-BR: Inglês Americano
+error:
+    en-US: Error
+    pt-BR: Erro
+error.page.title:
+    en-US: Ops!
+    pt-BR: Ops!
+error.page.message1:
+    en-US: Something went wrong, please,
+    pt-BR: Alguma coisa deu errado, por favor,
+error.page.message2:
+    en-US: refresh page and trya again.
+    pt-BR: atualize a pagina e tente novamente.
+expand.info:
+    en-US: Expand info
+    pt-BR: Expandir informações
+extract:
+    en-US: Extract
+    pt-BR: Extrato
+extract.last.months:
+    en-US: Balance in last months
+    pt-BR: Balanço dos últimos meses
+fast.add:
+    en-US: Fast adition
+    pt-BR: Adição Rápida
+filter:
+    en-US: Filter
+    pt-BR: Filtrar
+fixed:
+    en-US: Fixed
+    pt-BR: Fixa
+future.projects:
+    en-US: Future Projects
+    pt-BR: Projetos Futuros
+generate.extract.recurency:
+    en-US: Do Import
+    pt-BR: Realizar importação
+generate.extract.recurency.info:
+    en-US: >-
+        Do Import of the credits/debits of last month flagged like fixed or
+        recurrent
+    pt-BR: >-
+        Realizar a importação dos créditos/débitos do mes anterior marcadas como
+        fixas ou recorrentes.
+generate.recurency:
+    en-US: Generate Recurrencys
+    pt-BR: Gerar Recorrências
+generate.recurency.info:
+    en-US: Do Import of the bills of last month flagged like fixed or recurrent
+    pt-BR: >-
+        Realizar a importação das contas do mes anterior marcadas como fixas ou
+        recorrentes.
+generic.error:
+    en-US: Error on attempt to do this operation.
+    pt-BR: Houve um erro ao tentar realizar essa operação.
+goal:
+    en-US: Goal
+    pt-BR: Meta
+hide.filter:
+    en-US: Hide Filters
+    pt-BR: Ocultar Filtros
+hide.info:
+    en-US: Hide info
+    pt-BR: Ocultar informações
+home:
+    en-US: Home
+    pt-BR: Início
+import:
+    en-US: Import
+    pt-BR: Importação
+import.itau.extract:
+    en-US: Itaú Bank Extract
+    pt-BR: Extrato Banco Itaú
+import.resume:
+    en-US: 'Imported Items Summary'
+    pt-BR: 'Resumo itens importados'
+import.resume.already:
+    en-US: 'Already Imported'
+    pt-BR: 'Já importados'
+import.resume.credit:
+    en-US: 'Credits'
+    pt-BR: 'Créditos'
+import.resume.debit:
+    en-US: 'Debits'
+    pt-BR: 'Débitos'
+import.saveItau.error:
+    en-US: Error on import data from Itaú Bank extract
+    pt-BR: Erro na importação de dados do extrato do Branco Itaú
+init.date:
+    en-US: Init Date
+    pt-BR: Data Inicial
+installment:
+    en-US: Installment
+    pt-BR: Parcelada
+installment.qtd:
+    en-US: Installments
+    pt-BR: Parcelas
+invalid.email:
+    en-US: Please insert a valid email
+    pt-BR: Por favor insira um email válido
+invalid.file:
+    en-US: "Imported file format should be: '{0}'"
+    pt-BR: "O arquivo importado deve ser do formato: '{0}'"
+invalid.name:
+    en-US: Invalid Name
+    pt-BR: Nome inválido
+invalid.password:
+    en-US: Please insert a valid password
+    pt-BR: Por favor insira uma senha válida
+invalid.password.confirmation:
+    en-US: Passwords not match
+    pt-BR: Senhas divergentes
+invalid.qtd.chars:
+    en-US: 'Minimal quantity of char is {0}'
+    pt-BR: 'Quantidade minima de caracters é {0}'
+invite.confirmation.message:
+    en-US: 'Request to colaboration has sended to  {0} ({1}) '
+    pt-BR: 'Convite para colaboração na carteira enviada a {0} ({1})'
+invite.confirmation.title:
+    en-US: Invite Send!
+    pt-BR: Convite Enviado!
+keywords:
+    en-US: keywords
+    pt-BR: Palavras Chaves
+last.months:
+    en-US: Total in last months
+    pt-BR: Total nos últimos meses
+loading:
+    en-US: Loading...
+    pt-BR: Carregando...
+login:
+    en-US: Login
+    pt-BR: Logar
+login.message:
+    en-US: Please login
+    pt-BR: 'Por favor, faça o login'
+login.password:
+    en-US: Password
+    pt-BR: Senha
+login.userOrPasswordInvalid:
+    en-US: 'Invalid user or password, please, check inserted data and try again'
+    pt-BR: >-
+        Usuário ou Senha invalidos, por favor, revise seus dados e tente
+        novamente.
+login.username:
+    en-US: Username
+    pt-BR: Usuário
+logout:
+    en-US: Logout
+    pt-BR: Sair
+maintenance:
+    en-US: Maintenance
+    pt-BR: Manutenção
+maintenance.category:
+    en-US: Category Hierarchy
+    pt-BR: Categorias Hierarquicas
+manage.avatar:
+    en-US: Manage your avatar using
+    pt-BR: Gerencie seu avatar utilizando o
+member:
+    en-US: Member
+    pt-BR: Membro
+member.already.wallet:
+    en-US: User already in wallet.
+    pt-BR: Membro ja está adicionado a carteira.
+member.not.found:
+    en-US: Member not found.
+    pt-BR: Membro não encontrado.
+members:
+    en-US: Members
+    pt-BR: Membros
+member.invite:
+    en-US: Send invites to this wallet
+    pt-BR: Convide membros para essa carteira
+member.invite.after:
+    en-US: Send invites to this wallet after creation
+    pt-BR: Convide membros para essa carteira depois da criação
+member.invite.detailed:
+    en-US: >-
+        Insert a valid email from a registered on Money user to send a wallet
+        colaboration invite.
+    pt-BR: >-
+        Insira um e-mail válido de um usuário registrado no Money para enviar o
+        convite para colaborar com essa carteira.
+moment.date.format:
+    en-US: MM/DD/YYYY
+    pt-BR: DD/MM/YYYY
+month:
+    en-US: Month
+    pt-BR: Mês
+monthly.tracking:
+    en-US: Monthly Tracking
+    pt-BR: Acompanhamento Mensal
+name:
+    en-US: Name
+    pt-BR: Nome
+new.bill:
+    en-US: New Bill
+    pt-BR: Nova Conta
+new.extract:
+    en-US: New Credit/Debit
+    pt-BR: Novo Crédito/Débito
+new.receipt:
+    en-US: New receipt
+    pt-BR: Nova Receita
+new.version:
+    en-US: New version was found, click here to update
+    pt-BR: Nova versão disponível, clique aqui para atualizar
+no:
+    en-US: 'No'
+    pt-BR: Não
+no.data:
+    en-US: No data founded
+    pt-BR: Nenhum dado localizado
+objective:
+    en-US: Objective
+    pt-BR: Objetivo
+of:
+    en-US: ' of '
+    pt-BR: ' de '
+open:
+    en-US: Open
+    pt-BR: Abrir
+opened.bills:
+    en-US: Opened Bills
+    pt-BR: Contas a pagar
+other:
+    en-US: Other
+    pt-BR: Outro
+overdue:
+    en-US: Overdue
+    pt-BR: Vencida
+overdue.bills:
+    en-US: Overdue and Almost Overdue Bills
+    pt-BR: Contas vencidas ou à vencer
+overview:
+    en-US: Overview
+    pt-BR: Visão Geral
+owner:
+    en-US: Owner
+    pt-BR: Dono
+ownBusiness:
+    en-US: Own Business
+    pt-BR: Negócio Própia
+ownHome:
+    en-US: Own Home
+    pt-BR: Casa Própia
+password.confirmation:
+    en-US: Password confirmation
+    pt-BR: Confirmação de senha
+pay:
+    en-US: Pay
+    pt-BR: Pagar
+payed:
+    en-US: Payed
+    pt-BR: Pago
+payment:
+    en-US: Payment
+    pt-BR: Pagamento
+payment.date:
+    en-US: Payment Date
+    pt-BR: Data de pagamento
+pending:
+    en-US: Pending
+    pt-BR: Pendente
+pending.payment:
+    en-US: Pending Payment
+    pt-BR: Pendente Pagamento
+phone:
+    en-US: New Phone
+    pt-BR: Novo Smartphone
+plan:
+    en-US: Plan
+    pt-BR: Plano
+planning:
+    en-US: Planning
+    pt-BR: Planejamento
+possible.entries:
+    en-US: 'Not found any possible association '
+    pt-BR: Nenhuma associação possível localizada
+preffered.language:
+    en-US: Preffered Language
+    pt-BR: Linguagem Preferida
+price:
+    en-US: '$ {0}'
+    pt-BR: 'R$ {0}'
+progress:
+    en-US: 'Progress'
+    pt-BR: 'Progresso'
+pt-BR:
+    en-US: Portuguese
+    pt-BR: Português Brasileiro
+range:
+    en-US: Range
+    pt-BR: Intervalo
+receipt.date:
+    en-US: Receipt date
+    pt-BR: Data de recebimento
+receipts:
+    en-US: Receipts
+    pt-BR: Entradas
+received:
+    en-US: Received
+    pt-BR: Recebido
+recurrence:
+    en-US: Recurrence
+    pt-BR: Recorrência
+recurrency:
+    en-US: Recurrency
+    pt-BR: Recorrência
+recurrent:
+    en-US: Recurrent
+    pt-BR: Recorrente
+remove:
+    en-US: Remove
+    pt-BR: Remover
+remove.bill:
+    en-US: Bill remove
+    pt-BR: Remoção de conta
+remove.bill.confirmation:
+    en-US: 'You really want remove bill: {0}'
+    pt-BR: 'Você tem certeza que deseja remover a conta: {0}'
+remove.category:
+    en-US: Remove Category
+    pt-BR: Remover Categoria
+remove.category.confirmation:
+    en-US: 'Do you really want remove category: {0}'
+    pt-BR: 'Você deseja realmente remover a categoria: {0}'
+remove.credit:
+    en-US: Credit remove
+    pt-BR: Remoção de credito
+remove.credit.confirmation:
+    en-US: 'You really want remove credit: {0}'
+    pt-BR: 'Você tem certeza que deseja remover o credito: {0}'
+remove.debit:
+    en-US: Debit remove
+    pt-BR: Remoção de débito
+remove.debit.confirmation:
+    en-US: 'You really want remove debit: {0}'
+    pt-BR: 'Você tem certeza que deseja remover o débito: {0}'
+remove.member.confirmation:
+    en-US: 'Do you realy want remove member {0} of this wallet?'
+    pt-BR: 'Você deseja realmente remover o membro {0} dessa carteira?'
+remove.member.title:
+    en-US: Remove Member
+    pt-BR: Remoção de membro
+remove.wallet:
+    en-US: Remove Wallet
+    pt-BR: Remover Carteira
+remove.wallet.confirmation:
+    en-US: 'Do you really want remove wallet: {0}'
+    pt-BR: 'Você deseja realmente remover a carteira: {0}'
+required.field:
+    en-US: Required field
+    pt-BR: Campo obrigatório
+rescue:
+    en-US: Rescute
+    pt-BR: Resgatar
+save:
+    en-US: Save
+    pt-BR: Salvar
+savings:
+    en-US: Savings
+    pt-BR: Poupança
+select:
+    en-US: Select
+    pt-BR: Selecione
+select.member:
+    en-US: Select Member
+    pt-BR: Selecione um membro
+site.info.message:
+    en-US: ' Finance Control created by '
+    pt-BR: ' Gerenciador Financeiro criado por '
+show.filter:
+    en-US: Show Filters
+    pt-BR: Exibir Filtros
+signup.userAlreadyRegistered:
+    en-US: User already registered
+    pt-BR: Usuário já registrado
+status:
+    en-US: Status
+    pt-BR: Status
+study:
+    en-US: Study
+    pt-BR: Estudos
+total:
+    en-US: Total
+    pt-BR: Total
+total.bill:
+    en-US: Total Bills 
+    pt-BR: Total Devido
+total.payed:
+    en-US: Total Payed
+    pt-BR: Total Pago
+total.speding:
+    en-US: Total Speding
+    pt-BR: Total Gasto
+total.received:
+    en-US: Total Received
+    pt-BR: Total Recebido
+travel:
+    en-US: Travel
+    pt-BR: Viagem
+type:
+    en-US: Type
+    pt-BR: Tipo
+unique:
+    en-US: Unique
+    pt-BR: Unica
+user.data:
+    en-US: User data
+    pt-BR: Dados do usuário
+user.update.genericError:
+    en-US: Error on attempt to do this operation.
+    pt-BR: Houve um erro ao tentar realizar essa operação.
+value:
+    en-US: Value
+    pt-BR: Valor
+value.payed:
+    en-US: Payed Value
+    pt-BR: Valor Pago
+view.more:
+    en-US: View More
+    pt-BR: Ver Mais
+wallet:
+    en-US: Wallet
+    pt-BR: Carteira
+wallet.add:
+    en-US: Add Wallet
+    pt-BR: Adicionar Carteira
+wallet.addUser.noPermissionToAddUser:
+    en-US: You must be owner to add members.
+    pt-BR: Você precisar ser o dono para conseguir adicionar os membros.
+wallet.change:
+    en-US: Change Wallet
+    pt-BR: Alterar Carteira
+wallet.create:
+    en-US: Wallet Creation
+    pt-BR: Criação de Carteira
+wallet.delete.noPermissionToDelete:
+    en-US: You must be owner to remove this wallet.
+    pt-BR: Você precisar ser o dono para conseguir está carteira.
+wallet.editor:
+    en-US: Wallet Editor
+    pt-BR: Editor de Carteira
+wallet.manager:
+    en-US: Wallet Manager
+    pt-BR: Gerenciamento de Carteira
+wallet.not.found.create:
+    en-US: 'create '
+    pt-BR: 'crie '
+wallet.not.found.message1:
+    en-US: 'Invalid wallet, please, '
+    pt-BR: 'Carteira inválida, por favor, '
+wallet.not.found.message2:
+    en-US: or select one.
+    pt-BR: ou selecione uma carteira.
+wallet.removeUser.noPermissionToAddUser:
+    en-US: You must be owner to remove members.
+    pt-BR: Você precisar ser o dono para conseguir remover os membros.
+wallet.selector:
+    en-US: 'Wallet:'
+    pt-BR: 'Carteira:'
+warning:
+    en-US: Warning!
+    pt-BR: Atenção!
+welcome.message:
+    en-US: Welcome!
+    pt-BR: Bem vindo!
+year:
+    en-US: Year
+    pt-BR: Ano
+'yes':
+    en-US: 'Yes'
+    pt-BR: Sim

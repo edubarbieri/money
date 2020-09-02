@@ -1,0 +1,32 @@
+@import 'variables.scss';
+
+.error-page{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    img{
+        width: 500px;
+    }
+    h5{
+        width: 90%;
+        color: $gray;
+        font-size: 1.5rem;
+    }
+    @include mobile{
+        height: 100vh;
+        img{
+            width: 90%;
+        }
+        h5{
+            font-size: 1rem;
+        }
+        .navbar{
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+    }
+}

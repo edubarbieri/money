@@ -1,0 +1,43 @@
+@import 'variables.scss';
+
+.auth{
+    background: url('/img/auth-background.png');   
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .auth-container{
+        background-color: $white;
+        padding: 3em;
+        overflow: hidden;
+        overflow-y: auto;
+        @include middle;
+        
+        @include desktop{
+            width: 400px;
+            max-height: 90%;
+            max-width: 80%;
+        }
+
+        @include mobile{
+            max-height: 100%;
+            max-width: 100%;
+            min-width: 70%;
+        }
+
+        img{
+            width: 200px;
+        }
+        button{
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        .auth-redirect{
+            float: left;
+            margin-top: 25px;
+        }
+    }
+}
